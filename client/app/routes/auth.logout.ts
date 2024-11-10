@@ -1,3 +1,4 @@
+// REF: https://remix.run/resources/remix-auth-auth0-strategy
 import { redirect, type ActionFunctionArgs } from "@remix-run/node";
 
 import { destroySession, getSession } from "~/services/session.server";
