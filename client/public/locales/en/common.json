@@ -1,0 +1,13 @@
+{
+  "header": {
+    "resume": { "abbr": "Open Resume", "aria-label": "resume" },
+    "contact": { "abbr": "Move to contact page", "aria-label": "contact" },
+    "theme": { "aria-label": "theme" },
+    "menu": {
+      "aria-label": "Menu",
+      "change-theme-color": "Change theme color"
+    }
+  },
+  "admin-header": { "Logout": "Logout", "Home": "Home" },
+  "side-bar": { "home": "Home", "contact": "Contact", "about": "About" }
+}

@@ -1,0 +1,13 @@
+{
+  "header": {
+    "resume": { "abbr": "職務経歴書を開く", "aria-label": "職務経歴書" },
+    "contact": { "abbr": "問い合わせページへ移動", "aria-label": "問い合わせ" },
+    "theme": { "aria-label": "テーマ色" },
+    "menu": {
+      "aria-label": "メニュー",
+      "change-theme-color": "テーマの色を変更する"
+    }
+  },
+  "admin-header": { "Logout": "ログアウト", "Home": "ホーム" },
+  "side-bar": { "home": "ホーム", "contact": "問い合わせ", "about": "about" }
+}

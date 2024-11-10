@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Typecheck",
+    "Pipeable",
+    "isbot",
+    "languagedetector",
+    "Lngs",
+    "Chakra",
+    "Koichi",
+    "Kimura",
+    "buysell",
+    "Sorajima",
+    "Toon",
+    "vite",
+    "Haikyu",
+    "Kaisen",
+    "Naruto",
+    "codegen"
+  ],
+  "ignorePaths": ["node_modules", "pnpm-lock.yaml", "build", "gql"]
+}

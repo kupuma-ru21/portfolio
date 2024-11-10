@@ -1,0 +1,19 @@
+{
+  "About": "About",
+  "description": "Let me introduce myself!",
+  "I like to do": "I like to do...",
+  "software development": {
+    "title": "Software Development",
+    "description": "I'm especially interested in how to improve maintainability and performance. For example, I've used just avif images in this project cuz it's better in performance than jpg, png and things like that."
+  },
+  "reading comics and watching anime": {
+    "title": "Reading comics and watching anime",
+    "description1": "I'm a big fan of anime and comics. I've read countless comics and anime.",
+    "description2": "Anime like below are my favorite:",
+    "description3": "PSYCHO-PASS, Haikyu, JujutsuKaisen, Naruto, One Piece, Attack on Titan and so on."
+  },
+  "going to a restaurant": {
+    "title": "Going to a restaurant",
+    "description": "I love to eat a food from other countries cuz through the food, I can learn about the culture of the country. It really broadens my horizons."
+  }
+}
