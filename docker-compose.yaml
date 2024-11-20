@@ -1,16 +1,30 @@
 services:
+  client:
+    build:
+      context: ./client
+      args:
+        - PNPM_HOME=${PNPM_HOME}
+        - PNPM_PATH=${PNPM_PATH}
+        - CLIENT_PORT=${CLIENT_PORT}
+        - VITE_GRAPHQL_SCHEMA_URL=${VITE_DOCKER_GRAPHQL_SCHEMA_URL}
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    depends_on:
+      - api
+    restart: always
+
   api:
     build:
       context: ./api
       # Ref: https://stackoverflow.com/questions/29261811/use-docker-compose-env-variable-in-dockerbuild-file
       args:
-      - ENV=${ENV}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - PORT=${PORT}
+        - ENV=${ENV}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+        - POSTGRES_HOST=db
+        - POSTGRES_PORT=${POSTGRES_PORT}
+        - PORT=${PORT}
     ports:
       - ${PORT}:${PORT}
     depends_on:

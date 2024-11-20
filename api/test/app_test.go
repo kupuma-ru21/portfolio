@@ -14,6 +14,7 @@ import (
 )
 
 // Ref: https://entgo.io/docs/testing/
+// TODO: run this on github actions
 func TestApp(t *testing.T) {
 	// Create an ent.Client with in-memory SQLite database.
 	client, err := ent.Open(dialect.SQLite, "file:ent?mode=memory&cache=shared&_fk=1")

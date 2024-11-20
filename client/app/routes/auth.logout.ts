@@ -6,6 +6,7 @@ import { destroySession, getSession } from "~/services/session.server";
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
   const logoutURL = new URL(import.meta.env.VITE_AUTH0_LOGOUT_URL);
+  // TODO: remove this, I'm gonna make a login function by myself
   logoutURL.searchParams.set("client_id", import.meta.env.VITE_AUTH0_CLIENT_ID);
   logoutURL.searchParams.set(
     "returnTo",
