@@ -3,6 +3,7 @@
 # REF: https://zenn.dev/jy8752/articles/351fc5d8c53029
 # REF: https://cloud.google.com/workflows/docs/deploy-workflows-using-cloud-build
 # REF: https://stackoverflow.com/questions/68779751/error-publishing-source-code-from-cloud-build-to-a-bucket-using-triggers
+# REF: gcloud builds submit --config cloudbuild.yaml
 steps:
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -37,18 +38,67 @@ steps:
       - --platform
       - managed
       - --allow-unauthenticated
+  # api
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - build
+      - --build-arg
+      - ENV=${_ENV}
+      - --build-arg
+      - POSTGRES_USER=${_POSTGRES_USER}
+      - --build-arg
+      - POSTGRES_PASSWORD=${_POSTGRES_PASSWORD}
+      - --build-arg
+      - POSTGRES_HOST=${_POSTGRES_HOST}
+      - --build-arg
+      - POSTGRES_PORT=${_POSTGRES_PORT}
+      - --build-arg
+      - POSTGRES_DB=${_POSTGRES_DB}
+      - --build-arg
+      - PORT=${_PORT}
+      - -t
+      - ${_API_IMAGE}
+      - ./api
+    automapSubstitutions: true
 
-images:
-  - ${_IMAGE}
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - push
+      - ${_API_IMAGE}
 
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - run
+      - deploy
+      - ${_API_SERVICE}
+      - --image
+      - ${_API_IMAGE}
+      - --region
+      - ${_REGION}
+      - --platform
+      - managed
+      - --allow-unauthenticated
 substitutions:
-  _IMAGE: _IMAGE
-  _SERVICE: _SERVICE
+  # general
   _REGION: _REGION
+  # client
+  _IMAGE: us-central1-docker.pkg.dev/portfolio-441309/client/client-image
+  _SERVICE: _SERVICE
   _PNPM_HOME: _PNPM_HOME
   _PNPM_PATH: _PNPM_PATH
   _CLIENT_PORT: _CLIENT_PORT
   _VITE_GRAPHQL_SCHEMA_URL: _VITE_GRAPHQL_SCHEMA_URL
+
+  # api
+  _ENV: _ENV
+  _POSTGRES_USER: _POSTGRES_USER
+  _POSTGRES_PASSWORD: _POSTGRES_PASSWORD
+  _POSTGRES_HOST: _POSTGRES_HOST
+  _POSTGRES_PORT: _POSTGRES_PORT
+  _POSTGRES_DB: _POSTGRES_DB
+  _PORT: _PORT
+  _API_IMAGE: _API_IMAGE
+  _API_SERVICE: _API_SERVICE
 
 options:
   logging: CLOUD_LOGGING_ONLY
