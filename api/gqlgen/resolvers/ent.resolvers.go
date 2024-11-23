@@ -28,6 +28,11 @@ func (r *queryResolver) Apps(ctx context.Context) ([]*ent.App, error) {
 	return r.client.App.Query().All(ctx)
 }
 
+// Users is the resolver for the users field.
+func (r *queryResolver) Users(ctx context.Context) ([]*ent.User, error) {
+	return r.client.User.Query().All(ctx)
+}
+
 // Query returns gqlgen.QueryResolver implementation.
 func (r *Resolver) Query() gqlgen.QueryResolver { return &queryResolver{r} }
 
