@@ -36,5 +36,9 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserI
 	// }
 
 	user, err := r.client.User.Create().SetEmail(input.Email).SetPassword(string(passwordHashed)).Save(ctx)
-	return user.ID, err
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	return user.ID, nil
 }
