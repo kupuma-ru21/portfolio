@@ -11,15 +11,30 @@ import (
 	"portfolio-api/utils/validation"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserInput) (uuid.UUID, error) {
 	// TODO: email and password validation
+	// TODO: test
 	isInvalid := validation.Email(input.Email)
 	if isInvalid {
 		return uuid.Nil, errCustom.Create("Invalid email")
 	}
-	user, err := r.client.User.Create().SetInput(input).Save(ctx)
+
+	passwordHashed, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	// TODO: use this code for login function
+	// password1 := []byte(string(passwordHashed))
+	// err = bcrypt.CompareHashAndPassword(password1, password)
+	// if err != nil {
+	// 	return uuid.Nil, errCustom.Create("Invalid password")
+	// }
+
+	user, err := r.client.User.Create().SetEmail(input.Email).SetPassword(string(passwordHashed)).Save(ctx)
 	return user.ID, err
 }

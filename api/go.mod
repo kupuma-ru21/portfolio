@@ -14,6 +14,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.17
+	golang.org/x/crypto v0.27.0
 )
 
 require (
