@@ -18,7 +18,7 @@ type User struct {
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
 	// Email holds the value of the "email" field.
-	Email string `json:"-"`
+	Email string `json:"email,omitempty"`
 	// Password holds the value of the "password" field.
 	Password     string `json:"-"`
 	selectValues sql.SelectValues
@@ -102,7 +102,8 @@ func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
-	builder.WriteString("email=<sensitive>")
+	builder.WriteString("email=")
+	builder.WriteString(u.Email)
 	builder.WriteString(", ")
 	builder.WriteString("password=<sensitive>")
 	builder.WriteByte(')')

@@ -119,4 +119,5 @@ input UpdateAppInput {
 }
 type User implements Node {
   id: ID!
+  email: String!
 }
