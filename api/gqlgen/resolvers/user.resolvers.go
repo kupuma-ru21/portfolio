@@ -7,7 +7,7 @@ package resolvers
 import (
 	"context"
 	"portfolio-api/ent"
-	"portfolio-api/utils/err"
+	"portfolio-api/utils/errCustom"
 	"portfolio-api/utils/validation"
 
 	"github.com/google/uuid"
@@ -18,7 +18,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserI
 	// TODO: email and password validation
 	isInvalid := validation.Email(input.Email)
 	if isInvalid {
-		return uuid.Nil, err.Create("Invalid email")
+		return uuid.Nil, errCustom.Create("Invalid email")
 	}
 	user, err := r.client.User.Create().SetInput(input).Save(ctx)
 	return user.ID, err
