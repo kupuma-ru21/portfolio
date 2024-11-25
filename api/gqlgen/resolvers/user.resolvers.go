@@ -16,8 +16,16 @@ import (
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserInput) (uuid.UUID, error) {
-	// TODO: email and password validation
-	// TODO: test
+	isEmpty := validation.IsEmpty(input.Email)
+	if isEmpty {
+		return uuid.Nil, errCustom.Create("email is required")
+	}
+
+	isEmpty = validation.IsEmpty(input.Password)
+	if isEmpty {
+		return uuid.Nil, errCustom.Create("password is required")
+	}
+
 	isInvalid := validation.Email(input.Email)
 	if isInvalid {
 		return uuid.Nil, errCustom.Create("Invalid email")
@@ -30,7 +38,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserI
 
 	// TODO: use this code for login function
 	// password1 := []byte(string(passwordHashed))
-	// err = bcrypt.CompareHashAndPassword(password1, password)
+	// err = bcrypt.CompareHashAndPassword(password1, []byte(input.Password))
 	// if err != nil {
 	// 	return uuid.Nil, errCustom.Create("Invalid password")
 	// }
