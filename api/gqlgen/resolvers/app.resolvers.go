@@ -14,25 +14,25 @@ import (
 
 // CreateApp is the resolver for the createApp field.
 func (r *mutationResolver) CreateApp(ctx context.Context, input ent.CreateAppInput) (uuid.UUID, error) {
-	app, err := r.client.App.Create().SetInput(input).Save(ctx)
+	app, err := r.Client.App.Create().SetInput(input).Save(ctx)
 	return app.ID, err
 }
 
 // UpdateApp is the resolver for the updateApp field.
 func (r *mutationResolver) UpdateApp(ctx context.Context, id uuid.UUID, input ent.UpdateAppInput) (uuid.UUID, error) {
-	_, err := r.client.App.UpdateOneID(id).SetInput(input).Save(ctx)
+	_, err := r.Client.App.UpdateOneID(id).SetInput(input).Save(ctx)
 	return id, err
 }
 
 // DeleteApp is the resolver for the deleteApp field.
 func (r *mutationResolver) DeleteApp(ctx context.Context, id uuid.UUID) (uuid.UUID, error) {
-	err := r.client.App.DeleteOneID(id).Exec(ctx)
+	err := r.Client.App.DeleteOneID(id).Exec(ctx)
 	return id, err
 }
 
 // App is the resolver for the app field.
 func (r *queryResolver) App(ctx context.Context, id uuid.UUID) (*ent.App, error) {
-	return r.client.App.Get(ctx, id)
+	return r.Client.App.Get(ctx, id)
 }
 
 // Mutation returns gqlgen.MutationResolver implementation.

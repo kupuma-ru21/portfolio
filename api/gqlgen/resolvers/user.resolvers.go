@@ -35,7 +35,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserI
 	// 	return uuid.Nil, errCustom.Create("Invalid password")
 	// }
 
-	user, err := r.client.User.Create().SetEmail(input.Email).SetPassword(string(passwordHashed)).Save(ctx)
+	user, err := r.Client.User.Create().SetEmail(input.Email).SetPassword(string(passwordHashed)).Save(ctx)
 	if err != nil {
 		return uuid.Nil, err
 	}

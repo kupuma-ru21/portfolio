@@ -25,12 +25,12 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []uuid.UUID) ([]ent.Noder
 
 // Apps is the resolver for the apps field.
 func (r *queryResolver) Apps(ctx context.Context) ([]*ent.App, error) {
-	return r.client.App.Query().All(ctx)
+	return r.Client.App.Query().All(ctx)
 }
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*ent.User, error) {
-	return r.client.User.Query().All(ctx)
+	return r.Client.User.Query().All(ctx)
 }
 
 // Query returns gqlgen.QueryResolver implementation.
