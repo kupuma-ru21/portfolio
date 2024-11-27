@@ -17,7 +17,8 @@
     "Haikyu",
     "Kaisen",
     "Naruto",
-    "codegen"
+    "codegen",
+    "corepack"
   ],
   "ignorePaths": ["node_modules", "pnpm-lock.yaml", "build", "gql"]
 }
