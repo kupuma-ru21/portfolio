@@ -1,0 +1,4 @@
+# TODO: https://github.com/graphql/graphql-js/issues/937#issue-240146967
+extend type Mutation {
+  createUser(input: CreateUserInput!): ID!
+}

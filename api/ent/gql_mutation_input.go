@@ -69,3 +69,21 @@ func (c *AppUpdateOne) SetInput(i UpdateAppInput) *AppUpdateOne {
 	i.Mutate(c.Mutation())
 	return c
 }
+
+// CreateUserInput represents a mutation input for creating users.
+type CreateUserInput struct {
+	Email    string
+	Password string
+}
+
+// Mutate applies the CreateUserInput on the UserMutation builder.
+func (i *CreateUserInput) Mutate(m *UserMutation) {
+	m.SetEmail(i.Email)
+	m.SetPassword(i.Password)
+}
+
+// SetInput applies the change-set in the CreateUserInput on the UserCreate builder.
+func (c *UserCreate) SetInput(i CreateUserInput) *UserCreate {
+	i.Mutate(c.Mutation())
+	return c
+}
