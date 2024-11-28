@@ -17,7 +17,6 @@ import { SubmitButton } from "~/components/submit-button";
 import { Textarea } from "~/components/textarea";
 
 export const EditApp = ({ app }: { app: AppQuery["app"] & AppFragment }) => {
-  // TODO: add mutation to update the app
   const { t, isSubmitting } = useIndex();
 
   return (
