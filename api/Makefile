@@ -1,6 +1,5 @@
 test-go:
-	go test ./test
-	go test ./test/utils/**
+	go test -v ./...
 
 run:
 	ENV=local go run ./main.go
