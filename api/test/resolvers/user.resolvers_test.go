@@ -29,7 +29,7 @@ func Test_mutationResolver_CreateUser(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		r := &struct{ *resolvers.Resolver }{Resolver: &resolvers.Resolver{Client: client}}
 		email := "example@email.com"
-		password := "example@email.com"
+		password := "password"
 		userId, err := r.Mutation().CreateUser(
 			ctx,
 			ent.CreateUserInput{Email: email, Password: password},
