@@ -7,7 +7,6 @@ package resolvers
 import (
 	"context"
 	"portfolio-api/ent"
-	"portfolio-api/gqlgen"
 
 	"github.com/google/uuid"
 )
@@ -34,8 +33,3 @@ func (r *mutationResolver) DeleteApp(ctx context.Context, id uuid.UUID) (uuid.UU
 func (r *queryResolver) App(ctx context.Context, id uuid.UUID) (*ent.App, error) {
 	return r.Client.App.Get(ctx, id)
 }
-
-// Mutation returns gqlgen.MutationResolver implementation.
-func (r *Resolver) Mutation() gqlgen.MutationResolver { return &mutationResolver{r} }
-
-type mutationResolver struct{ *Resolver }
