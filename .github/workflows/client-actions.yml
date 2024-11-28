@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - "client/**"
+      - ".github/workflows/**"
   pull_request:
     paths:
       - "client/**"
+      - ".github/workflows/**"
 
 defaults:
   run:
