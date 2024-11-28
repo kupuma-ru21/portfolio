@@ -10,3 +10,6 @@ run-github-actions:
 
 run-a-workflow:
 	act -j $(job) test --container-architecture linux/amd64 --container-daemon-socket -
+
+show-workflows:
+	act -l
