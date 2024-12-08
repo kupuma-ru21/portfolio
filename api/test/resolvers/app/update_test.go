@@ -47,7 +47,7 @@ func Test_mutationResolver_UpdateApp(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
-		a, err := client.App.Get(ctx, appId)
+		a, err := r.Query().App(ctx, appId)
 		if err != nil {
 			log.Fatalf("error: %v", err)
 		}
