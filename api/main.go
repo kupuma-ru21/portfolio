@@ -41,23 +41,22 @@ func main() {
 	}
 
 	postgresPassword := os.Getenv("POSTGRES_PASSWORD")
-	// TODO: rewrite env to postgresPassword
-	if env == "" {
+	if postgresPassword == "" {
 		log.Fatal("postgresPassword is not set")
 	}
 
 	postgresHost := os.Getenv("POSTGRES_HOST")
-	if env == "" {
+	if postgresHost == "" {
 		log.Fatal("postgresHost is not set")
 	}
 
 	postgresPort := os.Getenv("POSTGRES_PORT")
-	if env == "" {
+	if postgresPort == "" {
 		log.Fatal("postgresPort is not set")
 	}
 
 	postgresDb := os.Getenv("POSTGRES_DB")
-	if env == "" {
+	if postgresDb == "" {
 		log.Fatal("postgresDb is not set")
 	}
 
