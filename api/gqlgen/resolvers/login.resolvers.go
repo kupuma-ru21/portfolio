@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"log"
 	"os"
 	"portfolio-api/ent"
 	"portfolio-api/ent/user"
@@ -61,7 +60,7 @@ func (r *mutationResolver) Login(ctx context.Context, input ent.CreateUserInput)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
 	if jwtSecretKey == "" {
-		log.Fatal("jwtSecretKey is not set")
+		return "", errCustom.Create("JWT_SECRET_KEY not found")
 	}
 	ss, err := token.SignedString([]byte(jwtSecretKey))
 	if err != nil {
