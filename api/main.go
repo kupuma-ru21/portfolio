@@ -41,6 +41,7 @@ func main() {
 	}
 
 	postgresPassword := os.Getenv("POSTGRES_PASSWORD")
+	// TODO: rewrite env to postgresPassword
 	if env == "" {
 		log.Fatal("postgresPassword is not set")
 	}
