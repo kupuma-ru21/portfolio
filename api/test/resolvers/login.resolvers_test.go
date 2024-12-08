@@ -2,31 +2,20 @@ package test
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"portfolio-api/ent"
 	"portfolio-api/gqlgen/resolvers"
-	"runtime"
 	"testing"
 
 	"entgo.io/ent/dialect"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_mutationResolver_Login(t *testing.T) {
 	// Create an ent.Client with in-memory SQLite database.
-	_, file, _, _ := runtime.Caller(0)
-	// TODO: make setup sql utils
-	err := godotenv.Load(filepath.Join(filepath.Dir(file), "../../../") + "/.env")
-	if err != nil {
-		fmt.Println("err here", err)
-		log.Fatalf("failed opening connection to sqlite: %v", err)
-	}
 	client, err := ent.Open(dialect.SQLite, "file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
 		log.Fatalf("failed opening connection to sqlite: %v", err)
@@ -51,6 +40,7 @@ func Test_mutationResolver_Login(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
+		jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
 		tokenString, err := r.Mutation().Login(
 			ctx,
 			ent.CreateUserInput{Email: email, Password: password},
@@ -59,7 +49,6 @@ func Test_mutationResolver_Login(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
-		jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			return []byte(jwtSecretKey), nil
 		})

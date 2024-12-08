@@ -1,5 +1,5 @@
 test-go:
-	go test -v ./...
+	JWT_SECRET_KEY=JWT_SECRET_KEY go test -v ./...
 
 run:
 	ENV=local go run ./main.go
