@@ -1,6 +1,8 @@
-import { getSession } from "~/services/session.server";
+import { tokenCookie } from "./cookies.server";
 
-export const isLoggedIn = async (cookie: string | null) => {
-  const session = await getSession(cookie);
-  return session.has("user");
+export const isLoggedIn = async (cookieHeader: string | null) => {
+  const cookie: { token: string } = (await tokenCookie.parse(cookieHeader)) || {
+    token: "",
+  };
+  return cookie.token !== "";
 };

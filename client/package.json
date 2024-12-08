@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "dev": "pnpm interface && pnpm codegen && remix vite:dev",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
@@ -13,7 +13,8 @@
     "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./@types/resources.d.ts",
     "test": "vitest",
     "format": "eslint ./app --fix",
-    "codegen": "graphql-codegen -r dotenv/config"
+    "//": "REF: https://the-guild.dev/graphql/codegen/docs/config-reference/require-field > Customize loaded env file",
+    "codegen": "DOTENV_CONFIG_PATH='../.env' graphql-codegen --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
