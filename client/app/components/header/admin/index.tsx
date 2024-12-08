@@ -15,7 +15,7 @@ export const AdminHeader = () => {
       <SwitchTheme />
       <Flex gap="16px">
         <Tooltip label={t("admin-header.Logout")}>
-          <Form action="/auth/logout" method="POST">
+          <Form action="/logout" method="POST">
             <IconButton
               type="submit"
               aria-label={t("admin-header.Logout")}

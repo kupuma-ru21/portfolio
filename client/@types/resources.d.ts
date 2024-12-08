@@ -103,7 +103,8 @@ interface Resources {
     "Read more": "Read more"
   },
   "login": {
-    "Login": "Login"
+    "Login": "Login",
+    "Email": "example@email.com"
   },
   "not-found": {
     "page-not-found": "Page not found",
