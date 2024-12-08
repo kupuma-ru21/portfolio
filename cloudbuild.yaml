@@ -56,6 +56,8 @@ steps:
       - POSTGRES_DB=${_POSTGRES_DB}
       - --build-arg
       - PORT=${_PORT}
+      - --build-arg
+      - JWT_SECRET_KEY=${_JWT_SECRET_KEY}
       - -t
       - ${_API_IMAGE}
       - ./api

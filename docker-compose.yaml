@@ -25,6 +25,7 @@ services:
         - POSTGRES_HOST=db
         - POSTGRES_PORT=${POSTGRES_PORT}
         - PORT=${PORT}
+        - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     ports:
       - ${PORT}:${PORT}
     depends_on:

@@ -36,7 +36,7 @@ func main() {
 	}
 
 	postgresUser := os.Getenv("POSTGRES_USER")
-	if env == "" {
+	if postgresUser == "" {
 		log.Fatal("postgresUser is not set")
 	}
 
