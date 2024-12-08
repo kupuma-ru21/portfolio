@@ -63,10 +63,7 @@ func Test_mutationResolver_DeleteApp(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
-		appDeleted, err := client.App.Get(ctx, appIdUpdated)
-		if err != nil {
-			log.Fatalf("error: %v", err)
-		}
-		assert.Nil(t, appDeleted)
+		_, err = client.App.Get(ctx, appIdUpdated)
+		assert.Error(t, err)
 	})
 }
