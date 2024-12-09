@@ -20,6 +20,7 @@ const documents = {
     "mutation CreateApp($title: String!, $detail: String!, $link: String!, $linkType: AppLinkType!, $imageURL: String!) {\n  createApp(\n    input: {title: $title, detail: $detail, link: $link, linkType: $linkType, imageURL: $imageURL}\n  )\n}": types.CreateAppDocument,
     "query App($id: ID!) {\n  app(id: $id) {\n    ...App\n    link\n    linkType\n  }\n}\n\nmutation UpdateApp($id: ID!, $title: String!, $detail: String!, $link: String!, $linkType: AppLinkType!, $imageUrl: String!) {\n  updateApp(\n    id: $id\n    input: {title: $title, detail: $detail, link: $link, linkType: $linkType, imageURL: $imageUrl}\n  )\n}": types.AppDocument,
     "mutation Login($input: CreateUserInput!) {\n  login(input: $input)\n}": types.LoginDocument,
+    "mutation Signup($input: CreateUserInput!) {\n  createUser(input: $input)\n}": types.SignupDocument,
 };
 
 /**
@@ -60,6 +61,10 @@ export function graphql(source: "query App($id: ID!) {\n  app(id: $id) {\n    ..
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation Login($input: CreateUserInput!) {\n  login(input: $input)\n}"): (typeof documents)["mutation Login($input: CreateUserInput!) {\n  login(input: $input)\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation Signup($input: CreateUserInput!) {\n  createUser(input: $input)\n}"): (typeof documents)["mutation Signup($input: CreateUserInput!) {\n  createUser(input: $input)\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
