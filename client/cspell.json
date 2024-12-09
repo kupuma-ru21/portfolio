@@ -2,23 +2,29 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "Typecheck",
-    "Pipeable",
+    "buysell",
+    "Chakra",
+    "codegen",
+    "corepack",
+    "Haikyu",
     "isbot",
+    "Kaisen",
+    "Kimura",
+    "Koichi",
     "languagedetector",
     "Lngs",
-    "Chakra",
-    "Koichi",
-    "Kimura",
-    "buysell",
+    "Naruto",
+    "Pipeable",
+    "Signup",
     "Sorajima",
     "Toon",
-    "vite",
-    "Haikyu",
-    "Kaisen",
-    "Naruto",
-    "codegen",
-    "corepack"
+    "Typecheck",
+    "vite"
   ],
-  "ignorePaths": ["node_modules", "pnpm-lock.yaml", "build", "gql"]
+  "ignorePaths": [
+    "node_modules",
+    "pnpm-lock.yaml",
+    "build",
+    "gql"
+  ]
 }

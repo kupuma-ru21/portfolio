@@ -113,6 +113,10 @@ interface Resources {
   "root": {
     "Something went wrong": "Something went wrong",
     "Try reload the page": "Try reload the page"
+  },
+  "signup": {
+    "Signup": "Signup",
+    "Email": "example@email.com"
   }
 }
 
