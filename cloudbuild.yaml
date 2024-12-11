@@ -16,6 +16,8 @@ steps:
       - CLIENT_PORT=${_CLIENT_PORT}
       - --build-arg
       - VITE_GRAPHQL_SCHEMA_URL=${_VITE_GRAPHQL_SCHEMA_URL}
+      - --build-arg
+      - VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID=${_VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID}
       - -t
       - ${_IMAGE}
       - ./client

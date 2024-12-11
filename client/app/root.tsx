@@ -120,6 +120,22 @@ const Document = ({ children, locale, dir }: DocumentProps) => {
         />
         <Meta />
         <Links />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-EXRFV4RHNM"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${
+              import.meta.env.VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID
+            }');
+        `,
+          }}
+        />
       </head>
       <body>
         {children}
