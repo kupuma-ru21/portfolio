@@ -13,7 +13,7 @@ export const useIndex = () => {
   const { sendToGTM } = useGTM();
   const sendDataToGTM = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendToGTM({ event: "contact", platform: "web" });
+    sendToGTM({ action: "contact" });
   };
 
   return { t, isSubmitting, sendDataToGTM };

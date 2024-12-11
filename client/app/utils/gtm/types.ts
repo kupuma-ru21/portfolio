@@ -1,4 +1,3 @@
 export type GTMPayload = {
-  event: "contact";
-  platform: "web";
+  action: "contact";
 };
