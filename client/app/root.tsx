@@ -122,7 +122,9 @@ const Document = ({ children, locale, dir }: DocumentProps) => {
         <Links />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-EXRFV4RHNM"
+          src={`https://www.googletagmanager.com/gtag/js?id=${
+            import.meta.env.VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID
+          }`}
         ></script>
         <script
           dangerouslySetInnerHTML={{
