@@ -1,5 +1,7 @@
+import { type FormEvent } from "react";
 import { useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
+import { useGTM } from "~/utils/gtm/hooks";
 
 export const useIndex = () => {
   const { t } = useTranslation("contact");
@@ -8,5 +10,11 @@ export const useIndex = () => {
   const isSubmitting =
     navigation.state === "submitting" || navigation.state === "loading";
 
-  return { t, isSubmitting };
+  const { sendToGTM } = useGTM();
+  const sendDataToGTM = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    sendToGTM({ event: "contact", platform: "web" });
+  };
+
+  return { t, isSubmitting, sendDataToGTM };
 };

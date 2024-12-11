@@ -13,14 +13,18 @@ import { SubmitButton } from "~/components/submit-button";
 import { Textarea } from "~/components/textarea";
 
 export const Contact = () => {
-  const { t, isSubmitting } = useIndex();
+  const { t, isSubmitting, sendDataToGTM } = useIndex();
 
   return (
     <Box py="20px">
       <Heading as="h1" textAlign="center" mb="32px">
         {t("Contact")}
       </Heading>
-      <Form method="POST" style={{ textAlign: "center" }}>
+      <Form
+        method="POST"
+        onSubmit={sendDataToGTM}
+        style={{ textAlign: "center" }}
+      >
         <chakra.fieldset disabled={isSubmitting}>
           <Flex
             direction="column"
