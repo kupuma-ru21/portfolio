@@ -3,5 +3,5 @@ extend type Mutation {
 }
 
 extend type Query {
-  users: [User!]!
+  users: [User!]! @isAuthenticated
 }

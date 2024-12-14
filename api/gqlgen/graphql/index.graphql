@@ -2,3 +2,5 @@
 type Mutation {
   _mutation: Boolean
 }
+
+directive @isAuthenticated on FIELD_DEFINITION

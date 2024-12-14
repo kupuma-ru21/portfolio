@@ -11,8 +11,6 @@ import (
 type Resolver struct{ Client *ent.Client }
 
 // NewSchema creates a graphql executable schema.
-func NewSchema(client *ent.Client) graphql.ExecutableSchema {
-	return gqlgen.NewExecutableSchema(gqlgen.Config{
-		Resolvers: &Resolver{client},
-	})
+func NewSchema(c gqlgen.Config) graphql.ExecutableSchema {
+	return gqlgen.NewExecutableSchema(c)
 }
