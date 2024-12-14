@@ -104,7 +104,6 @@ type Query {
     ids: [ID!]!
   ): [Node]!
   apps: [App!]!
-  users: [User!]!
 }
 """
 UpdateAppInput is used for update App object.
