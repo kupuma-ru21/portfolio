@@ -40,3 +40,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(w, req.WithContext(ctx))
 	})
 }
+
+func HasUserId(ctx context.Context) bool {
+	return ctx.Value(userIdKey{}) != nil
+}

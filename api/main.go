@@ -10,6 +10,7 @@ import (
 	"portfolio-api/ent"
 	"portfolio-api/ent/migrate"
 	"portfolio-api/gqlgen"
+	"portfolio-api/gqlgen/directive"
 	"portfolio-api/gqlgen/resolvers"
 	"portfolio-api/middlewares/auth"
 	"runtime"
@@ -96,8 +97,10 @@ func main() {
 		log.Fatal("opening ent client: ", err)
 	}
 
-	c := gqlgen.Config{Resolvers: &resolvers.Resolver{Client: client}}
-	srv := handler.NewDefaultServer(resolvers.NewSchema(c))
+	srv := handler.NewDefaultServer(resolvers.NewSchema(gqlgen.Config{
+		Resolvers:  &resolvers.Resolver{Client: client},
+		Directives: directive.Directive,
+	}))
 	http.Handle("/",
 		playground.Handler("Todo", "/query"),
 	)
