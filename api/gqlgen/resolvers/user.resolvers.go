@@ -50,3 +50,8 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input ent.CreateUserI
 
 	return user.ID, nil
 }
+
+// Users is the resolver for the users field.
+func (r *queryResolver) Users(ctx context.Context) ([]*ent.User, error) {
+	return r.Client.User.Query().All(ctx)
+}

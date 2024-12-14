@@ -1,3 +1,7 @@
 extend type Mutation {
   createUser(input: CreateUserInput!): ID!
 }
+
+extend type Query {
+  users: [User!]!
+}
