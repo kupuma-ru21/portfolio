@@ -76,7 +76,7 @@ interface Resources {
   },
   "contact": {
     "Contact": "Contact",
-    "Email address": "Email address",
+    "Your email address": "Your email address",
     "Subject": "Subject",
     "Content": "Content",
     "Submit": "Submit",

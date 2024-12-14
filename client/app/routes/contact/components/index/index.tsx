@@ -35,7 +35,7 @@ export const Contact = () => {
             mb="54px"
           >
             <FormControl>
-              <FormLabel>{t("Email address")}</FormLabel>
+              <FormLabel>{t("Your email address")}</FormLabel>
               <Input type="email" name="email" />
             </FormControl>
             <FormControl>
