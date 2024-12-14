@@ -20,6 +20,10 @@ steps:
       - VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID=${_VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID}
       - --build-arg
       - VITE_GOOGLE_TAG_MANAGER_CONTAINER_ID=${_VITE_GOOGLE_TAG_MANAGER_CONTAINER_ID}
+      - --build-arg
+      - VITE_EMAIL=${_VITE_EMAIL}
+      - --build-arg
+      - VITE_RESEND_API_KEY=${_VITE_RESEND_API_KEY}
       - -t
       - ${_IMAGE}
       - ./client
