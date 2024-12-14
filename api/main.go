@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"portfolio-api/ent"
 	"portfolio-api/ent/migrate"
+	"portfolio-api/gqlgen"
 	"portfolio-api/gqlgen/resolvers"
 	"portfolio-api/middlewares/auth"
 	"runtime"
@@ -95,7 +96,8 @@ func main() {
 		log.Fatal("opening ent client: ", err)
 	}
 
-	srv := handler.NewDefaultServer(resolvers.NewSchema(client))
+	c := gqlgen.Config{Resolvers: &resolvers.Resolver{Client: client}}
+	srv := handler.NewDefaultServer(resolvers.NewSchema(c))
 	http.Handle("/",
 		playground.Handler("Todo", "/query"),
 	)
