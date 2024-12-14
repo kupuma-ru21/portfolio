@@ -23,11 +23,6 @@ func (r *queryResolver) Nodes(ctx context.Context, ids []uuid.UUID) ([]ent.Noder
 	panic(fmt.Errorf("not implemented: Nodes - nodes"))
 }
 
-// Apps is the resolver for the apps field.
-func (r *queryResolver) Apps(ctx context.Context) ([]*ent.App, error) {
-	return r.Client.App.Query().All(ctx)
-}
-
 // Query returns gqlgen.QueryResolver implementation.
 func (r *Resolver) Query() gqlgen.QueryResolver { return &queryResolver{r} }
 

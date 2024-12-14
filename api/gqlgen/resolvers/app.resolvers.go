@@ -29,6 +29,11 @@ func (r *mutationResolver) DeleteApp(ctx context.Context, id uuid.UUID) (uuid.UU
 	return id, err
 }
 
+// Apps is the resolver for the apps field.
+func (r *queryResolver) Apps(ctx context.Context) ([]*ent.App, error) {
+	return r.Client.App.Query().All(ctx)
+}
+
 // App is the resolver for the app field.
 func (r *queryResolver) App(ctx context.Context, id uuid.UUID) (*ent.App, error) {
 	return r.Client.App.Get(ctx, id)
