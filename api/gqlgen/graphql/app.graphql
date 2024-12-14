@@ -1,5 +1,6 @@
 # Ref: https://github.com/99designs/gqlgen/issues/679#issuecomment-483511737
 extend type Query {
+  apps: [App!]!
   app(id: ID!): App!
 }
 
