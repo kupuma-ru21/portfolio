@@ -10,6 +10,7 @@ import (
 	"portfolio-api/ent"
 	"portfolio-api/ent/migrate"
 	"portfolio-api/gqlgen/resolvers"
+	"portfolio-api/middlewares/auth"
 	"runtime"
 
 	"entgo.io/ent/dialect"
@@ -98,7 +99,7 @@ func main() {
 	http.Handle("/",
 		playground.Handler("Todo", "/query"),
 	)
-	http.Handle("/query", srv)
+	http.Handle("/query", auth.AuthMiddleware(srv))
 
 	port := os.Getenv("PORT")
 	if port == "" {
