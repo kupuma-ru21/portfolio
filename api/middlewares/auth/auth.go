@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -17,6 +18,7 @@ const (
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		tokenString := req.Header.Get("Authorization")
+		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 		if tokenString == "" {
 			next.ServeHTTP(w, req)
 			return
