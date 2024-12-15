@@ -1,4 +1,4 @@
-fragment App on App {
+fragment Company on Company {
   id
   title
   detail

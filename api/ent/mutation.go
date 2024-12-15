@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/predicate"
 	"portfolio-api/ent/user"
 	"sync"
@@ -25,12 +25,12 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeApp  = "App"
-	TypeUser = "User"
+	TypeCompany = "Company"
+	TypeUser    = "User"
 )
 
-// AppMutation represents an operation that mutates the App nodes in the graph.
-type AppMutation struct {
+// CompanyMutation represents an operation that mutates the Company nodes in the graph.
+type CompanyMutation struct {
 	config
 	op            Op
 	typ           string
@@ -38,25 +38,25 @@ type AppMutation struct {
 	title         *string
 	detail        *string
 	link          *string
-	link_type     *app.LinkType
+	link_type     *company.LinkType
 	image_url     *string
 	clearedFields map[string]struct{}
 	done          bool
-	oldValue      func(context.Context) (*App, error)
-	predicates    []predicate.App
+	oldValue      func(context.Context) (*Company, error)
+	predicates    []predicate.Company
 }
 
-var _ ent.Mutation = (*AppMutation)(nil)
+var _ ent.Mutation = (*CompanyMutation)(nil)
 
-// appOption allows management of the mutation configuration using functional options.
-type appOption func(*AppMutation)
+// companyOption allows management of the mutation configuration using functional options.
+type companyOption func(*CompanyMutation)
 
-// newAppMutation creates new mutation for the App entity.
-func newAppMutation(c config, op Op, opts ...appOption) *AppMutation {
-	m := &AppMutation{
+// newCompanyMutation creates new mutation for the Company entity.
+func newCompanyMutation(c config, op Op, opts ...companyOption) *CompanyMutation {
+	m := &CompanyMutation{
 		config:        c,
 		op:            op,
-		typ:           TypeApp,
+		typ:           TypeCompany,
 		clearedFields: make(map[string]struct{}),
 	}
 	for _, opt := range opts {
@@ -65,20 +65,20 @@ func newAppMutation(c config, op Op, opts ...appOption) *AppMutation {
 	return m
 }
 
-// withAppID sets the ID field of the mutation.
-func withAppID(id uuid.UUID) appOption {
-	return func(m *AppMutation) {
+// withCompanyID sets the ID field of the mutation.
+func withCompanyID(id uuid.UUID) companyOption {
+	return func(m *CompanyMutation) {
 		var (
 			err   error
 			once  sync.Once
-			value *App
+			value *Company
 		)
-		m.oldValue = func(ctx context.Context) (*App, error) {
+		m.oldValue = func(ctx context.Context) (*Company, error) {
 			once.Do(func() {
 				if m.done {
 					err = errors.New("querying old values post mutation is not allowed")
 				} else {
-					value, err = m.Client().App.Get(ctx, id)
+					value, err = m.Client().Company.Get(ctx, id)
 				}
 			})
 			return value, err
@@ -87,10 +87,10 @@ func withAppID(id uuid.UUID) appOption {
 	}
 }
 
-// withApp sets the old App of the mutation.
-func withApp(node *App) appOption {
-	return func(m *AppMutation) {
-		m.oldValue = func(context.Context) (*App, error) {
+// withCompany sets the old Company of the mutation.
+func withCompany(node *Company) companyOption {
+	return func(m *CompanyMutation) {
+		m.oldValue = func(context.Context) (*Company, error) {
 			return node, nil
 		}
 		m.id = &node.ID
@@ -99,7 +99,7 @@ func withApp(node *App) appOption {
 
 // Client returns a new `ent.Client` from the mutation. If the mutation was
 // executed in a transaction (ent.Tx), a transactional client is returned.
-func (m AppMutation) Client() *Client {
+func (m CompanyMutation) Client() *Client {
 	client := &Client{config: m.config}
 	client.init()
 	return client
@@ -107,7 +107,7 @@ func (m AppMutation) Client() *Client {
 
 // Tx returns an `ent.Tx` for mutations that were executed in transactions;
 // it returns an error otherwise.
-func (m AppMutation) Tx() (*Tx, error) {
+func (m CompanyMutation) Tx() (*Tx, error) {
 	if _, ok := m.driver.(*txDriver); !ok {
 		return nil, errors.New("ent: mutation is not running in a transaction")
 	}
@@ -117,14 +117,14 @@ func (m AppMutation) Tx() (*Tx, error) {
 }
 
 // SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of App entities.
-func (m *AppMutation) SetID(id uuid.UUID) {
+// operation is only accepted on creation of Company entities.
+func (m *CompanyMutation) SetID(id uuid.UUID) {
 	m.id = &id
 }
 
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *AppMutation) ID() (id uuid.UUID, exists bool) {
+func (m *CompanyMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -135,7 +135,7 @@ func (m *AppMutation) ID() (id uuid.UUID, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *AppMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
+func (m *CompanyMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
@@ -144,19 +144,19 @@ func (m *AppMutation) IDs(ctx context.Context) ([]uuid.UUID, error) {
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
-		return m.Client().App.Query().Where(m.predicates...).IDs(ctx)
+		return m.Client().Company.Query().Where(m.predicates...).IDs(ctx)
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
 }
 
 // SetTitle sets the "title" field.
-func (m *AppMutation) SetTitle(s string) {
+func (m *CompanyMutation) SetTitle(s string) {
 	m.title = &s
 }
 
 // Title returns the value of the "title" field in the mutation.
-func (m *AppMutation) Title() (r string, exists bool) {
+func (m *CompanyMutation) Title() (r string, exists bool) {
 	v := m.title
 	if v == nil {
 		return
@@ -164,10 +164,10 @@ func (m *AppMutation) Title() (r string, exists bool) {
 	return *v, true
 }
 
-// OldTitle returns the old "title" field's value of the App entity.
-// If the App object wasn't provided to the builder, the object is fetched from the database.
+// OldTitle returns the old "title" field's value of the Company entity.
+// If the Company object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppMutation) OldTitle(ctx context.Context) (v string, err error) {
+func (m *CompanyMutation) OldTitle(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTitle is only allowed on UpdateOne operations")
 	}
@@ -182,17 +182,17 @@ func (m *AppMutation) OldTitle(ctx context.Context) (v string, err error) {
 }
 
 // ResetTitle resets all changes to the "title" field.
-func (m *AppMutation) ResetTitle() {
+func (m *CompanyMutation) ResetTitle() {
 	m.title = nil
 }
 
 // SetDetail sets the "detail" field.
-func (m *AppMutation) SetDetail(s string) {
+func (m *CompanyMutation) SetDetail(s string) {
 	m.detail = &s
 }
 
 // Detail returns the value of the "detail" field in the mutation.
-func (m *AppMutation) Detail() (r string, exists bool) {
+func (m *CompanyMutation) Detail() (r string, exists bool) {
 	v := m.detail
 	if v == nil {
 		return
@@ -200,10 +200,10 @@ func (m *AppMutation) Detail() (r string, exists bool) {
 	return *v, true
 }
 
-// OldDetail returns the old "detail" field's value of the App entity.
-// If the App object wasn't provided to the builder, the object is fetched from the database.
+// OldDetail returns the old "detail" field's value of the Company entity.
+// If the Company object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppMutation) OldDetail(ctx context.Context) (v string, err error) {
+func (m *CompanyMutation) OldDetail(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDetail is only allowed on UpdateOne operations")
 	}
@@ -218,17 +218,17 @@ func (m *AppMutation) OldDetail(ctx context.Context) (v string, err error) {
 }
 
 // ResetDetail resets all changes to the "detail" field.
-func (m *AppMutation) ResetDetail() {
+func (m *CompanyMutation) ResetDetail() {
 	m.detail = nil
 }
 
 // SetLink sets the "link" field.
-func (m *AppMutation) SetLink(s string) {
+func (m *CompanyMutation) SetLink(s string) {
 	m.link = &s
 }
 
 // Link returns the value of the "link" field in the mutation.
-func (m *AppMutation) Link() (r string, exists bool) {
+func (m *CompanyMutation) Link() (r string, exists bool) {
 	v := m.link
 	if v == nil {
 		return
@@ -236,10 +236,10 @@ func (m *AppMutation) Link() (r string, exists bool) {
 	return *v, true
 }
 
-// OldLink returns the old "link" field's value of the App entity.
-// If the App object wasn't provided to the builder, the object is fetched from the database.
+// OldLink returns the old "link" field's value of the Company entity.
+// If the Company object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppMutation) OldLink(ctx context.Context) (v string, err error) {
+func (m *CompanyMutation) OldLink(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldLink is only allowed on UpdateOne operations")
 	}
@@ -254,17 +254,17 @@ func (m *AppMutation) OldLink(ctx context.Context) (v string, err error) {
 }
 
 // ResetLink resets all changes to the "link" field.
-func (m *AppMutation) ResetLink() {
+func (m *CompanyMutation) ResetLink() {
 	m.link = nil
 }
 
 // SetLinkType sets the "link_type" field.
-func (m *AppMutation) SetLinkType(at app.LinkType) {
-	m.link_type = &at
+func (m *CompanyMutation) SetLinkType(ct company.LinkType) {
+	m.link_type = &ct
 }
 
 // LinkType returns the value of the "link_type" field in the mutation.
-func (m *AppMutation) LinkType() (r app.LinkType, exists bool) {
+func (m *CompanyMutation) LinkType() (r company.LinkType, exists bool) {
 	v := m.link_type
 	if v == nil {
 		return
@@ -272,10 +272,10 @@ func (m *AppMutation) LinkType() (r app.LinkType, exists bool) {
 	return *v, true
 }
 
-// OldLinkType returns the old "link_type" field's value of the App entity.
-// If the App object wasn't provided to the builder, the object is fetched from the database.
+// OldLinkType returns the old "link_type" field's value of the Company entity.
+// If the Company object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppMutation) OldLinkType(ctx context.Context) (v app.LinkType, err error) {
+func (m *CompanyMutation) OldLinkType(ctx context.Context) (v company.LinkType, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldLinkType is only allowed on UpdateOne operations")
 	}
@@ -290,17 +290,17 @@ func (m *AppMutation) OldLinkType(ctx context.Context) (v app.LinkType, err erro
 }
 
 // ResetLinkType resets all changes to the "link_type" field.
-func (m *AppMutation) ResetLinkType() {
+func (m *CompanyMutation) ResetLinkType() {
 	m.link_type = nil
 }
 
 // SetImageURL sets the "image_url" field.
-func (m *AppMutation) SetImageURL(s string) {
+func (m *CompanyMutation) SetImageURL(s string) {
 	m.image_url = &s
 }
 
 // ImageURL returns the value of the "image_url" field in the mutation.
-func (m *AppMutation) ImageURL() (r string, exists bool) {
+func (m *CompanyMutation) ImageURL() (r string, exists bool) {
 	v := m.image_url
 	if v == nil {
 		return
@@ -308,10 +308,10 @@ func (m *AppMutation) ImageURL() (r string, exists bool) {
 	return *v, true
 }
 
-// OldImageURL returns the old "image_url" field's value of the App entity.
-// If the App object wasn't provided to the builder, the object is fetched from the database.
+// OldImageURL returns the old "image_url" field's value of the Company entity.
+// If the Company object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppMutation) OldImageURL(ctx context.Context) (v string, err error) {
+func (m *CompanyMutation) OldImageURL(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldImageURL is only allowed on UpdateOne operations")
 	}
@@ -326,19 +326,19 @@ func (m *AppMutation) OldImageURL(ctx context.Context) (v string, err error) {
 }
 
 // ResetImageURL resets all changes to the "image_url" field.
-func (m *AppMutation) ResetImageURL() {
+func (m *CompanyMutation) ResetImageURL() {
 	m.image_url = nil
 }
 
-// Where appends a list predicates to the AppMutation builder.
-func (m *AppMutation) Where(ps ...predicate.App) {
+// Where appends a list predicates to the CompanyMutation builder.
+func (m *CompanyMutation) Where(ps ...predicate.Company) {
 	m.predicates = append(m.predicates, ps...)
 }
 
-// WhereP appends storage-level predicates to the AppMutation builder. Using this method,
+// WhereP appends storage-level predicates to the CompanyMutation builder. Using this method,
 // users can use type-assertion to append predicates that do not depend on any generated package.
-func (m *AppMutation) WhereP(ps ...func(*sql.Selector)) {
-	p := make([]predicate.App, len(ps))
+func (m *CompanyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.Company, len(ps))
 	for i := range ps {
 		p[i] = ps[i]
 	}
@@ -346,39 +346,39 @@ func (m *AppMutation) WhereP(ps ...func(*sql.Selector)) {
 }
 
 // Op returns the operation name.
-func (m *AppMutation) Op() Op {
+func (m *CompanyMutation) Op() Op {
 	return m.op
 }
 
 // SetOp allows setting the mutation operation.
-func (m *AppMutation) SetOp(op Op) {
+func (m *CompanyMutation) SetOp(op Op) {
 	m.op = op
 }
 
-// Type returns the node type of this mutation (App).
-func (m *AppMutation) Type() string {
+// Type returns the node type of this mutation (Company).
+func (m *CompanyMutation) Type() string {
 	return m.typ
 }
 
 // Fields returns all fields that were changed during this mutation. Note that in
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
-func (m *AppMutation) Fields() []string {
+func (m *CompanyMutation) Fields() []string {
 	fields := make([]string, 0, 5)
 	if m.title != nil {
-		fields = append(fields, app.FieldTitle)
+		fields = append(fields, company.FieldTitle)
 	}
 	if m.detail != nil {
-		fields = append(fields, app.FieldDetail)
+		fields = append(fields, company.FieldDetail)
 	}
 	if m.link != nil {
-		fields = append(fields, app.FieldLink)
+		fields = append(fields, company.FieldLink)
 	}
 	if m.link_type != nil {
-		fields = append(fields, app.FieldLinkType)
+		fields = append(fields, company.FieldLinkType)
 	}
 	if m.image_url != nil {
-		fields = append(fields, app.FieldImageURL)
+		fields = append(fields, company.FieldImageURL)
 	}
 	return fields
 }
@@ -386,17 +386,17 @@ func (m *AppMutation) Fields() []string {
 // Field returns the value of a field with the given name. The second boolean
 // return value indicates that this field was not set, or was not defined in the
 // schema.
-func (m *AppMutation) Field(name string) (ent.Value, bool) {
+func (m *CompanyMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case app.FieldTitle:
+	case company.FieldTitle:
 		return m.Title()
-	case app.FieldDetail:
+	case company.FieldDetail:
 		return m.Detail()
-	case app.FieldLink:
+	case company.FieldLink:
 		return m.Link()
-	case app.FieldLinkType:
+	case company.FieldLinkType:
 		return m.LinkType()
-	case app.FieldImageURL:
+	case company.FieldImageURL:
 		return m.ImageURL()
 	}
 	return nil, false
@@ -405,56 +405,56 @@ func (m *AppMutation) Field(name string) (ent.Value, bool) {
 // OldField returns the old value of the field from the database. An error is
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
-func (m *AppMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+func (m *CompanyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case app.FieldTitle:
+	case company.FieldTitle:
 		return m.OldTitle(ctx)
-	case app.FieldDetail:
+	case company.FieldDetail:
 		return m.OldDetail(ctx)
-	case app.FieldLink:
+	case company.FieldLink:
 		return m.OldLink(ctx)
-	case app.FieldLinkType:
+	case company.FieldLinkType:
 		return m.OldLinkType(ctx)
-	case app.FieldImageURL:
+	case company.FieldImageURL:
 		return m.OldImageURL(ctx)
 	}
-	return nil, fmt.Errorf("unknown App field %s", name)
+	return nil, fmt.Errorf("unknown Company field %s", name)
 }
 
 // SetField sets the value of a field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *AppMutation) SetField(name string, value ent.Value) error {
+func (m *CompanyMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case app.FieldTitle:
+	case company.FieldTitle:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTitle(v)
 		return nil
-	case app.FieldDetail:
+	case company.FieldDetail:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDetail(v)
 		return nil
-	case app.FieldLink:
+	case company.FieldLink:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetLink(v)
 		return nil
-	case app.FieldLinkType:
-		v, ok := value.(app.LinkType)
+	case company.FieldLinkType:
+		v, ok := value.(company.LinkType)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetLinkType(v)
 		return nil
-	case app.FieldImageURL:
+	case company.FieldImageURL:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -462,119 +462,119 @@ func (m *AppMutation) SetField(name string, value ent.Value) error {
 		m.SetImageURL(v)
 		return nil
 	}
-	return fmt.Errorf("unknown App field %s", name)
+	return fmt.Errorf("unknown Company field %s", name)
 }
 
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
-func (m *AppMutation) AddedFields() []string {
+func (m *CompanyMutation) AddedFields() []string {
 	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
-func (m *AppMutation) AddedField(name string) (ent.Value, bool) {
+func (m *CompanyMutation) AddedField(name string) (ent.Value, bool) {
 	return nil, false
 }
 
 // AddField adds the value to the field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *AppMutation) AddField(name string, value ent.Value) error {
+func (m *CompanyMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	}
-	return fmt.Errorf("unknown App numeric field %s", name)
+	return fmt.Errorf("unknown Company numeric field %s", name)
 }
 
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
-func (m *AppMutation) ClearedFields() []string {
+func (m *CompanyMutation) ClearedFields() []string {
 	return nil
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
 // cleared in this mutation.
-func (m *AppMutation) FieldCleared(name string) bool {
+func (m *CompanyMutation) FieldCleared(name string) bool {
 	_, ok := m.clearedFields[name]
 	return ok
 }
 
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
-func (m *AppMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown App nullable field %s", name)
+func (m *CompanyMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown Company nullable field %s", name)
 }
 
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
-func (m *AppMutation) ResetField(name string) error {
+func (m *CompanyMutation) ResetField(name string) error {
 	switch name {
-	case app.FieldTitle:
+	case company.FieldTitle:
 		m.ResetTitle()
 		return nil
-	case app.FieldDetail:
+	case company.FieldDetail:
 		m.ResetDetail()
 		return nil
-	case app.FieldLink:
+	case company.FieldLink:
 		m.ResetLink()
 		return nil
-	case app.FieldLinkType:
+	case company.FieldLinkType:
 		m.ResetLinkType()
 		return nil
-	case app.FieldImageURL:
+	case company.FieldImageURL:
 		m.ResetImageURL()
 		return nil
 	}
-	return fmt.Errorf("unknown App field %s", name)
+	return fmt.Errorf("unknown Company field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
-func (m *AppMutation) AddedEdges() []string {
+func (m *CompanyMutation) AddedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
-func (m *AppMutation) AddedIDs(name string) []ent.Value {
+func (m *CompanyMutation) AddedIDs(name string) []ent.Value {
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
-func (m *AppMutation) RemovedEdges() []string {
+func (m *CompanyMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
-func (m *AppMutation) RemovedIDs(name string) []ent.Value {
+func (m *CompanyMutation) RemovedIDs(name string) []ent.Value {
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *AppMutation) ClearedEdges() []string {
+func (m *CompanyMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
-func (m *AppMutation) EdgeCleared(name string) bool {
+func (m *CompanyMutation) EdgeCleared(name string) bool {
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
-func (m *AppMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown App unique edge %s", name)
+func (m *CompanyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown Company unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
-func (m *AppMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown App edge %s", name)
+func (m *CompanyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown Company edge %s", name)
 }
 
 // UserMutation represents an operation that mutates the User nodes in the graph.

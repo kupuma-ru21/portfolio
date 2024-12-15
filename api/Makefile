@@ -6,3 +6,6 @@ run:
 
 gen:
 	go generate .
+
+db-schema:
+	go run -mod=mod entgo.io/ent/cmd/ent new $(db-schema)

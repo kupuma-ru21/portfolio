@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	// AppsColumns holds the columns for the "apps" table.
-	AppsColumns = []*schema.Column{
+	// CompaniesColumns holds the columns for the "companies" table.
+	CompaniesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID},
 		{Name: "title", Type: field.TypeString},
 		{Name: "detail", Type: field.TypeString},
@@ -17,11 +17,11 @@ var (
 		{Name: "link_type", Type: field.TypeEnum, Enums: []string{"APP", "COMPANY"}},
 		{Name: "image_url", Type: field.TypeString},
 	}
-	// AppsTable holds the schema information for the "apps" table.
-	AppsTable = &schema.Table{
-		Name:       "apps",
-		Columns:    AppsColumns,
-		PrimaryKey: []*schema.Column{AppsColumns[0]},
+	// CompaniesTable holds the schema information for the "companies" table.
+	CompaniesTable = &schema.Table{
+		Name:       "companies",
+		Columns:    CompaniesColumns,
+		PrimaryKey: []*schema.Column{CompaniesColumns[0]},
 	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
@@ -37,7 +37,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		AppsTable,
+		CompaniesTable,
 		UsersTable,
 	}
 )

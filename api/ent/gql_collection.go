@@ -4,57 +4,57 @@ package ent
 
 import (
 	"context"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/user"
 
 	"github.com/99designs/gqlgen/graphql"
 )
 
 // CollectFields tells the query-builder to eagerly load connected nodes by resolver context.
-func (a *AppQuery) CollectFields(ctx context.Context, satisfies ...string) (*AppQuery, error) {
+func (c *CompanyQuery) CollectFields(ctx context.Context, satisfies ...string) (*CompanyQuery, error) {
 	fc := graphql.GetFieldContext(ctx)
 	if fc == nil {
-		return a, nil
+		return c, nil
 	}
-	if err := a.collectField(ctx, false, graphql.GetOperationContext(ctx), fc.Field, nil, satisfies...); err != nil {
+	if err := c.collectField(ctx, false, graphql.GetOperationContext(ctx), fc.Field, nil, satisfies...); err != nil {
 		return nil, err
 	}
-	return a, nil
+	return c, nil
 }
 
-func (a *AppQuery) collectField(ctx context.Context, oneNode bool, opCtx *graphql.OperationContext, collected graphql.CollectedField, path []string, satisfies ...string) error {
+func (c *CompanyQuery) collectField(ctx context.Context, oneNode bool, opCtx *graphql.OperationContext, collected graphql.CollectedField, path []string, satisfies ...string) error {
 	path = append([]string(nil), path...)
 	var (
 		unknownSeen    bool
-		fieldSeen      = make(map[string]struct{}, len(app.Columns))
-		selectedFields = []string{app.FieldID}
+		fieldSeen      = make(map[string]struct{}, len(company.Columns))
+		selectedFields = []string{company.FieldID}
 	)
 	for _, field := range graphql.CollectFields(opCtx, collected.Selections, satisfies) {
 		switch field.Name {
 		case "title":
-			if _, ok := fieldSeen[app.FieldTitle]; !ok {
-				selectedFields = append(selectedFields, app.FieldTitle)
-				fieldSeen[app.FieldTitle] = struct{}{}
+			if _, ok := fieldSeen[company.FieldTitle]; !ok {
+				selectedFields = append(selectedFields, company.FieldTitle)
+				fieldSeen[company.FieldTitle] = struct{}{}
 			}
 		case "detail":
-			if _, ok := fieldSeen[app.FieldDetail]; !ok {
-				selectedFields = append(selectedFields, app.FieldDetail)
-				fieldSeen[app.FieldDetail] = struct{}{}
+			if _, ok := fieldSeen[company.FieldDetail]; !ok {
+				selectedFields = append(selectedFields, company.FieldDetail)
+				fieldSeen[company.FieldDetail] = struct{}{}
 			}
 		case "link":
-			if _, ok := fieldSeen[app.FieldLink]; !ok {
-				selectedFields = append(selectedFields, app.FieldLink)
-				fieldSeen[app.FieldLink] = struct{}{}
+			if _, ok := fieldSeen[company.FieldLink]; !ok {
+				selectedFields = append(selectedFields, company.FieldLink)
+				fieldSeen[company.FieldLink] = struct{}{}
 			}
 		case "linkType":
-			if _, ok := fieldSeen[app.FieldLinkType]; !ok {
-				selectedFields = append(selectedFields, app.FieldLinkType)
-				fieldSeen[app.FieldLinkType] = struct{}{}
+			if _, ok := fieldSeen[company.FieldLinkType]; !ok {
+				selectedFields = append(selectedFields, company.FieldLinkType)
+				fieldSeen[company.FieldLinkType] = struct{}{}
 			}
 		case "imageURL":
-			if _, ok := fieldSeen[app.FieldImageURL]; !ok {
-				selectedFields = append(selectedFields, app.FieldImageURL)
-				fieldSeen[app.FieldImageURL] = struct{}{}
+			if _, ok := fieldSeen[company.FieldImageURL]; !ok {
+				selectedFields = append(selectedFields, company.FieldImageURL)
+				fieldSeen[company.FieldImageURL] = struct{}{}
 			}
 		case "id":
 		case "__typename":
@@ -63,19 +63,19 @@ func (a *AppQuery) collectField(ctx context.Context, oneNode bool, opCtx *graphq
 		}
 	}
 	if !unknownSeen {
-		a.Select(selectedFields...)
+		c.Select(selectedFields...)
 	}
 	return nil
 }
 
-type appPaginateArgs struct {
+type companyPaginateArgs struct {
 	first, last   *int
 	after, before *Cursor
-	opts          []AppPaginateOption
+	opts          []CompanyPaginateOption
 }
 
-func newAppPaginateArgs(rv map[string]any) *appPaginateArgs {
-	args := &appPaginateArgs{}
+func newCompanyPaginateArgs(rv map[string]any) *companyPaginateArgs {
+	args := &companyPaginateArgs{}
 	if rv == nil {
 		return args
 	}

@@ -11,7 +11,7 @@ import (
 
 	"portfolio-api/ent/migrate"
 
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/user"
 
 	"entgo.io/ent"
@@ -25,8 +25,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// App is the client for interacting with the App builders.
-	App *AppClient
+	// Company is the client for interacting with the Company builders.
+	Company *CompanyClient
 	// User is the client for interacting with the User builders.
 	User *UserClient
 }
@@ -40,7 +40,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.App = NewAppClient(c.config)
+	c.Company = NewCompanyClient(c.config)
 	c.User = NewUserClient(c.config)
 }
 
@@ -132,10 +132,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		App:    NewAppClient(cfg),
-		User:   NewUserClient(cfg),
+		ctx:     ctx,
+		config:  cfg,
+		Company: NewCompanyClient(cfg),
+		User:    NewUserClient(cfg),
 	}, nil
 }
 
@@ -153,17 +153,17 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:    ctx,
-		config: cfg,
-		App:    NewAppClient(cfg),
-		User:   NewUserClient(cfg),
+		ctx:     ctx,
+		config:  cfg,
+		Company: NewCompanyClient(cfg),
+		User:    NewUserClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		App.
+//		Company.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -185,22 +185,22 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.App.Use(hooks...)
+	c.Company.Use(hooks...)
 	c.User.Use(hooks...)
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.App.Intercept(interceptors...)
+	c.Company.Intercept(interceptors...)
 	c.User.Intercept(interceptors...)
 }
 
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *AppMutation:
-		return c.App.mutate(ctx, m)
+	case *CompanyMutation:
+		return c.Company.mutate(ctx, m)
 	case *UserMutation:
 		return c.User.mutate(ctx, m)
 	default:
@@ -208,107 +208,107 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	}
 }
 
-// AppClient is a client for the App schema.
-type AppClient struct {
+// CompanyClient is a client for the Company schema.
+type CompanyClient struct {
 	config
 }
 
-// NewAppClient returns a client for the App from the given config.
-func NewAppClient(c config) *AppClient {
-	return &AppClient{config: c}
+// NewCompanyClient returns a client for the Company from the given config.
+func NewCompanyClient(c config) *CompanyClient {
+	return &CompanyClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `app.Hooks(f(g(h())))`.
-func (c *AppClient) Use(hooks ...Hook) {
-	c.hooks.App = append(c.hooks.App, hooks...)
+// A call to `Use(f, g, h)` equals to `company.Hooks(f(g(h())))`.
+func (c *CompanyClient) Use(hooks ...Hook) {
+	c.hooks.Company = append(c.hooks.Company, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `app.Intercept(f(g(h())))`.
-func (c *AppClient) Intercept(interceptors ...Interceptor) {
-	c.inters.App = append(c.inters.App, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `company.Intercept(f(g(h())))`.
+func (c *CompanyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.Company = append(c.inters.Company, interceptors...)
 }
 
-// Create returns a builder for creating a App entity.
-func (c *AppClient) Create() *AppCreate {
-	mutation := newAppMutation(c.config, OpCreate)
-	return &AppCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a Company entity.
+func (c *CompanyClient) Create() *CompanyCreate {
+	mutation := newCompanyMutation(c.config, OpCreate)
+	return &CompanyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of App entities.
-func (c *AppClient) CreateBulk(builders ...*AppCreate) *AppCreateBulk {
-	return &AppCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of Company entities.
+func (c *CompanyClient) CreateBulk(builders ...*CompanyCreate) *CompanyCreateBulk {
+	return &CompanyCreateBulk{config: c.config, builders: builders}
 }
 
 // MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
 // a builder and applies setFunc on it.
-func (c *AppClient) MapCreateBulk(slice any, setFunc func(*AppCreate, int)) *AppCreateBulk {
+func (c *CompanyClient) MapCreateBulk(slice any, setFunc func(*CompanyCreate, int)) *CompanyCreateBulk {
 	rv := reflect.ValueOf(slice)
 	if rv.Kind() != reflect.Slice {
-		return &AppCreateBulk{err: fmt.Errorf("calling to AppClient.MapCreateBulk with wrong type %T, need slice", slice)}
+		return &CompanyCreateBulk{err: fmt.Errorf("calling to CompanyClient.MapCreateBulk with wrong type %T, need slice", slice)}
 	}
-	builders := make([]*AppCreate, rv.Len())
+	builders := make([]*CompanyCreate, rv.Len())
 	for i := 0; i < rv.Len(); i++ {
 		builders[i] = c.Create()
 		setFunc(builders[i], i)
 	}
-	return &AppCreateBulk{config: c.config, builders: builders}
+	return &CompanyCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for App.
-func (c *AppClient) Update() *AppUpdate {
-	mutation := newAppMutation(c.config, OpUpdate)
-	return &AppUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Company.
+func (c *CompanyClient) Update() *CompanyUpdate {
+	mutation := newCompanyMutation(c.config, OpUpdate)
+	return &CompanyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *AppClient) UpdateOne(a *App) *AppUpdateOne {
-	mutation := newAppMutation(c.config, OpUpdateOne, withApp(a))
-	return &AppUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *CompanyClient) UpdateOne(co *Company) *CompanyUpdateOne {
+	mutation := newCompanyMutation(c.config, OpUpdateOne, withCompany(co))
+	return &CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *AppClient) UpdateOneID(id uuid.UUID) *AppUpdateOne {
-	mutation := newAppMutation(c.config, OpUpdateOne, withAppID(id))
-	return &AppUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *CompanyClient) UpdateOneID(id uuid.UUID) *CompanyUpdateOne {
+	mutation := newCompanyMutation(c.config, OpUpdateOne, withCompanyID(id))
+	return &CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for App.
-func (c *AppClient) Delete() *AppDelete {
-	mutation := newAppMutation(c.config, OpDelete)
-	return &AppDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Company.
+func (c *CompanyClient) Delete() *CompanyDelete {
+	mutation := newCompanyMutation(c.config, OpDelete)
+	return &CompanyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *AppClient) DeleteOne(a *App) *AppDeleteOne {
-	return c.DeleteOneID(a.ID)
+func (c *CompanyClient) DeleteOne(co *Company) *CompanyDeleteOne {
+	return c.DeleteOneID(co.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *AppClient) DeleteOneID(id uuid.UUID) *AppDeleteOne {
-	builder := c.Delete().Where(app.ID(id))
+func (c *CompanyClient) DeleteOneID(id uuid.UUID) *CompanyDeleteOne {
+	builder := c.Delete().Where(company.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &AppDeleteOne{builder}
+	return &CompanyDeleteOne{builder}
 }
 
-// Query returns a query builder for App.
-func (c *AppClient) Query() *AppQuery {
-	return &AppQuery{
+// Query returns a query builder for Company.
+func (c *CompanyClient) Query() *CompanyQuery {
+	return &CompanyQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeApp},
+		ctx:    &QueryContext{Type: TypeCompany},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a App entity by its id.
-func (c *AppClient) Get(ctx context.Context, id uuid.UUID) (*App, error) {
-	return c.Query().Where(app.ID(id)).Only(ctx)
+// Get returns a Company entity by its id.
+func (c *CompanyClient) Get(ctx context.Context, id uuid.UUID) (*Company, error) {
+	return c.Query().Where(company.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *AppClient) GetX(ctx context.Context, id uuid.UUID) *App {
+func (c *CompanyClient) GetX(ctx context.Context, id uuid.UUID) *Company {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -317,27 +317,27 @@ func (c *AppClient) GetX(ctx context.Context, id uuid.UUID) *App {
 }
 
 // Hooks returns the client hooks.
-func (c *AppClient) Hooks() []Hook {
-	return c.hooks.App
+func (c *CompanyClient) Hooks() []Hook {
+	return c.hooks.Company
 }
 
 // Interceptors returns the client interceptors.
-func (c *AppClient) Interceptors() []Interceptor {
-	return c.inters.App
+func (c *CompanyClient) Interceptors() []Interceptor {
+	return c.inters.Company
 }
 
-func (c *AppClient) mutate(ctx context.Context, m *AppMutation) (Value, error) {
+func (c *CompanyClient) mutate(ctx context.Context, m *CompanyMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&AppCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&CompanyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&AppUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&CompanyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&AppUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&CompanyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&AppDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&CompanyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("ent: unknown App mutation op: %q", m.Op())
+		return nil, fmt.Errorf("ent: unknown Company mutation op: %q", m.Op())
 	}
 }
 
@@ -477,9 +477,9 @@ func (c *UserClient) mutate(ctx context.Context, m *UserMutation) (Value, error)
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		App, User []ent.Hook
+		Company, User []ent.Hook
 	}
 	inters struct {
-		App, User []ent.Interceptor
+		Company, User []ent.Interceptor
 	}
 )

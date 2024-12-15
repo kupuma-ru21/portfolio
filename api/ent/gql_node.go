@@ -5,7 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/user"
 
 	"entgo.io/contrib/entgql"
@@ -19,10 +19,10 @@ type Noder interface {
 	IsNode()
 }
 
-var appImplementors = []string{"App", "Node"}
+var companyImplementors = []string{"Company", "Node"}
 
 // IsNode implements the Node interface check for GQLGen.
-func (*App) IsNode() {}
+func (*Company) IsNode() {}
 
 var userImplementors = []string{"User", "Node"}
 
@@ -87,11 +87,11 @@ func (c *Client) Noder(ctx context.Context, id uuid.UUID, opts ...NodeOption) (_
 
 func (c *Client) noder(ctx context.Context, table string, id uuid.UUID) (Noder, error) {
 	switch table {
-	case app.Table:
-		query := c.App.Query().
-			Where(app.ID(id))
+	case company.Table:
+		query := c.Company.Query().
+			Where(company.ID(id))
 		if fc := graphql.GetFieldContext(ctx); fc != nil {
-			if err := query.collectField(ctx, true, graphql.GetOperationContext(ctx), fc.Field, nil, appImplementors...); err != nil {
+			if err := query.collectField(ctx, true, graphql.GetOperationContext(ctx), fc.Field, nil, companyImplementors...); err != nil {
 				return nil, err
 			}
 		}
@@ -178,10 +178,10 @@ func (c *Client) noders(ctx context.Context, table string, ids []uuid.UUID) ([]N
 		idmap[id] = append(idmap[id], &noders[i])
 	}
 	switch table {
-	case app.Table:
-		query := c.App.Query().
-			Where(app.IDIn(ids...))
-		query, err := query.CollectFields(ctx, appImplementors...)
+	case company.Table:
+		query := c.Company.Query().
+			Where(company.IDIn(ids...))
+		query, err := query.CollectFields(ctx, companyImplementors...)
 		if err != nil {
 			return nil, err
 		}

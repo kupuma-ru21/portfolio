@@ -1,11 +1,11 @@
-mutation CreateApp(
+mutation CreateCompany(
   $title: String!
   $detail: String!
   $link: String!
-  $linkType: AppLinkType!
+  $linkType: CompanyLinkType!
   $imageURL: String!
 ) {
-  createApp(
+  createCompany(
     input: {
       title: $title
       detail: $detail

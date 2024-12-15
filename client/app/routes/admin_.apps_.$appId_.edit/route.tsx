@@ -8,10 +8,10 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import { getFragmentData } from "gql/fragment-masking";
 import {
-  AppDocument,
-  AppFragmentDoc,
-  type AppLinkType,
-  UpdateAppDocument,
+  CompanyDocument,
+  CompanyFragmentDoc,
+  type CompanyLinkType,
+  UpdateCompanyDocument,
 } from "gql/graphql";
 import { EditApp } from "./components/index";
 import i18next from "~/i18n/i18next.server";
@@ -22,8 +22,12 @@ import { isLoggedIn } from "~/utils/isLoggedIn";
 
 export default function Route() {
   const data = useLoaderData<typeof loader>();
-  const app = data.app;
-  return <EditApp app={{ ...app, ...getFragmentData(AppFragmentDoc, app) }} />;
+  const company = data.company;
+  return (
+    <EditApp
+      company={{ ...company, ...getFragmentData(CompanyFragmentDoc, company) }}
+    />
+  );
 }
 
 const I18N = "admin_apps_app-id_edit";
@@ -34,31 +38,31 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   }
 
   const {
-    data: { app },
+    data: { company },
     error,
   } = await apolloClient.query({
-    query: AppDocument,
+    query: CompanyDocument,
     variables: { id: params.appId || "" },
   });
   if (error) throw get500ErrorResponse(error);
 
   const t = await i18next.getFixedT(request, I18N);
   const title = t("Edit Application");
-  return json({ title, app });
+  return json({ title, company });
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
 
   const { errors } = await apolloClient.mutate({
-    mutation: UpdateAppDocument,
+    mutation: UpdateCompanyDocument,
     variables: {
       id: params.appId || "",
       title: String(formData.get("title")),
       detail: String(formData.get("detail")),
       imageUrl: String(formData.get("imageUrl")),
       link: String(formData.get("link")),
-      linkType: String(formData.get("linkType")) as AppLinkType,
+      linkType: String(formData.get("linkType")) as CompanyLinkType,
     },
   });
   if (errors) throw get500ErrorResponse(errors[0]);

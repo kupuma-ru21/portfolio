@@ -9,7 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"portfolio-api/ent"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -51,7 +51,7 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	App struct {
+	Company struct {
 		Detail   func(childComplexity int) int
 		ID       func(childComplexity int) int
 		ImageURL func(childComplexity int) int
@@ -61,12 +61,12 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateApp  func(childComplexity int, input ent.CreateAppInput) int
-		CreateUser func(childComplexity int, input ent.CreateUserInput) int
-		DeleteApp  func(childComplexity int, id uuid.UUID) int
-		Login      func(childComplexity int, input ent.CreateUserInput) int
-		Mutation   func(childComplexity int) int
-		UpdateApp  func(childComplexity int, id uuid.UUID, input ent.UpdateAppInput) int
+		CreateCompany func(childComplexity int, input ent.CreateCompanyInput) int
+		CreateUser    func(childComplexity int, input ent.CreateUserInput) int
+		DeleteCompany func(childComplexity int, id uuid.UUID) int
+		Login         func(childComplexity int, input ent.CreateUserInput) int
+		Mutation      func(childComplexity int) int
+		UpdateCompany func(childComplexity int, id uuid.UUID, input ent.UpdateCompanyInput) int
 	}
 
 	PageInfo struct {
@@ -77,11 +77,11 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		App   func(childComplexity int, id uuid.UUID) int
-		Apps  func(childComplexity int) int
-		Node  func(childComplexity int, id uuid.UUID) int
-		Nodes func(childComplexity int, ids []uuid.UUID) int
-		Users func(childComplexity int) int
+		Companies func(childComplexity int) int
+		Company   func(childComplexity int, id uuid.UUID) int
+		Node      func(childComplexity int, id uuid.UUID) int
+		Nodes     func(childComplexity int, ids []uuid.UUID) int
+		Users     func(childComplexity int) int
 	}
 
 	User struct {
@@ -92,17 +92,17 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	Mutation(ctx context.Context) (*bool, error)
-	CreateApp(ctx context.Context, input ent.CreateAppInput) (uuid.UUID, error)
-	UpdateApp(ctx context.Context, id uuid.UUID, input ent.UpdateAppInput) (uuid.UUID, error)
-	DeleteApp(ctx context.Context, id uuid.UUID) (uuid.UUID, error)
+	CreateCompany(ctx context.Context, input ent.CreateCompanyInput) (uuid.UUID, error)
+	UpdateCompany(ctx context.Context, id uuid.UUID, input ent.UpdateCompanyInput) (uuid.UUID, error)
+	DeleteCompany(ctx context.Context, id uuid.UUID) (uuid.UUID, error)
 	Login(ctx context.Context, input ent.CreateUserInput) (string, error)
 	CreateUser(ctx context.Context, input ent.CreateUserInput) (uuid.UUID, error)
 }
 type QueryResolver interface {
 	Node(ctx context.Context, id uuid.UUID) (ent.Noder, error)
 	Nodes(ctx context.Context, ids []uuid.UUID) ([]ent.Noder, error)
-	Apps(ctx context.Context) ([]*ent.App, error)
-	App(ctx context.Context, id uuid.UUID) (*ent.App, error)
+	Companies(ctx context.Context) ([]*ent.Company, error)
+	Company(ctx context.Context, id uuid.UUID) (*ent.Company, error)
 	Users(ctx context.Context) ([]*ent.User, error)
 }
 
@@ -125,59 +125,59 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "App.detail":
-		if e.complexity.App.Detail == nil {
+	case "Company.detail":
+		if e.complexity.Company.Detail == nil {
 			break
 		}
 
-		return e.complexity.App.Detail(childComplexity), true
+		return e.complexity.Company.Detail(childComplexity), true
 
-	case "App.id":
-		if e.complexity.App.ID == nil {
+	case "Company.id":
+		if e.complexity.Company.ID == nil {
 			break
 		}
 
-		return e.complexity.App.ID(childComplexity), true
+		return e.complexity.Company.ID(childComplexity), true
 
-	case "App.imageURL":
-		if e.complexity.App.ImageURL == nil {
+	case "Company.imageURL":
+		if e.complexity.Company.ImageURL == nil {
 			break
 		}
 
-		return e.complexity.App.ImageURL(childComplexity), true
+		return e.complexity.Company.ImageURL(childComplexity), true
 
-	case "App.link":
-		if e.complexity.App.Link == nil {
+	case "Company.link":
+		if e.complexity.Company.Link == nil {
 			break
 		}
 
-		return e.complexity.App.Link(childComplexity), true
+		return e.complexity.Company.Link(childComplexity), true
 
-	case "App.linkType":
-		if e.complexity.App.LinkType == nil {
+	case "Company.linkType":
+		if e.complexity.Company.LinkType == nil {
 			break
 		}
 
-		return e.complexity.App.LinkType(childComplexity), true
+		return e.complexity.Company.LinkType(childComplexity), true
 
-	case "App.title":
-		if e.complexity.App.Title == nil {
+	case "Company.title":
+		if e.complexity.Company.Title == nil {
 			break
 		}
 
-		return e.complexity.App.Title(childComplexity), true
+		return e.complexity.Company.Title(childComplexity), true
 
-	case "Mutation.createApp":
-		if e.complexity.Mutation.CreateApp == nil {
+	case "Mutation.createCompany":
+		if e.complexity.Mutation.CreateCompany == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_createApp_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_createCompany_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateApp(childComplexity, args["input"].(ent.CreateAppInput)), true
+		return e.complexity.Mutation.CreateCompany(childComplexity, args["input"].(ent.CreateCompanyInput)), true
 
 	case "Mutation.createUser":
 		if e.complexity.Mutation.CreateUser == nil {
@@ -191,17 +191,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateUser(childComplexity, args["input"].(ent.CreateUserInput)), true
 
-	case "Mutation.deleteApp":
-		if e.complexity.Mutation.DeleteApp == nil {
+	case "Mutation.deleteCompany":
+		if e.complexity.Mutation.DeleteCompany == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_deleteApp_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_deleteCompany_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeleteApp(childComplexity, args["id"].(uuid.UUID)), true
+		return e.complexity.Mutation.DeleteCompany(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.login":
 		if e.complexity.Mutation.Login == nil {
@@ -222,17 +222,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Mutation(childComplexity), true
 
-	case "Mutation.updateApp":
-		if e.complexity.Mutation.UpdateApp == nil {
+	case "Mutation.updateCompany":
+		if e.complexity.Mutation.UpdateCompany == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updateApp_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updateCompany_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateApp(childComplexity, args["id"].(uuid.UUID), args["input"].(ent.UpdateAppInput)), true
+		return e.complexity.Mutation.UpdateCompany(childComplexity, args["id"].(uuid.UUID), args["input"].(ent.UpdateCompanyInput)), true
 
 	case "PageInfo.endCursor":
 		if e.complexity.PageInfo.EndCursor == nil {
@@ -262,24 +262,24 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PageInfo.StartCursor(childComplexity), true
 
-	case "Query.app":
-		if e.complexity.Query.App == nil {
+	case "Query.companies":
+		if e.complexity.Query.Companies == nil {
 			break
 		}
 
-		args, err := ec.field_Query_app_args(context.TODO(), rawArgs)
+		return e.complexity.Query.Companies(childComplexity), true
+
+	case "Query.company":
+		if e.complexity.Query.Company == nil {
+			break
+		}
+
+		args, err := ec.field_Query_company_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Query.App(childComplexity, args["id"].(uuid.UUID)), true
-
-	case "Query.apps":
-		if e.complexity.Query.Apps == nil {
-			break
-		}
-
-		return e.complexity.Query.Apps(childComplexity), true
+		return e.complexity.Query.Company(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Query.node":
 		if e.complexity.Query.Node == nil {
@@ -334,9 +334,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputCreateAppInput,
+		ec.unmarshalInputCreateCompanyInput,
 		ec.unmarshalInputCreateUserInput,
-		ec.unmarshalInputUpdateAppInput,
+		ec.unmarshalInputUpdateCompanyInput,
 	)
 	first := true
 
@@ -433,7 +433,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 	return introspection.WrapTypeFromDef(ec.Schema(), ec.Schema().Types[name]), nil
 }
 
-//go:embed "graphql/app.graphql" "graphql/index.graphql" "graphql/login.graphql" "graphql/user.graphql"
+//go:embed "graphql/company.graphql" "graphql/index.graphql" "graphql/login.graphql" "graphql/user.graphql"
 var sourcesFS embed.FS
 
 func sourceData(filename string) string {
@@ -447,30 +447,30 @@ func sourceData(filename string) string {
 var sources = []*ast.Source{
 	{Name: "../ent.graphql", Input: `directive @goField(forceResolver: Boolean, name: String, omittable: Boolean) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
 directive @goModel(model: String, models: [String!], forceGenerate: Boolean) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-type App implements Node {
+type Company implements Node {
   id: ID!
   title: String!
   detail: String!
   link: String!
-  linkType: AppLinkType!
+  linkType: CompanyLinkType!
   imageURL: String!
 }
 """
-AppLinkType is enum for the field link_type
+CompanyLinkType is enum for the field link_type
 """
-enum AppLinkType @goModel(model: "portfolio-api/ent/app.LinkType") {
+enum CompanyLinkType @goModel(model: "portfolio-api/ent/company.LinkType") {
   APP
   COMPANY
 }
 """
-CreateAppInput is used for create App object.
+CreateCompanyInput is used for create Company object.
 Input was generated by ent.
 """
-input CreateAppInput {
+input CreateCompanyInput {
   title: String!
   detail: String!
   link: String!
-  linkType: AppLinkType!
+  linkType: CompanyLinkType!
   imageURL: String!
 }
 """
@@ -552,14 +552,14 @@ type Query {
   ): [Node]!
 }
 """
-UpdateAppInput is used for update App object.
+UpdateCompanyInput is used for update Company object.
 Input was generated by ent.
 """
-input UpdateAppInput {
+input UpdateCompanyInput {
   title: String
   detail: String
   link: String
-  linkType: AppLinkType
+  linkType: CompanyLinkType
   imageURL: String
 }
 type User implements Node {
@@ -567,7 +567,7 @@ type User implements Node {
   email: String!
 }
 `, BuiltIn: false},
-	{Name: "graphql/app.graphql", Input: sourceData("graphql/app.graphql"), BuiltIn: false},
+	{Name: "graphql/company.graphql", Input: sourceData("graphql/company.graphql"), BuiltIn: false},
 	{Name: "graphql/index.graphql", Input: sourceData("graphql/index.graphql"), BuiltIn: false},
 	{Name: "graphql/login.graphql", Input: sourceData("graphql/login.graphql"), BuiltIn: false},
 	{Name: "graphql/user.graphql", Input: sourceData("graphql/user.graphql"), BuiltIn: false},
@@ -578,35 +578,35 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
-func (ec *executionContext) field_Mutation_createApp_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createCompany_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	arg0, err := ec.field_Mutation_createApp_argsInput(ctx, rawArgs)
+	arg0, err := ec.field_Mutation_createCompany_argsInput(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["input"] = arg0
 	return args, nil
 }
-func (ec *executionContext) field_Mutation_createApp_argsInput(
+func (ec *executionContext) field_Mutation_createCompany_argsInput(
 	ctx context.Context,
 	rawArgs map[string]interface{},
-) (ent.CreateAppInput, error) {
+) (ent.CreateCompanyInput, error) {
 	// We won't call the directive if the argument is null.
 	// Set call_argument_directives_with_null to true to call directives
 	// even if the argument is null.
 	_, ok := rawArgs["input"]
 	if !ok {
-		var zeroVal ent.CreateAppInput
+		var zeroVal ent.CreateCompanyInput
 		return zeroVal, nil
 	}
 
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNCreateAppInput2portfolioᚑapiᚋentᚐCreateAppInput(ctx, tmp)
+		return ec.unmarshalNCreateCompanyInput2portfolioᚑapiᚋentᚐCreateCompanyInput(ctx, tmp)
 	}
 
-	var zeroVal ent.CreateAppInput
+	var zeroVal ent.CreateCompanyInput
 	return zeroVal, nil
 }
 
@@ -642,17 +642,17 @@ func (ec *executionContext) field_Mutation_createUser_argsInput(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteApp_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_deleteCompany_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	arg0, err := ec.field_Mutation_deleteApp_argsID(ctx, rawArgs)
+	arg0, err := ec.field_Mutation_deleteCompany_argsID(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["id"] = arg0
 	return args, nil
 }
-func (ec *executionContext) field_Mutation_deleteApp_argsID(
+func (ec *executionContext) field_Mutation_deleteCompany_argsID(
 	ctx context.Context,
 	rawArgs map[string]interface{},
 ) (uuid.UUID, error) {
@@ -706,22 +706,22 @@ func (ec *executionContext) field_Mutation_login_argsInput(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateApp_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updateCompany_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	arg0, err := ec.field_Mutation_updateApp_argsID(ctx, rawArgs)
+	arg0, err := ec.field_Mutation_updateCompany_argsID(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["id"] = arg0
-	arg1, err := ec.field_Mutation_updateApp_argsInput(ctx, rawArgs)
+	arg1, err := ec.field_Mutation_updateCompany_argsInput(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["input"] = arg1
 	return args, nil
 }
-func (ec *executionContext) field_Mutation_updateApp_argsID(
+func (ec *executionContext) field_Mutation_updateCompany_argsID(
 	ctx context.Context,
 	rawArgs map[string]interface{},
 ) (uuid.UUID, error) {
@@ -743,25 +743,25 @@ func (ec *executionContext) field_Mutation_updateApp_argsID(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Mutation_updateApp_argsInput(
+func (ec *executionContext) field_Mutation_updateCompany_argsInput(
 	ctx context.Context,
 	rawArgs map[string]interface{},
-) (ent.UpdateAppInput, error) {
+) (ent.UpdateCompanyInput, error) {
 	// We won't call the directive if the argument is null.
 	// Set call_argument_directives_with_null to true to call directives
 	// even if the argument is null.
 	_, ok := rawArgs["input"]
 	if !ok {
-		var zeroVal ent.UpdateAppInput
+		var zeroVal ent.UpdateCompanyInput
 		return zeroVal, nil
 	}
 
 	ctx = graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 	if tmp, ok := rawArgs["input"]; ok {
-		return ec.unmarshalNUpdateAppInput2portfolioᚑapiᚋentᚐUpdateAppInput(ctx, tmp)
+		return ec.unmarshalNUpdateCompanyInput2portfolioᚑapiᚋentᚐUpdateCompanyInput(ctx, tmp)
 	}
 
-	var zeroVal ent.UpdateAppInput
+	var zeroVal ent.UpdateCompanyInput
 	return zeroVal, nil
 }
 
@@ -797,17 +797,17 @@ func (ec *executionContext) field_Query___type_argsName(
 	return zeroVal, nil
 }
 
-func (ec *executionContext) field_Query_app_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_company_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	arg0, err := ec.field_Query_app_argsID(ctx, rawArgs)
+	arg0, err := ec.field_Query_company_argsID(ctx, rawArgs)
 	if err != nil {
 		return nil, err
 	}
 	args["id"] = arg0
 	return args, nil
 }
-func (ec *executionContext) field_Query_app_argsID(
+func (ec *executionContext) field_Query_company_argsID(
 	ctx context.Context,
 	rawArgs map[string]interface{},
 ) (uuid.UUID, error) {
@@ -965,8 +965,8 @@ func (ec *executionContext) field___Type_fields_argsIncludeDeprecated(
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _App_id(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_id(ctx, field)
+func (ec *executionContext) _Company_id(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -996,9 +996,9 @@ func (ec *executionContext) _App_id(ctx context.Context, field graphql.Collected
 	return ec.marshalNID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1009,8 +1009,8 @@ func (ec *executionContext) fieldContext_App_id(_ context.Context, field graphql
 	return fc, nil
 }
 
-func (ec *executionContext) _App_title(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_title(ctx, field)
+func (ec *executionContext) _Company_title(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_title(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1040,9 +1040,9 @@ func (ec *executionContext) _App_title(ctx context.Context, field graphql.Collec
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_title(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_title(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1053,8 +1053,8 @@ func (ec *executionContext) fieldContext_App_title(_ context.Context, field grap
 	return fc, nil
 }
 
-func (ec *executionContext) _App_detail(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_detail(ctx, field)
+func (ec *executionContext) _Company_detail(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_detail(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1084,9 +1084,9 @@ func (ec *executionContext) _App_detail(ctx context.Context, field graphql.Colle
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_detail(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_detail(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1097,8 +1097,8 @@ func (ec *executionContext) fieldContext_App_detail(_ context.Context, field gra
 	return fc, nil
 }
 
-func (ec *executionContext) _App_link(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_link(ctx, field)
+func (ec *executionContext) _Company_link(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_link(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1128,9 +1128,9 @@ func (ec *executionContext) _App_link(ctx context.Context, field graphql.Collect
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_link(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_link(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1141,8 +1141,8 @@ func (ec *executionContext) fieldContext_App_link(_ context.Context, field graph
 	return fc, nil
 }
 
-func (ec *executionContext) _App_linkType(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_linkType(ctx, field)
+func (ec *executionContext) _Company_linkType(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_linkType(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1167,26 +1167,26 @@ func (ec *executionContext) _App_linkType(ctx context.Context, field graphql.Col
 		}
 		return graphql.Null
 	}
-	res := resTmp.(app.LinkType)
+	res := resTmp.(company.LinkType)
 	fc.Result = res
-	return ec.marshalNAppLinkType2portfolioᚑapiᚋentᚋappᚐLinkType(ctx, field.Selections, res)
+	return ec.marshalNCompanyLinkType2portfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_linkType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_linkType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type AppLinkType does not have child fields")
+			return nil, errors.New("field of type CompanyLinkType does not have child fields")
 		},
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _App_imageURL(ctx context.Context, field graphql.CollectedField, obj *ent.App) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_App_imageURL(ctx, field)
+func (ec *executionContext) _Company_imageURL(ctx context.Context, field graphql.CollectedField, obj *ent.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_imageURL(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1216,9 +1216,9 @@ func (ec *executionContext) _App_imageURL(ctx context.Context, field graphql.Col
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_App_imageURL(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Company_imageURL(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "App",
+		Object:     "Company",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1270,8 +1270,8 @@ func (ec *executionContext) fieldContext_Mutation__mutation(_ context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createApp(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createApp(ctx, field)
+func (ec *executionContext) _Mutation_createCompany(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createCompany(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1285,7 +1285,7 @@ func (ec *executionContext) _Mutation_createApp(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateApp(rctx, fc.Args["input"].(ent.CreateAppInput))
+			return ec.resolvers.Mutation().CreateCompany(rctx, fc.Args["input"].(ent.CreateCompanyInput))
 		}
 
 		directive1 := func(ctx context.Context) (interface{}, error) {
@@ -1323,7 +1323,7 @@ func (ec *executionContext) _Mutation_createApp(ctx context.Context, field graph
 	return ec.marshalNID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_createApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -1340,15 +1340,15 @@ func (ec *executionContext) fieldContext_Mutation_createApp(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createApp_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createCompany_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateApp(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateApp(ctx, field)
+func (ec *executionContext) _Mutation_updateCompany(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateCompany(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1362,7 +1362,7 @@ func (ec *executionContext) _Mutation_updateApp(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateApp(rctx, fc.Args["id"].(uuid.UUID), fc.Args["input"].(ent.UpdateAppInput))
+			return ec.resolvers.Mutation().UpdateCompany(rctx, fc.Args["id"].(uuid.UUID), fc.Args["input"].(ent.UpdateCompanyInput))
 		}
 
 		directive1 := func(ctx context.Context) (interface{}, error) {
@@ -1400,7 +1400,7 @@ func (ec *executionContext) _Mutation_updateApp(ctx context.Context, field graph
 	return ec.marshalNID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -1417,15 +1417,15 @@ func (ec *executionContext) fieldContext_Mutation_updateApp(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateApp_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateCompany_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deleteApp(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteApp(ctx, field)
+func (ec *executionContext) _Mutation_deleteCompany(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deleteCompany(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1439,7 +1439,7 @@ func (ec *executionContext) _Mutation_deleteApp(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteApp(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Mutation().DeleteCompany(rctx, fc.Args["id"].(uuid.UUID))
 		}
 
 		directive1 := func(ctx context.Context) (interface{}, error) {
@@ -1477,7 +1477,7 @@ func (ec *executionContext) _Mutation_deleteApp(ctx context.Context, field graph
 	return ec.marshalNID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deleteApp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_deleteCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -1494,7 +1494,7 @@ func (ec *executionContext) fieldContext_Mutation_deleteApp(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteApp_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_deleteCompany_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -1888,8 +1888,8 @@ func (ec *executionContext) fieldContext_Query_nodes(ctx context.Context, field 
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_apps(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_apps(ctx, field)
+func (ec *executionContext) _Query_companies(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_companies(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1902,7 +1902,7 @@ func (ec *executionContext) _Query_apps(ctx context.Context, field graphql.Colle
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Apps(rctx)
+		return ec.resolvers.Query().Companies(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1914,12 +1914,12 @@ func (ec *executionContext) _Query_apps(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*ent.App)
+	res := resTmp.([]*ent.Company)
 	fc.Result = res
-	return ec.marshalNApp2ᚕᚖportfolioᚑapiᚋentᚐAppᚄ(ctx, field.Selections, res)
+	return ec.marshalNCompany2ᚕᚖportfolioᚑapiᚋentᚐCompanyᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_apps(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_companies(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1928,26 +1928,26 @@ func (ec *executionContext) fieldContext_Query_apps(_ context.Context, field gra
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_App_id(ctx, field)
+				return ec.fieldContext_Company_id(ctx, field)
 			case "title":
-				return ec.fieldContext_App_title(ctx, field)
+				return ec.fieldContext_Company_title(ctx, field)
 			case "detail":
-				return ec.fieldContext_App_detail(ctx, field)
+				return ec.fieldContext_Company_detail(ctx, field)
 			case "link":
-				return ec.fieldContext_App_link(ctx, field)
+				return ec.fieldContext_Company_link(ctx, field)
 			case "linkType":
-				return ec.fieldContext_App_linkType(ctx, field)
+				return ec.fieldContext_Company_linkType(ctx, field)
 			case "imageURL":
-				return ec.fieldContext_App_imageURL(ctx, field)
+				return ec.fieldContext_Company_imageURL(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type App", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Company", field.Name)
 		},
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_app(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_app(ctx, field)
+func (ec *executionContext) _Query_company(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_company(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1961,12 +1961,12 @@ func (ec *executionContext) _Query_app(ctx context.Context, field graphql.Collec
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().App(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Query().Company(rctx, fc.Args["id"].(uuid.UUID))
 		}
 
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			if ec.directives.IsAuthenticated == nil {
-				var zeroVal *ent.App
+				var zeroVal *ent.Company
 				return zeroVal, errors.New("directive isAuthenticated is not implemented")
 			}
 			return ec.directives.IsAuthenticated(ctx, nil, directive0)
@@ -1979,10 +1979,10 @@ func (ec *executionContext) _Query_app(ctx context.Context, field graphql.Collec
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*ent.App); ok {
+		if data, ok := tmp.(*ent.Company); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *portfolio-api/ent.App`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *portfolio-api/ent.Company`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1994,12 +1994,12 @@ func (ec *executionContext) _Query_app(ctx context.Context, field graphql.Collec
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*ent.App)
+	res := resTmp.(*ent.Company)
 	fc.Result = res
-	return ec.marshalNApp2ᚖportfolioᚑapiᚋentᚐApp(ctx, field.Selections, res)
+	return ec.marshalNCompany2ᚖportfolioᚑapiᚋentᚐCompany(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_app(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_company(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -2008,19 +2008,19 @@ func (ec *executionContext) fieldContext_Query_app(ctx context.Context, field gr
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_App_id(ctx, field)
+				return ec.fieldContext_Company_id(ctx, field)
 			case "title":
-				return ec.fieldContext_App_title(ctx, field)
+				return ec.fieldContext_Company_title(ctx, field)
 			case "detail":
-				return ec.fieldContext_App_detail(ctx, field)
+				return ec.fieldContext_Company_detail(ctx, field)
 			case "link":
-				return ec.fieldContext_App_link(ctx, field)
+				return ec.fieldContext_Company_link(ctx, field)
 			case "linkType":
-				return ec.fieldContext_App_linkType(ctx, field)
+				return ec.fieldContext_Company_linkType(ctx, field)
 			case "imageURL":
-				return ec.fieldContext_App_imageURL(ctx, field)
+				return ec.fieldContext_Company_imageURL(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type App", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Company", field.Name)
 		},
 	}
 	defer func() {
@@ -2030,7 +2030,7 @@ func (ec *executionContext) fieldContext_Query_app(ctx context.Context, field gr
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_app_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_company_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -4099,8 +4099,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(_ context.Context
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputCreateAppInput(ctx context.Context, obj interface{}) (ent.CreateAppInput, error) {
-	var it ent.CreateAppInput
+func (ec *executionContext) unmarshalInputCreateCompanyInput(ctx context.Context, obj interface{}) (ent.CreateCompanyInput, error) {
+	var it ent.CreateCompanyInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -4136,7 +4136,7 @@ func (ec *executionContext) unmarshalInputCreateAppInput(ctx context.Context, ob
 			it.Link = data
 		case "linkType":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("linkType"))
-			data, err := ec.unmarshalNAppLinkType2portfolioᚑapiᚋentᚋappᚐLinkType(ctx, v)
+			data, err := ec.unmarshalNCompanyLinkType2portfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4188,8 +4188,8 @@ func (ec *executionContext) unmarshalInputCreateUserInput(ctx context.Context, o
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputUpdateAppInput(ctx context.Context, obj interface{}) (ent.UpdateAppInput, error) {
-	var it ent.UpdateAppInput
+func (ec *executionContext) unmarshalInputUpdateCompanyInput(ctx context.Context, obj interface{}) (ent.UpdateCompanyInput, error) {
+	var it ent.UpdateCompanyInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -4225,7 +4225,7 @@ func (ec *executionContext) unmarshalInputUpdateAppInput(ctx context.Context, ob
 			it.Link = data
 		case "linkType":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("linkType"))
-			data, err := ec.unmarshalOAppLinkType2ᚖportfolioᚑapiᚋentᚋappᚐLinkType(ctx, v)
+			data, err := ec.unmarshalOCompanyLinkType2ᚖportfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4251,11 +4251,11 @@ func (ec *executionContext) _Node(ctx context.Context, sel ast.SelectionSet, obj
 	switch obj := (obj).(type) {
 	case nil:
 		return graphql.Null
-	case *ent.App:
+	case *ent.Company:
 		if obj == nil {
 			return graphql.Null
 		}
-		return ec._App(ctx, sel, obj)
+		return ec._Company(ctx, sel, obj)
 	case *ent.User:
 		if obj == nil {
 			return graphql.Null
@@ -4270,44 +4270,44 @@ func (ec *executionContext) _Node(ctx context.Context, sel ast.SelectionSet, obj
 
 // region    **************************** object.gotpl ****************************
 
-var appImplementors = []string{"App", "Node"}
+var companyImplementors = []string{"Company", "Node"}
 
-func (ec *executionContext) _App(ctx context.Context, sel ast.SelectionSet, obj *ent.App) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, appImplementors)
+func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, obj *ent.Company) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, companyImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("App")
+			out.Values[i] = graphql.MarshalString("Company")
 		case "id":
-			out.Values[i] = ec._App_id(ctx, field, obj)
+			out.Values[i] = ec._Company_id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "title":
-			out.Values[i] = ec._App_title(ctx, field, obj)
+			out.Values[i] = ec._Company_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "detail":
-			out.Values[i] = ec._App_detail(ctx, field, obj)
+			out.Values[i] = ec._Company_detail(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "link":
-			out.Values[i] = ec._App_link(ctx, field, obj)
+			out.Values[i] = ec._Company_link(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "linkType":
-			out.Values[i] = ec._App_linkType(ctx, field, obj)
+			out.Values[i] = ec._Company_linkType(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "imageURL":
-			out.Values[i] = ec._App_imageURL(ctx, field, obj)
+			out.Values[i] = ec._Company_imageURL(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -4357,23 +4357,23 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation__mutation(ctx, field)
 			})
-		case "createApp":
+		case "createCompany":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createApp(ctx, field)
+				return ec._Mutation_createCompany(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updateApp":
+		case "updateCompany":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateApp(ctx, field)
+				return ec._Mutation_updateCompany(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "deleteApp":
+		case "deleteCompany":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteApp(ctx, field)
+				return ec._Mutation_deleteCompany(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -4523,7 +4523,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "apps":
+		case "companies":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -4532,7 +4532,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_apps(ctx, field)
+				res = ec._Query_companies(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -4545,7 +4545,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "app":
+		case "company":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -4554,7 +4554,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_app(ctx, field)
+				res = ec._Query_company(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -4990,11 +4990,26 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNApp2portfolioᚑapiᚋentᚐApp(ctx context.Context, sel ast.SelectionSet, v ent.App) graphql.Marshaler {
-	return ec._App(ctx, sel, &v)
+func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
+	res, err := graphql.UnmarshalBoolean(v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNApp2ᚕᚖportfolioᚑapiᚋentᚐAppᚄ(ctx context.Context, sel ast.SelectionSet, v []*ent.App) graphql.Marshaler {
+func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
+	res := graphql.MarshalBoolean(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) marshalNCompany2portfolioᚑapiᚋentᚐCompany(ctx context.Context, sel ast.SelectionSet, v ent.Company) graphql.Marshaler {
+	return ec._Company(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCompany2ᚕᚖportfolioᚑapiᚋentᚐCompanyᚄ(ctx context.Context, sel ast.SelectionSet, v []*ent.Company) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -5018,7 +5033,7 @@ func (ec *executionContext) marshalNApp2ᚕᚖportfolioᚑapiᚋentᚐAppᚄ(ctx
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNApp2ᚖportfolioᚑapiᚋentᚐApp(ctx, sel, v[i])
+			ret[i] = ec.marshalNCompany2ᚖportfolioᚑapiᚋentᚐCompany(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -5038,43 +5053,28 @@ func (ec *executionContext) marshalNApp2ᚕᚖportfolioᚑapiᚋentᚐAppᚄ(ctx
 	return ret
 }
 
-func (ec *executionContext) marshalNApp2ᚖportfolioᚑapiᚋentᚐApp(ctx context.Context, sel ast.SelectionSet, v *ent.App) graphql.Marshaler {
+func (ec *executionContext) marshalNCompany2ᚖportfolioᚑapiᚋentᚐCompany(ctx context.Context, sel ast.SelectionSet, v *ent.Company) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
 		}
 		return graphql.Null
 	}
-	return ec._App(ctx, sel, v)
+	return ec._Company(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNAppLinkType2portfolioᚑapiᚋentᚋappᚐLinkType(ctx context.Context, v interface{}) (app.LinkType, error) {
-	var res app.LinkType
+func (ec *executionContext) unmarshalNCompanyLinkType2portfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx context.Context, v interface{}) (company.LinkType, error) {
+	var res company.LinkType
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNAppLinkType2portfolioᚑapiᚋentᚋappᚐLinkType(ctx context.Context, sel ast.SelectionSet, v app.LinkType) graphql.Marshaler {
+func (ec *executionContext) marshalNCompanyLinkType2portfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx context.Context, sel ast.SelectionSet, v company.LinkType) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
-	res, err := graphql.UnmarshalBoolean(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
-	res := graphql.MarshalBoolean(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNCreateAppInput2portfolioᚑapiᚋentᚐCreateAppInput(ctx context.Context, v interface{}) (ent.CreateAppInput, error) {
-	res, err := ec.unmarshalInputCreateAppInput(ctx, v)
+func (ec *executionContext) unmarshalNCreateCompanyInput2portfolioᚑapiᚋentᚐCreateCompanyInput(ctx context.Context, v interface{}) (ent.CreateCompanyInput, error) {
+	res, err := ec.unmarshalInputCreateCompanyInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -5183,8 +5183,8 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) unmarshalNUpdateAppInput2portfolioᚑapiᚋentᚐUpdateAppInput(ctx context.Context, v interface{}) (ent.UpdateAppInput, error) {
-	res, err := ec.unmarshalInputUpdateAppInput(ctx, v)
+func (ec *executionContext) unmarshalNUpdateCompanyInput2portfolioᚑapiᚋentᚐUpdateCompanyInput(ctx context.Context, v interface{}) (ent.UpdateCompanyInput, error) {
+	res, err := ec.unmarshalInputUpdateCompanyInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -5495,22 +5495,6 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) unmarshalOAppLinkType2ᚖportfolioᚑapiᚋentᚋappᚐLinkType(ctx context.Context, v interface{}) (*app.LinkType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(app.LinkType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOAppLinkType2ᚖportfolioᚑapiᚋentᚋappᚐLinkType(ctx context.Context, sel ast.SelectionSet, v *app.LinkType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
-}
-
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -5535,6 +5519,22 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	}
 	res := graphql.MarshalBoolean(*v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOCompanyLinkType2ᚖportfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx context.Context, v interface{}) (*company.LinkType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var res = new(company.LinkType)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCompanyLinkType2ᚖportfolioᚑapiᚋentᚋcompanyᚐLinkType(ctx context.Context, sel ast.SelectionSet, v *company.LinkType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return v
 }
 
 func (ec *executionContext) unmarshalOCursor2ᚖentgoᚗioᚋcontribᚋentgqlᚐCursor(ctx context.Context, v interface{}) (*entgql.Cursor[uuid.UUID], error) {

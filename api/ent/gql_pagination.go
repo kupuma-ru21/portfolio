@@ -5,7 +5,7 @@ package ent
 import (
 	"context"
 	"errors"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/user"
 
 	"entgo.io/contrib/entgql"
@@ -97,20 +97,20 @@ func paginateLimit(first, last *int) int {
 	return limit
 }
 
-// AppEdge is the edge representation of App.
-type AppEdge struct {
-	Node   *App   `json:"node"`
-	Cursor Cursor `json:"cursor"`
+// CompanyEdge is the edge representation of Company.
+type CompanyEdge struct {
+	Node   *Company `json:"node"`
+	Cursor Cursor   `json:"cursor"`
 }
 
-// AppConnection is the connection containing edges to App.
-type AppConnection struct {
-	Edges      []*AppEdge `json:"edges"`
-	PageInfo   PageInfo   `json:"pageInfo"`
-	TotalCount int        `json:"totalCount"`
+// CompanyConnection is the connection containing edges to Company.
+type CompanyConnection struct {
+	Edges      []*CompanyEdge `json:"edges"`
+	PageInfo   PageInfo       `json:"pageInfo"`
+	TotalCount int            `json:"totalCount"`
 }
 
-func (c *AppConnection) build(nodes []*App, pager *appPager, after *Cursor, first *int, before *Cursor, last *int) {
+func (c *CompanyConnection) build(nodes []*Company, pager *companyPager, after *Cursor, first *int, before *Cursor, last *int) {
 	c.PageInfo.HasNextPage = before != nil
 	c.PageInfo.HasPreviousPage = after != nil
 	if first != nil && *first+1 == len(nodes) {
@@ -120,21 +120,21 @@ func (c *AppConnection) build(nodes []*App, pager *appPager, after *Cursor, firs
 		c.PageInfo.HasPreviousPage = true
 		nodes = nodes[:len(nodes)-1]
 	}
-	var nodeAt func(int) *App
+	var nodeAt func(int) *Company
 	if last != nil {
 		n := len(nodes) - 1
-		nodeAt = func(i int) *App {
+		nodeAt = func(i int) *Company {
 			return nodes[n-i]
 		}
 	} else {
-		nodeAt = func(i int) *App {
+		nodeAt = func(i int) *Company {
 			return nodes[i]
 		}
 	}
-	c.Edges = make([]*AppEdge, len(nodes))
+	c.Edges = make([]*CompanyEdge, len(nodes))
 	for i := range nodes {
 		node := nodeAt(i)
-		c.Edges[i] = &AppEdge{
+		c.Edges[i] = &CompanyEdge{
 			Node:   node,
 			Cursor: pager.toCursor(node),
 		}
@@ -148,87 +148,87 @@ func (c *AppConnection) build(nodes []*App, pager *appPager, after *Cursor, firs
 	}
 }
 
-// AppPaginateOption enables pagination customization.
-type AppPaginateOption func(*appPager) error
+// CompanyPaginateOption enables pagination customization.
+type CompanyPaginateOption func(*companyPager) error
 
-// WithAppOrder configures pagination ordering.
-func WithAppOrder(order *AppOrder) AppPaginateOption {
+// WithCompanyOrder configures pagination ordering.
+func WithCompanyOrder(order *CompanyOrder) CompanyPaginateOption {
 	if order == nil {
-		order = DefaultAppOrder
+		order = DefaultCompanyOrder
 	}
 	o := *order
-	return func(pager *appPager) error {
+	return func(pager *companyPager) error {
 		if err := o.Direction.Validate(); err != nil {
 			return err
 		}
 		if o.Field == nil {
-			o.Field = DefaultAppOrder.Field
+			o.Field = DefaultCompanyOrder.Field
 		}
 		pager.order = &o
 		return nil
 	}
 }
 
-// WithAppFilter configures pagination filter.
-func WithAppFilter(filter func(*AppQuery) (*AppQuery, error)) AppPaginateOption {
-	return func(pager *appPager) error {
+// WithCompanyFilter configures pagination filter.
+func WithCompanyFilter(filter func(*CompanyQuery) (*CompanyQuery, error)) CompanyPaginateOption {
+	return func(pager *companyPager) error {
 		if filter == nil {
-			return errors.New("AppQuery filter cannot be nil")
+			return errors.New("CompanyQuery filter cannot be nil")
 		}
 		pager.filter = filter
 		return nil
 	}
 }
 
-type appPager struct {
+type companyPager struct {
 	reverse bool
-	order   *AppOrder
-	filter  func(*AppQuery) (*AppQuery, error)
+	order   *CompanyOrder
+	filter  func(*CompanyQuery) (*CompanyQuery, error)
 }
 
-func newAppPager(opts []AppPaginateOption, reverse bool) (*appPager, error) {
-	pager := &appPager{reverse: reverse}
+func newCompanyPager(opts []CompanyPaginateOption, reverse bool) (*companyPager, error) {
+	pager := &companyPager{reverse: reverse}
 	for _, opt := range opts {
 		if err := opt(pager); err != nil {
 			return nil, err
 		}
 	}
 	if pager.order == nil {
-		pager.order = DefaultAppOrder
+		pager.order = DefaultCompanyOrder
 	}
 	return pager, nil
 }
 
-func (p *appPager) applyFilter(query *AppQuery) (*AppQuery, error) {
+func (p *companyPager) applyFilter(query *CompanyQuery) (*CompanyQuery, error) {
 	if p.filter != nil {
 		return p.filter(query)
 	}
 	return query, nil
 }
 
-func (p *appPager) toCursor(a *App) Cursor {
-	return p.order.Field.toCursor(a)
+func (p *companyPager) toCursor(c *Company) Cursor {
+	return p.order.Field.toCursor(c)
 }
 
-func (p *appPager) applyCursors(query *AppQuery, after, before *Cursor) (*AppQuery, error) {
+func (p *companyPager) applyCursors(query *CompanyQuery, after, before *Cursor) (*CompanyQuery, error) {
 	direction := p.order.Direction
 	if p.reverse {
 		direction = direction.Reverse()
 	}
-	for _, predicate := range entgql.CursorsPredicate(after, before, DefaultAppOrder.Field.column, p.order.Field.column, direction) {
+	for _, predicate := range entgql.CursorsPredicate(after, before, DefaultCompanyOrder.Field.column, p.order.Field.column, direction) {
 		query = query.Where(predicate)
 	}
 	return query, nil
 }
 
-func (p *appPager) applyOrder(query *AppQuery) *AppQuery {
+func (p *companyPager) applyOrder(query *CompanyQuery) *CompanyQuery {
 	direction := p.order.Direction
 	if p.reverse {
 		direction = direction.Reverse()
 	}
 	query = query.Order(p.order.Field.toTerm(direction.OrderTermOption()))
-	if p.order.Field != DefaultAppOrder.Field {
-		query = query.Order(DefaultAppOrder.Field.toTerm(direction.OrderTermOption()))
+	if p.order.Field != DefaultCompanyOrder.Field {
+		query = query.Order(DefaultCompanyOrder.Field.toTerm(direction.OrderTermOption()))
 	}
 	if len(query.ctx.Fields) > 0 {
 		query.ctx.AppendFieldOnce(p.order.Field.column)
@@ -236,7 +236,7 @@ func (p *appPager) applyOrder(query *AppQuery) *AppQuery {
 	return query
 }
 
-func (p *appPager) orderExpr(query *AppQuery) sql.Querier {
+func (p *companyPager) orderExpr(query *CompanyQuery) sql.Querier {
 	direction := p.order.Direction
 	if p.reverse {
 		direction = direction.Reverse()
@@ -246,33 +246,33 @@ func (p *appPager) orderExpr(query *AppQuery) sql.Querier {
 	}
 	return sql.ExprFunc(func(b *sql.Builder) {
 		b.Ident(p.order.Field.column).Pad().WriteString(string(direction))
-		if p.order.Field != DefaultAppOrder.Field {
-			b.Comma().Ident(DefaultAppOrder.Field.column).Pad().WriteString(string(direction))
+		if p.order.Field != DefaultCompanyOrder.Field {
+			b.Comma().Ident(DefaultCompanyOrder.Field.column).Pad().WriteString(string(direction))
 		}
 	})
 }
 
-// Paginate executes the query and returns a relay based cursor connection to App.
-func (a *AppQuery) Paginate(
+// Paginate executes the query and returns a relay based cursor connection to Company.
+func (c *CompanyQuery) Paginate(
 	ctx context.Context, after *Cursor, first *int,
-	before *Cursor, last *int, opts ...AppPaginateOption,
-) (*AppConnection, error) {
+	before *Cursor, last *int, opts ...CompanyPaginateOption,
+) (*CompanyConnection, error) {
 	if err := validateFirstLast(first, last); err != nil {
 		return nil, err
 	}
-	pager, err := newAppPager(opts, last != nil)
+	pager, err := newCompanyPager(opts, last != nil)
 	if err != nil {
 		return nil, err
 	}
-	if a, err = pager.applyFilter(a); err != nil {
+	if c, err = pager.applyFilter(c); err != nil {
 		return nil, err
 	}
-	conn := &AppConnection{Edges: []*AppEdge{}}
+	conn := &CompanyConnection{Edges: []*CompanyEdge{}}
 	ignoredEdges := !hasCollectedField(ctx, edgesField)
 	if hasCollectedField(ctx, totalCountField) || hasCollectedField(ctx, pageInfoField) {
 		hasPagination := after != nil || first != nil || before != nil || last != nil
 		if hasPagination || ignoredEdges {
-			c := a.Clone()
+			c := c.Clone()
 			c.ctx.Fields = nil
 			if conn.TotalCount, err = c.Count(ctx); err != nil {
 				return nil, err
@@ -284,20 +284,20 @@ func (a *AppQuery) Paginate(
 	if ignoredEdges || (first != nil && *first == 0) || (last != nil && *last == 0) {
 		return conn, nil
 	}
-	if a, err = pager.applyCursors(a, after, before); err != nil {
+	if c, err = pager.applyCursors(c, after, before); err != nil {
 		return nil, err
 	}
 	limit := paginateLimit(first, last)
 	if limit != 0 {
-		a.Limit(limit)
+		c.Limit(limit)
 	}
 	if field := collectedField(ctx, edgesField, nodeField); field != nil {
-		if err := a.collectField(ctx, limit == 1, graphql.GetOperationContext(ctx), *field, []string{edgesField, nodeField}); err != nil {
+		if err := c.collectField(ctx, limit == 1, graphql.GetOperationContext(ctx), *field, []string{edgesField, nodeField}); err != nil {
 			return nil, err
 		}
 	}
-	a = pager.applyOrder(a)
-	nodes, err := a.All(ctx)
+	c = pager.applyOrder(c)
+	nodes, err := c.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -305,44 +305,44 @@ func (a *AppQuery) Paginate(
 	return conn, nil
 }
 
-// AppOrderField defines the ordering field of App.
-type AppOrderField struct {
-	// Value extracts the ordering value from the given App.
-	Value    func(*App) (ent.Value, error)
+// CompanyOrderField defines the ordering field of Company.
+type CompanyOrderField struct {
+	// Value extracts the ordering value from the given Company.
+	Value    func(*Company) (ent.Value, error)
 	column   string // field or computed.
-	toTerm   func(...sql.OrderTermOption) app.OrderOption
-	toCursor func(*App) Cursor
+	toTerm   func(...sql.OrderTermOption) company.OrderOption
+	toCursor func(*Company) Cursor
 }
 
-// AppOrder defines the ordering of App.
-type AppOrder struct {
-	Direction OrderDirection `json:"direction"`
-	Field     *AppOrderField `json:"field"`
+// CompanyOrder defines the ordering of Company.
+type CompanyOrder struct {
+	Direction OrderDirection     `json:"direction"`
+	Field     *CompanyOrderField `json:"field"`
 }
 
-// DefaultAppOrder is the default ordering of App.
-var DefaultAppOrder = &AppOrder{
+// DefaultCompanyOrder is the default ordering of Company.
+var DefaultCompanyOrder = &CompanyOrder{
 	Direction: entgql.OrderDirectionAsc,
-	Field: &AppOrderField{
-		Value: func(a *App) (ent.Value, error) {
-			return a.ID, nil
+	Field: &CompanyOrderField{
+		Value: func(c *Company) (ent.Value, error) {
+			return c.ID, nil
 		},
-		column: app.FieldID,
-		toTerm: app.ByID,
-		toCursor: func(a *App) Cursor {
-			return Cursor{ID: a.ID}
+		column: company.FieldID,
+		toTerm: company.ByID,
+		toCursor: func(c *Company) Cursor {
+			return Cursor{ID: c.ID}
 		},
 	},
 }
 
-// ToEdge converts App into AppEdge.
-func (a *App) ToEdge(order *AppOrder) *AppEdge {
+// ToEdge converts Company into CompanyEdge.
+func (c *Company) ToEdge(order *CompanyOrder) *CompanyEdge {
 	if order == nil {
-		order = DefaultAppOrder
+		order = DefaultCompanyOrder
 	}
-	return &AppEdge{
-		Node:   a,
-		Cursor: order.Field.toCursor(a),
+	return &CompanyEdge{
+		Node:   c,
+		Cursor: order.Field.toCursor(c),
 	}
 }
 

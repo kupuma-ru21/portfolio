@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"strings"
 
 	"entgo.io/ent"
@@ -12,8 +12,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// App is the model entity for the App schema.
-type App struct {
+// Company is the model entity for the Company schema.
+type Company struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
@@ -24,20 +24,20 @@ type App struct {
 	// Link holds the value of the "link" field.
 	Link string `json:"link,omitempty"`
 	// LinkType holds the value of the "link_type" field.
-	LinkType app.LinkType `json:"link_type,omitempty"`
+	LinkType company.LinkType `json:"link_type,omitempty"`
 	// ImageURL holds the value of the "image_url" field.
 	ImageURL     string `json:"image_url,omitempty"`
 	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*App) scanValues(columns []string) ([]any, error) {
+func (*Company) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case app.FieldTitle, app.FieldDetail, app.FieldLink, app.FieldLinkType, app.FieldImageURL:
+		case company.FieldTitle, company.FieldDetail, company.FieldLink, company.FieldLinkType, company.FieldImageURL:
 			values[i] = new(sql.NullString)
-		case app.FieldID:
+		case company.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -47,102 +47,102 @@ func (*App) scanValues(columns []string) ([]any, error) {
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the App fields.
-func (a *App) assignValues(columns []string, values []any) error {
+// to the Company fields.
+func (c *Company) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case app.FieldID:
+		case company.FieldID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
-				a.ID = *value
+				c.ID = *value
 			}
-		case app.FieldTitle:
+		case company.FieldTitle:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field title", values[i])
 			} else if value.Valid {
-				a.Title = value.String
+				c.Title = value.String
 			}
-		case app.FieldDetail:
+		case company.FieldDetail:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field detail", values[i])
 			} else if value.Valid {
-				a.Detail = value.String
+				c.Detail = value.String
 			}
-		case app.FieldLink:
+		case company.FieldLink:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field link", values[i])
 			} else if value.Valid {
-				a.Link = value.String
+				c.Link = value.String
 			}
-		case app.FieldLinkType:
+		case company.FieldLinkType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field link_type", values[i])
 			} else if value.Valid {
-				a.LinkType = app.LinkType(value.String)
+				c.LinkType = company.LinkType(value.String)
 			}
-		case app.FieldImageURL:
+		case company.FieldImageURL:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field image_url", values[i])
 			} else if value.Valid {
-				a.ImageURL = value.String
+				c.ImageURL = value.String
 			}
 		default:
-			a.selectValues.Set(columns[i], values[i])
+			c.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
 }
 
-// Value returns the ent.Value that was dynamically selected and assigned to the App.
+// Value returns the ent.Value that was dynamically selected and assigned to the Company.
 // This includes values selected through modifiers, order, etc.
-func (a *App) Value(name string) (ent.Value, error) {
-	return a.selectValues.Get(name)
+func (c *Company) Value(name string) (ent.Value, error) {
+	return c.selectValues.Get(name)
 }
 
-// Update returns a builder for updating this App.
-// Note that you need to call App.Unwrap() before calling this method if this App
+// Update returns a builder for updating this Company.
+// Note that you need to call Company.Unwrap() before calling this method if this Company
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (a *App) Update() *AppUpdateOne {
-	return NewAppClient(a.config).UpdateOne(a)
+func (c *Company) Update() *CompanyUpdateOne {
+	return NewCompanyClient(c.config).UpdateOne(c)
 }
 
-// Unwrap unwraps the App entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the Company entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (a *App) Unwrap() *App {
-	_tx, ok := a.config.driver.(*txDriver)
+func (c *Company) Unwrap() *Company {
+	_tx, ok := c.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: App is not a transactional entity")
+		panic("ent: Company is not a transactional entity")
 	}
-	a.config.driver = _tx.drv
-	return a
+	c.config.driver = _tx.drv
+	return c
 }
 
 // String implements the fmt.Stringer.
-func (a *App) String() string {
+func (c *Company) String() string {
 	var builder strings.Builder
-	builder.WriteString("App(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", a.ID))
+	builder.WriteString("Company(")
+	builder.WriteString(fmt.Sprintf("id=%v, ", c.ID))
 	builder.WriteString("title=")
-	builder.WriteString(a.Title)
+	builder.WriteString(c.Title)
 	builder.WriteString(", ")
 	builder.WriteString("detail=")
-	builder.WriteString(a.Detail)
+	builder.WriteString(c.Detail)
 	builder.WriteString(", ")
 	builder.WriteString("link=")
-	builder.WriteString(a.Link)
+	builder.WriteString(c.Link)
 	builder.WriteString(", ")
 	builder.WriteString("link_type=")
-	builder.WriteString(fmt.Sprintf("%v", a.LinkType))
+	builder.WriteString(fmt.Sprintf("%v", c.LinkType))
 	builder.WriteString(", ")
 	builder.WriteString("image_url=")
-	builder.WriteString(a.ImageURL)
+	builder.WriteString(c.ImageURL)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// Apps is a parsable slice of App.
-type Apps []*App
+// Companies is a parsable slice of Company.
+type Companies []*Company

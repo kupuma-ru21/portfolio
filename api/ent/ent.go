@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/ent/user"
 	"reflect"
 	"sync"
@@ -74,8 +74,8 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			app.Table:  app.ValidColumn,
-			user.Table: user.ValidColumn,
+			company.Table: company.ValidColumn,
+			user.Table:    user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

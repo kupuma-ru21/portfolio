@@ -3,20 +3,20 @@
 package ent
 
 import (
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 )
 
-// CreateAppInput represents a mutation input for creating apps.
-type CreateAppInput struct {
+// CreateCompanyInput represents a mutation input for creating companies.
+type CreateCompanyInput struct {
 	Title    string
 	Detail   string
 	Link     string
-	LinkType app.LinkType
+	LinkType company.LinkType
 	ImageURL string
 }
 
-// Mutate applies the CreateAppInput on the AppMutation builder.
-func (i *CreateAppInput) Mutate(m *AppMutation) {
+// Mutate applies the CreateCompanyInput on the CompanyMutation builder.
+func (i *CreateCompanyInput) Mutate(m *CompanyMutation) {
 	m.SetTitle(i.Title)
 	m.SetDetail(i.Detail)
 	m.SetLink(i.Link)
@@ -24,23 +24,23 @@ func (i *CreateAppInput) Mutate(m *AppMutation) {
 	m.SetImageURL(i.ImageURL)
 }
 
-// SetInput applies the change-set in the CreateAppInput on the AppCreate builder.
-func (c *AppCreate) SetInput(i CreateAppInput) *AppCreate {
+// SetInput applies the change-set in the CreateCompanyInput on the CompanyCreate builder.
+func (c *CompanyCreate) SetInput(i CreateCompanyInput) *CompanyCreate {
 	i.Mutate(c.Mutation())
 	return c
 }
 
-// UpdateAppInput represents a mutation input for updating apps.
-type UpdateAppInput struct {
+// UpdateCompanyInput represents a mutation input for updating companies.
+type UpdateCompanyInput struct {
 	Title    *string
 	Detail   *string
 	Link     *string
-	LinkType *app.LinkType
+	LinkType *company.LinkType
 	ImageURL *string
 }
 
-// Mutate applies the UpdateAppInput on the AppMutation builder.
-func (i *UpdateAppInput) Mutate(m *AppMutation) {
+// Mutate applies the UpdateCompanyInput on the CompanyMutation builder.
+func (i *UpdateCompanyInput) Mutate(m *CompanyMutation) {
 	if v := i.Title; v != nil {
 		m.SetTitle(*v)
 	}
@@ -58,14 +58,14 @@ func (i *UpdateAppInput) Mutate(m *AppMutation) {
 	}
 }
 
-// SetInput applies the change-set in the UpdateAppInput on the AppUpdate builder.
-func (c *AppUpdate) SetInput(i UpdateAppInput) *AppUpdate {
+// SetInput applies the change-set in the UpdateCompanyInput on the CompanyUpdate builder.
+func (c *CompanyUpdate) SetInput(i UpdateCompanyInput) *CompanyUpdate {
 	i.Mutate(c.Mutation())
 	return c
 }
 
-// SetInput applies the change-set in the UpdateAppInput on the AppUpdateOne builder.
-func (c *AppUpdateOne) SetInput(i UpdateAppInput) *AppUpdateOne {
+// SetInput applies the change-set in the UpdateCompanyInput on the CompanyUpdateOne builder.
+func (c *CompanyUpdateOne) SetInput(i UpdateCompanyInput) *CompanyUpdateOne {
 	i.Mutate(c.Mutation())
 	return c
 }

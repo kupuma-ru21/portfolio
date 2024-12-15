@@ -1,9 +1,9 @@
-query AdminApps {
-  apps {
-    ...App
+query AdminCompanies {
+  companies {
+    ...Company
   }
 }
 
-mutation DeleteApp($id: ID!) {
-  deleteApp(id: $id)
+mutation DeleteCompany($id: ID!) {
+  deleteCompany(id: $id)
 }

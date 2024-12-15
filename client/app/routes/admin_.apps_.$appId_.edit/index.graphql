@@ -1,20 +1,20 @@
-query App($id: ID!) {
-  app(id: $id) {
-    ...App
+query Company($id: ID!) {
+  company(id: $id) {
+    ...Company
     link
     linkType
   }
 }
 
-mutation UpdateApp(
+mutation UpdateCompany(
   $id: ID!
   $title: String!
   $detail: String!
   $link: String!
-  $linkType: AppLinkType!
+  $linkType: CompanyLinkType!
   $imageUrl: String!
 ) {
-  updateApp(
+  updateCompany(
     id: $id
     input: {
       title: $title

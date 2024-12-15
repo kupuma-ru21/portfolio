@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 	"portfolio-api/ent"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/gqlgen/resolvers"
 	"testing"
 
@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_mutationResolver_DeleteApp(t *testing.T) {
+func Test_mutationResolver_CreateApp(t *testing.T) {
 	// Create an ent.Client with in-memory SQLite database.
 	client, err := ent.Open(dialect.SQLite, "file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
@@ -28,14 +28,14 @@ func Test_mutationResolver_DeleteApp(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		r := &struct{ *resolvers.Resolver }{Resolver: &resolvers.Resolver{Client: client}}
-		title := "App title"
-		detail := "App Detail"
+		title := "Company title"
+		detail := "Company Detail"
 		link := "https://example.com/"
-		linkType := app.LinkTypeApp
+		linkType := company.LinkTypeApp
 		imageURL := "https://picsum.photos/200/300"
-		appId, err := r.Mutation().CreateApp(
+		appId, err := r.Mutation().CreateCompany(
 			ctx,
-			ent.CreateAppInput{
+			ent.CreateCompanyInput{
 				Title:    title,
 				Detail:   detail,
 				Link:     link,
@@ -47,23 +47,15 @@ func Test_mutationResolver_DeleteApp(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
-		a, err := r.Query().App(ctx, appId)
+		app, err := r.Query().Company(ctx, appId)
 		if err != nil {
 			log.Fatalf("error: %v", err)
 		}
 
-		assert.Equal(t, title, a.Title)
-		assert.Equal(t, detail, a.Detail)
-		assert.Equal(t, link, a.Link)
-		assert.Equal(t, linkType, a.LinkType)
-		assert.Equal(t, imageURL, a.ImageURL)
-
-		appIdUpdated, err := r.Mutation().DeleteApp(ctx, appId)
-		if err != nil {
-			log.Fatalf("error: %v", err)
-		}
-
-		_, err = client.App.Get(ctx, appIdUpdated)
-		assert.Error(t, err)
+		assert.Equal(t, title, app.Title)
+		assert.Equal(t, detail, app.Detail)
+		assert.Equal(t, link, app.Link)
+		assert.Equal(t, linkType, app.LinkType)
+		assert.Equal(t, imageURL, app.ImageURL)
 	})
 }

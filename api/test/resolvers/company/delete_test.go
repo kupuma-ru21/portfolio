@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 	"portfolio-api/ent"
-	"portfolio-api/ent/app"
+	"portfolio-api/ent/company"
 	"portfolio-api/gqlgen/resolvers"
 	"testing"
 
@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_mutationResolver_UpdateApp(t *testing.T) {
+func Test_mutationResolver_DeleteApp(t *testing.T) {
 	// Create an ent.Client with in-memory SQLite database.
 	client, err := ent.Open(dialect.SQLite, "file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
@@ -28,14 +28,14 @@ func Test_mutationResolver_UpdateApp(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		r := &struct{ *resolvers.Resolver }{Resolver: &resolvers.Resolver{Client: client}}
-		title := "App title"
-		detail := "App Detail"
+		title := "Company title"
+		detail := "Company Detail"
 		link := "https://example.com/"
-		linkType := app.LinkTypeApp
+		linkType := company.LinkTypeApp
 		imageURL := "https://picsum.photos/200/300"
-		appId, err := r.Mutation().CreateApp(
+		appId, err := r.Mutation().CreateCompany(
 			ctx,
-			ent.CreateAppInput{
+			ent.CreateCompanyInput{
 				Title:    title,
 				Detail:   detail,
 				Link:     link,
@@ -47,7 +47,7 @@ func Test_mutationResolver_UpdateApp(t *testing.T) {
 			log.Fatalf("error: %v", err)
 		}
 
-		a, err := r.Query().App(ctx, appId)
+		a, err := r.Query().Company(ctx, appId)
 		if err != nil {
 			log.Fatalf("error: %v", err)
 		}
@@ -58,35 +58,12 @@ func Test_mutationResolver_UpdateApp(t *testing.T) {
 		assert.Equal(t, linkType, a.LinkType)
 		assert.Equal(t, imageURL, a.ImageURL)
 
-		titleUpdated := "App title updated"
-		detailUpdated := "App Detail updated"
-		linkUpdated := "https://www.google.com/"
-		linkTypeUpdated := app.LinkTypeCompany
-		imageURLUpdated := "https://picsum.photos/300/300"
-		appIdUpdated, err := r.Mutation().UpdateApp(
-			ctx,
-			appId,
-			ent.UpdateAppInput{
-				Title:    &titleUpdated,
-				Detail:   &detailUpdated,
-				Link:     &linkUpdated,
-				LinkType: &linkTypeUpdated,
-				ImageURL: &imageURLUpdated,
-			},
-		)
+		appIdUpdated, err := r.Mutation().DeleteCompany(ctx, appId)
 		if err != nil {
 			log.Fatalf("error: %v", err)
 		}
 
-		aUpdated, err := client.App.Get(ctx, appIdUpdated)
-		if err != nil {
-			log.Fatalf("error: %v", err)
-		}
-
-		assert.Equal(t, titleUpdated, aUpdated.Title)
-		assert.Equal(t, detailUpdated, aUpdated.Detail)
-		assert.Equal(t, linkUpdated, aUpdated.Link)
-		assert.Equal(t, linkTypeUpdated, aUpdated.LinkType)
-		assert.Equal(t, imageURLUpdated, aUpdated.ImageURL)
+		_, err = client.Company.Get(ctx, appIdUpdated)
+		assert.Error(t, err)
 	})
 }

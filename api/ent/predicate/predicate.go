@@ -6,8 +6,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// App is the predicate function for app builders.
-type App func(*sql.Selector)
+// Company is the predicate function for company builders.
+type Company func(*sql.Selector)
 
 // User is the predicate function for user builders.
 type User func(*sql.Selector)

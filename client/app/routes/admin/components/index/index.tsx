@@ -1,11 +1,11 @@
 import { Box, Button, Flex, Heading } from "@chakra-ui/react";
-import { type AppFragment } from "gql/graphql";
+import { type CompanyFragment } from "gql/graphql";
 import { DeleteButton } from "../delete-app";
 import { useIndex } from "./useIndex";
 import { Card } from "~/components/card";
 import { Link } from "~/components/link";
 
-export const Admin = ({ apps }: { apps: AppFragment[] }) => {
+export const Admin = ({ companies }: { companies: CompanyFragment[] }) => {
   const { t } = useIndex();
 
   return (
@@ -25,7 +25,7 @@ export const Admin = ({ apps }: { apps: AppFragment[] }) => {
           </Button>
         </Flex>
         <Flex direction="column" gap="16px">
-          {apps.map(({ id, title, detail, imageURL }) => {
+          {companies.map(({ id, title, detail, imageURL }) => {
             return (
               <Card key={id}>
                 <Card.Image src={imageURL} alt={title} />
@@ -37,7 +37,7 @@ export const Admin = ({ apps }: { apps: AppFragment[] }) => {
                   <Card.Footer>
                     <Button
                       as={Link}
-                      to={`/admin/apps/${id}/edit`}
+                      to={`/admin/companies/${id}/edit`}
                       variant="solid"
                       colorScheme="green"
                     >

@@ -8,13 +8,13 @@ import (
 	"github.com/google/uuid"
 )
 
-// App holds the schema definition for the App entity.
-type App struct {
+// Company holds the schema definition for the Company entity.
+type Company struct {
 	ent.Schema
 }
 
-// Fields of the App.
-func (App) Fields() []ent.Field {
+// Fields of the Company.
+func (Company) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).Default(uuid.New),
 		field.String("title").NotEmpty(),
@@ -25,12 +25,12 @@ func (App) Fields() []ent.Field {
 	}
 }
 
-// Edges of the App.
-func (App) Edges() []ent.Edge {
+// Edges of the Company.
+func (Company) Edges() []ent.Edge {
 	return nil
 }
 
-func (App) Annotations() []schema.Annotation {
+func (Company) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entgql.Mutations(entgql.MutationCreate(), entgql.MutationUpdate()),
 	}

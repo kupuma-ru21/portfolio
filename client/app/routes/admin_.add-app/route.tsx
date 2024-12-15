@@ -5,7 +5,7 @@ import {
   json,
   type MetaFunction,
 } from "@remix-run/node";
-import { type AppLinkType, CreateAppDocument } from "gql/graphql";
+import { type CompanyLinkType, CreateCompanyDocument } from "gql/graphql";
 import { AddApp } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
@@ -33,13 +33,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
 
   const { errors } = await apolloClient.mutate({
-    mutation: CreateAppDocument,
+    mutation: CreateCompanyDocument,
     variables: {
       title: String(formData.get("title")),
       detail: String(formData.get("detail")),
       imageURL: String(formData.get("imageUrl")),
       link: String(formData.get("link")),
-      linkType: String(formData.get("linkType")) as AppLinkType,
+      linkType: String(formData.get("linkType")) as CompanyLinkType,
     },
   });
   if (errors) throw get500ErrorResponse(errors[0]);

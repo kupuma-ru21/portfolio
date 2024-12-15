@@ -1,6 +1,6 @@
-query Apps {
-  apps {
-    ...App
+query Companies {
+  companies {
+    ...Company
     link
     linkType
   }
