@@ -10,6 +10,8 @@ import { AddApp } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
 import { get500ErrorResponse } from "~/utils/error/get500ErrorResponse";
+import { getContext } from "~/utils/getContext";
+import { getJwt } from "~/utils/getJwt";
 import { apolloClient } from "~/utils/graphql";
 import { isLoggedIn } from "~/utils/isLoggedIn";
 
@@ -30,7 +32,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
+  const [formData, { token }] = await Promise.all([
+    request.formData(),
+    getJwt(request.headers.get("cookie")),
+  ]);
 
   const { errors } = await apolloClient.mutate({
     mutation: CreateAppDocument,
@@ -41,6 +46,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       link: String(formData.get("link")),
       linkType: String(formData.get("linkType")) as AppLinkType,
     },
+    context: getContext({ token }),
   });
   if (errors) throw get500ErrorResponse(errors[0]);
   return redirect("/admin");
