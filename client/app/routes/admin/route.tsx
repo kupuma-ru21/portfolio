@@ -57,9 +57,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     mutation: DeleteAppDocument,
     variables: { id: String(formData.get("appId")) },
     context: getContext({ token }),
+    refetchQueries: [{ query: AdminAppsDocument }],
   });
-  // TODO: fix error
   if (errors) throw get500ErrorResponse(errors[0]);
+
   return null;
 };
 
