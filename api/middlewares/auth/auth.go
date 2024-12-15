@@ -18,7 +18,6 @@ const (
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		tokenString := req.Header.Get("Authorization")
-		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 		if tokenString == "" {
 			next.ServeHTTP(w, req)
 			return
@@ -29,6 +28,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			http.Error(w, `{"reason": "jwtSecretKey not found"}`, http.StatusUnauthorized)
 		}
 
+		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 		claims := &jwt.RegisteredClaims{}
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(jwtSecretKey), nil
