@@ -16,6 +16,8 @@ import { Admin } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
 import { get500ErrorResponse } from "~/utils/error/get500ErrorResponse";
+import { getContext } from "~/utils/getContext";
+import { getJwt } from "~/utils/getJwt";
 import { apolloClient } from "~/utils/graphql";
 import { isLoggedIn } from "~/utils/isLoggedIn";
 
@@ -46,11 +48,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
+  const [formData, { token }] = await Promise.all([
+    request.formData(),
+    getJwt(request.headers.get("cookie")),
+  ]);
 
   const { errors } = await apolloClient.mutate({
     mutation: DeleteAppDocument,
     variables: { id: String(formData.get("appId")) },
+    context: getContext({ token }),
   });
   if (errors) throw get500ErrorResponse(errors[0]);
   return null;

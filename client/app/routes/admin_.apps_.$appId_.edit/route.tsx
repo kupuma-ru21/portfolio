@@ -17,6 +17,8 @@ import { EditApp } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
 import { get500ErrorResponse } from "~/utils/error/get500ErrorResponse";
+import { getContext } from "~/utils/getContext";
+import { getJwt } from "~/utils/getJwt";
 import { apolloClient } from "~/utils/graphql";
 import { isLoggedIn } from "~/utils/isLoggedIn";
 
@@ -33,12 +35,14 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     return redirect("/login");
   }
 
+  const { token } = await getJwt(request.headers.get("cookie"));
   const {
     data: { app },
     error,
   } = await apolloClient.query({
     query: AppDocument,
     variables: { id: params.appId || "" },
+    context: getContext({ token }),
   });
   if (error) throw get500ErrorResponse(error);
 
@@ -48,7 +52,10 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
-  const formData = await request.formData();
+  const [formData, { token }] = await Promise.all([
+    request.formData(),
+    getJwt(request.headers.get("cookie")),
+  ]);
 
   const { errors } = await apolloClient.mutate({
     mutation: UpdateAppDocument,
@@ -60,6 +67,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       link: String(formData.get("link")),
       linkType: String(formData.get("linkType")) as AppLinkType,
     },
+    context: getContext({ token }),
   });
   if (errors) throw get500ErrorResponse(errors[0]);
   return redirect("/admin");

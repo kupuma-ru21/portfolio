@@ -1,8 +1,6 @@
-import { tokenCookie } from "./cookies.server";
+import { getJwt } from "./getJwt";
 
 export const isLoggedIn = async (cookieHeader: string | null) => {
-  const cookie: { token: string } = (await tokenCookie.parse(cookieHeader)) || {
-    token: "",
-  };
-  return cookie.token !== "";
+  const { token } = await getJwt(cookieHeader);
+  return token !== "";
 };
