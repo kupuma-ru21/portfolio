@@ -58,6 +58,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     variables: { id: String(formData.get("appId")) },
     context: getContext({ token }),
   });
+  // TODO: fix error
   if (errors) throw get500ErrorResponse(errors[0]);
   return null;
 };
