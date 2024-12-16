@@ -21,16 +21,6 @@ export type Scalars = {
   Cursor: { input: any; output: any; }
 };
 
-export type App = Node & {
-  __typename?: 'App';
-  detail: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  imageURL: Scalars['String']['output'];
-  link: Scalars['String']['output'];
-  linkType: AppLinkType;
-  title: Scalars['String']['output'];
-};
-
 /** AppLinkType is enum for the field link_type */
 export enum AppLinkType {
   App = 'APP',
@@ -58,51 +48,6 @@ export type CreateUserInput = {
   password: Scalars['String']['input'];
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  _mutation?: Maybe<Scalars['Boolean']['output']>;
-  createApp: Scalars['ID']['output'];
-  createUser: Scalars['ID']['output'];
-  deleteApp: Scalars['ID']['output'];
-  login: Scalars['String']['output'];
-  updateApp: Scalars['ID']['output'];
-};
-
-
-export type MutationCreateAppArgs = {
-  input: CreateAppInput;
-};
-
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationDeleteAppArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationLoginArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationUpdateAppArgs = {
-  id: Scalars['ID']['input'];
-  input: UpdateAppInput;
-};
-
-/**
- * An object with an ID.
- * Follows the [Relay Global Object Identification Specification](https://relay.dev/graphql/objectidentification.htm)
- */
-export type Node = {
-  /** The id of the object. */
-  id: Scalars['ID']['output'];
-};
-
 /** Possible directions in which to order a list of items when provided an `orderBy` argument. */
 export enum OrderDirection {
   /** Specifies an ascending order for a given `orderBy` argument. */
@@ -110,48 +55,6 @@ export enum OrderDirection {
   /** Specifies a descending order for a given `orderBy` argument. */
   Desc = 'DESC'
 }
-
-/**
- * Information about pagination in a connection.
- * https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo
- */
-export type PageInfo = {
-  __typename?: 'PageInfo';
-  /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['Cursor']['output']>;
-  /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean']['output'];
-  /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean']['output'];
-  /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['Cursor']['output']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  app: App;
-  apps: Array<App>;
-  /** Fetches an object given its ID. */
-  node?: Maybe<Node>;
-  /** Lookup nodes by a list of IDs. */
-  nodes: Array<Maybe<Node>>;
-  users: Array<User>;
-};
-
-
-export type QueryAppArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryNodeArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryNodesArgs = {
-  ids: Array<Scalars['ID']['input']>;
-};
 
 /**
  * UpdateAppInput is used for update App object.
@@ -163,12 +66,6 @@ export type UpdateAppInput = {
   link?: InputMaybe<Scalars['String']['input']>;
   linkType?: InputMaybe<AppLinkType>;
   title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type User = Node & {
-  __typename?: 'User';
-  email: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
 };
 
 export type AppFragment = { __typename?: 'App', id: string, title: string, detail: string, imageURL: string } & { ' $fragmentName'?: 'AppFragment' };
