@@ -6,12 +6,7 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getFragmentData } from "gql/fragment-masking";
-import {
-  AdminAppsDocument,
-  AppFragmentDoc,
-  DeleteAppDocument,
-} from "gql/graphql";
+import { AdminAppsDocument, DeleteAppDocument } from "gql/graphql";
 import { Admin } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
@@ -23,7 +18,7 @@ import { isLoggedIn } from "~/utils/isLoggedIn";
 
 export default function Route() {
   const data = useLoaderData<typeof loader>();
-  return <Admin apps={getFragmentData(AppFragmentDoc, data.apps)} />;
+  return <Admin apps={data.apps} />;
 }
 
 const I18N = "admin";

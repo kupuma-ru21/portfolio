@@ -6,13 +6,7 @@ import {
   type ActionFunctionArgs,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getFragmentData } from "gql/fragment-masking";
-import {
-  AppDocument,
-  AppFragmentDoc,
-  type AppLinkType,
-  UpdateAppDocument,
-} from "gql/graphql";
+import { AppDocument, type AppLinkType, UpdateAppDocument } from "gql/graphql";
 import { EditApp } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
@@ -25,7 +19,7 @@ import { isLoggedIn } from "~/utils/isLoggedIn";
 export default function Route() {
   const data = useLoaderData<typeof loader>();
   const app = data.app;
-  return <EditApp app={{ ...app, ...getFragmentData(AppFragmentDoc, app) }} />;
+  return <EditApp app={app} />;
 }
 
 const I18N = "admin_apps_app-id_edit";
