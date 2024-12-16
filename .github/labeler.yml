@@ -1,0 +1,12 @@
+# https://github.com/actions/labeler?tab=readme-ov-file#basic-examples
+client:
+  - changed-files:
+      - any-glob-to-any-file: client/**
+
+api:
+  - changed-files:
+      - any-glob-to-any-file: api/**
+
+ci/cd:
+  - changed-files:
+      - any-glob-to-any-file: .github/**
