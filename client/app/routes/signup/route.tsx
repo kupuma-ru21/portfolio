@@ -14,6 +14,7 @@ import { apolloClient } from "~/utils/graphql";
 import { isLoggedIn } from "~/utils/isLoggedIn";
 
 export default function Route() {
+  return null;
   return <Signup />;
 }
 
