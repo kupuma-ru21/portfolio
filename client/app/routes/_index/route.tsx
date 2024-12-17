@@ -4,7 +4,9 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 // import { useLoaderData } from "@remix-run/react";
-import { AppsDocument } from "gql/graphql";
+import { useLoaderData } from "@remix-run/react";
+import { getFragmentData } from "gql/fragment-masking";
+import { AppFragmentDoc, AppsDocument } from "gql/graphql";
 import { Index } from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import { createMetaTitle } from "~/utils/createMetaTitle";
@@ -12,12 +14,11 @@ import { get500ErrorResponse } from "~/utils/error/get500ErrorResponse";
 import { apolloClient } from "~/utils/graphql";
 
 export default function Route() {
-  // const data = useLoaderData<typeof loader>();
-  return (
-    <Index
-    // apps={data.apps}
-    />
-  );
+  const data = useLoaderData<typeof loader>();
+  const apps = data.apps.map(({ link, linkType, ...rest }) => {
+    return { ...getFragmentData(AppFragmentDoc, rest), link, linkType };
+  });
+  return <Index apps={apps} />;
 }
 
 const I18N = "index";
