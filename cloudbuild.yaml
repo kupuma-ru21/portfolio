@@ -92,7 +92,7 @@ substitutions:
   # general
   _REGION: _REGION
   # client
-  _IMAGE: us-central1-docker.pkg.dev/portfolio-441309/client/client-image
+  _IMAGE: _IMAGE
   _SERVICE: _SERVICE
   _PNPM_HOME: _PNPM_HOME
   _PNPM_PATH: _PNPM_PATH
