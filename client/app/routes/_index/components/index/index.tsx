@@ -1,15 +1,15 @@
-import { Box, Divider, Flex, Heading, Image, Text } from "@chakra-ui/react";
-import { AppLinkType, type AppFragment } from "gql/graphql";
-import { CardContent } from "../card-body";
-import { useIndex } from "./useIndex";
-import { Card } from "~/components/card";
+import {Box, Divider, Flex, Heading, Image, Text} from "@chakra-ui/react";
+import {AppLinkType, type AppFragment} from "gql/graphql";
+import {CardContent} from "../card-body";
+import {useIndex} from "./useIndex";
+import {Card} from "~/components/card";
 
 export const Index = ({
   apps,
 }: {
-  apps: (AppFragment & { link: string; linkType: AppLinkType })[];
+  apps: (AppFragment & {link: string; linkType: AppLinkType})[];
 }) => {
-  const { t } = useIndex();
+  const {t} = useIndex();
 
   return (
     <Box py="20px">
@@ -18,8 +18,8 @@ export const Index = ({
         m="auto"
         gap="16px"
         mb="48px"
-        direction={{ base: "column", md: "initial" }}
-        alignItems={{ base: "center", md: "initial" }}
+        direction={{base: "column", md: "initial"}}
+        alignItems={{base: "center", md: "initial"}}
       >
         <Heading as="h1" alignContent="center">
           <Text as="span" fontWeight={400}>
@@ -45,7 +45,7 @@ export const Index = ({
           {t("Applications I developed at work")}
         </Heading>
         <Flex direction="column" gap="16px">
-          {apps.map(({ id, imageURL, title, detail, link, linkType }) => {
+          {apps.map(({id, imageURL, title, detail, link, linkType}) => {
             return (
               <Card key={id}>
                 <Card.Image src={imageURL} alt={title} />

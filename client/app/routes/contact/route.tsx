@@ -5,15 +5,15 @@ import {
   type MetaFunction,
   redirect,
 } from "@remix-run/node";
-import { Contact } from "./components/index";
+import {Contact} from "./components/index";
 import i18next from "~/i18n/i18next.server";
-import { createMetaTitle } from "~/utils/createMetaTitle";
+import {createMetaTitle} from "~/utils/createMetaTitle";
 
 export default function Route() {
   return <Contact />;
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({request}: ActionFunctionArgs) {
   const body = await request.formData();
   try {
     // Ref: https://resend.com/docs/send-with-remix
@@ -26,20 +26,20 @@ export async function action({ request }: ActionFunctionArgs) {
     });
     return redirect("/contact/submitted");
   } catch (error) {
-    throw new Response(JSON.stringify({ error }), { status: 500 });
+    throw new Response(JSON.stringify({error}), {status: 500});
   }
 }
 
 const I18N = "contact";
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({request}: LoaderFunctionArgs) {
   const t = await i18next.getFixedT(request, "contact");
   const title = t("Contact");
-  return json({ title });
+  return json({title});
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [{ title: createMetaTitle(data?.title ?? "") }];
+export const meta: MetaFunction<typeof loader> = ({data}) => {
+  return [{title: createMetaTitle(data?.title ?? "")}];
 };
 
-export const handle = { i18n: I18N };
+export const handle = {i18n: I18N};

@@ -1,7 +1,7 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
+ import {fileURLToPath} from "node:url";
+import {fixupConfigRules, fixupPluginRules} from "@eslint/compat";
+import {FlatCompat} from "@eslint/eslintrc";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
@@ -27,8 +27,8 @@ export default [
     compat.extends(
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended"
-    )
+      "plugin:react-hooks/recommended",
+    ),
   ),
   {
     plugins: {
@@ -39,14 +39,14 @@ export default [
       import: fixupPluginRules(_import),
     },
     languageOptions: {
-      globals: { ...globals.browser, ...globals.es2022 },
+      globals: {...globals.browser, ...globals.es2022},
       parser: tsParser,
     },
-    settings: { react: { version: "detect" } },
+    settings: {react: {version: "detect"}},
     rules: {
       "@typescript-eslint/consistent-type-imports": [
         "error",
-        { fixStyle: "inline-type-imports" },
+        {fixStyle: "inline-type-imports"},
       ],
       "import/order": [
         "error",
@@ -69,10 +69,10 @@ export default [
             },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
-          alphabetize: { order: "asc" },
+          alphabetize: {order: "asc"},
         },
       ],
-      "no-console": ["error", { allow: ["warn", "error"] }],
+      "no-console": ["error", {allow: ["warn", "error"]}],
       "no-restricted-imports": [
         "error",
         {
@@ -86,7 +86,7 @@ export default [
           ],
         },
       ],
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
     },
   },
 ];

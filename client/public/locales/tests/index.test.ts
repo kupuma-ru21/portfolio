@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import {expect, test} from "vitest";
 import enJson from "../en/index.json";
 import jaJson from "../ja/index.json";
 

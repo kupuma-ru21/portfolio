@@ -1,7 +1,7 @@
-import { type ReactNode } from "react";
-import { chakra, useColorModeValue } from "@chakra-ui/react";
+import {type ReactNode} from "react";
+import {chakra, useColorModeValue} from "@chakra-ui/react";
 
-export const Wrapper = ({ children }: { children: ReactNode }) => {
+export const Wrapper = ({children}: {children: ReactNode}) => {
   return (
     <chakra.header
       boxShadow="0px 1px 5px 0px rgba(88, 102, 126, 0.13)"

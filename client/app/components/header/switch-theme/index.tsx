@@ -1,9 +1,9 @@
-import { Icon, IconButton, useColorModeValue } from "@chakra-ui/react";
-import { CiLight, CiDark } from "react-icons/ci";
-import { useIndex } from "./useIndex";
+import {Icon, IconButton, useColorModeValue} from "@chakra-ui/react";
+import {CiLight, CiDark} from "react-icons/ci";
+import {useIndex} from "./useIndex";
 
 export const SwitchTheme = () => {
-  const { t, changeThemeColor } = useIndex();
+  const {t, changeThemeColor} = useIndex();
 
   return (
     <IconButton

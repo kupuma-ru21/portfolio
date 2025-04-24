@@ -1,9 +1,9 @@
-import { useTranslation } from "react-i18next";
-import { FaBook, FaLaptop } from "react-icons/fa";
-import { IoFastFoodOutline } from "react-icons/io5";
+import {useTranslation} from "react-i18next";
+import {FaBook, FaLaptop} from "react-icons/fa";
+import {IoFastFoodOutline} from "react-icons/io5";
 
 export const useIndex = () => {
-  const { t } = useTranslation("about");
+  const {t} = useTranslation("about");
 
   const hobbies = [
     {
@@ -27,5 +27,5 @@ export const useIndex = () => {
     },
   ];
 
-  return { t, hobbies };
+  return {t, hobbies};
 };

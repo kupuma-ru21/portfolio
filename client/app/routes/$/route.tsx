@@ -1,4 +1,4 @@
-import { NotFound } from "./components/index";
+import {NotFound} from "./components/index";
 
 /*
   Ref: https://remix.run/docs/en/1.19.3/guides/routing#splats
@@ -8,4 +8,4 @@ export default function Route() {
   return <NotFound />;
 }
 
-export const handle = { i18n: "not-found" };
+export const handle = {i18n: "not-found"};

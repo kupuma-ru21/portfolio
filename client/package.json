@@ -13,6 +13,7 @@
     "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./@types/resources.d.ts",
     "test": "vitest",
     "format": "eslint ./app --fix",
+    "prettier": "pnpm exec prettier . --write",
     "//": "REF: https://the-guild.dev/graphql/codegen/docs/config-reference/require-field > Customize loaded env file",
     "codegen": "DOTENV_CONFIG_PATH='../.env' graphql-codegen --require dotenv/config --config codegen.ts"
   },
@@ -64,6 +65,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "globals": "^15.11.0",
     "postcss": "^8.4.47",
+    "prettier": "3.5.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.9",
     "vite-tsconfig-paths": "^5.0.1",

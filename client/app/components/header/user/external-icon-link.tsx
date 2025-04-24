@@ -1,5 +1,5 @@
-import { Icon, IconButton as IconButtonBase } from "@chakra-ui/react";
-import { type IconType } from "react-icons/lib";
+import {Icon, IconButton as IconButtonBase} from "@chakra-ui/react";
+import {type IconType} from "react-icons/lib";
 
 export const ExternalIconLink = ({
   iconType,
