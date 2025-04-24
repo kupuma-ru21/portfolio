@@ -39,7 +39,7 @@ jobs:
         run: pnpm spellcheck
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm eslint
 
       - name: Interface
         run: pnpm interface
