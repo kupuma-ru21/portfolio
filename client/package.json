@@ -12,7 +12,7 @@
     "spellcheck": "cspell '**'",
     "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./@types/resources.d.ts",
     "test": "vitest",
-    "format": "eslint ./app --fix",
+    "fix:eslint": "eslint ./app --fix",
     "prettier": "pnpm exec prettier . --write",
     "//": "REF: https://the-guild.dev/graphql/codegen/docs/config-reference/require-field > Customize loaded env file",
     "codegen": "DOTENV_CONFIG_PATH='../.env' graphql-codegen --require dotenv/config --config codegen.ts"
