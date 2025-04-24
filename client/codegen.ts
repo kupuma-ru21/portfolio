@@ -9,7 +9,7 @@ const config: CodegenConfig = {
       preset: "client",
       plugins: [],
       presetConfig: {
-        // ref: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#the-usefragment-helper
+        // REF: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#the-usefragment-helper
         fragmentMasking: {unmaskFunctionName: "getFragmentData"},
       },
     },
