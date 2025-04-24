@@ -19,7 +19,7 @@ autobind:
 
 # This section declares type mapping between the GraphQL and Go type systems.
 models:
-  # Ref: https://gqlgen.com/config/
+  # REF: https://gqlgen.com/config/
   ID:
     model:
       - github.com/99designs/gqlgen/graphql.UUID

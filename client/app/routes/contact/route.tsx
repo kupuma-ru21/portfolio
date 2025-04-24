@@ -16,7 +16,7 @@ export default function Route() {
 export async function action({request}: ActionFunctionArgs) {
   const body = await request.formData();
   try {
-    // Ref: https://resend.com/docs/send-with-remix
+    // REF: https://resend.com/docs/send-with-remix
     const Resend = (await import("resend")).Resend;
     await new Resend(import.meta.env.VITE_RESEND_API_KEY).emails.send({
       from: `${String(body.get("email"))} <onboarding@resend.dev>`,

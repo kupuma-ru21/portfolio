@@ -1,4 +1,4 @@
-// Ref: https://www.i18next.com/overview/typescript
+// REF: https://www.i18next.com/overview/typescript
 
 import type Resources from "./resources.d.ts";
 

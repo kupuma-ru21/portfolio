@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Ref: https://docs.docker.com/guides/golang/build-images/
-# Ref: https://www.googlecloudcommunity.com/gc/Community-Blogs/No-servers-no-problem-A-guide-to-deploying-your-React/ba-p/690760
+# REF: https://docs.docker.com/guides/golang/build-images/
+# REF: https://www.googlecloudcommunity.com/gc/Community-Blogs/No-servers-no-problem-A-guide-to-deploying-your-React/ba-p/690760
 
 FROM golang:1.23.2
 

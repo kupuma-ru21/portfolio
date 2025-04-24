@@ -65,12 +65,12 @@ export default function App() {
     </Document>
   );
 }
-// Ref: https://remix.run/docs/en/main/guides/errors
+// REF: https://remix.run/docs/en/main/guides/errors
 export function ErrorBoundary() {
   const error = useRouteError();
   console.error(error);
 
-  // Ref: https://sergiodxa.com/tutorials/access-remix-s-loader-data-from-a-root-errorboundary
+  // REF: https://sergiodxa.com/tutorials/access-remix-s-loader-data-from-a-root-errorboundary
   const data = useRouteLoaderData<typeof loader>("root");
   const {i18n, t} = useTranslation("root");
 
