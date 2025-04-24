@@ -25,14 +25,14 @@ steps:
       - --build-arg
       - VITE_RESEND_API_KEY=${_VITE_RESEND_API_KEY}
       - -t
-      - ${_IMAGE}
+      - ${_CLIENT_IMAGE}
       - ./client
     automapSubstitutions: true
 
   - name: "gcr.io/cloud-builders/docker"
     args:
       - push
-      - ${_IMAGE}
+      - ${_CLIENT_IMAGE}
 
   - name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -40,7 +40,7 @@ steps:
       - deploy
       - ${_SERVICE}
       - --image
-      - ${_IMAGE}
+      - ${_CLIENT_IMAGE}
       - --region
       - ${_REGION}
       - --platform
@@ -92,7 +92,7 @@ substitutions:
   # general
   _REGION: _REGION
   # client
-  _IMAGE: _IMAGE
+  _CLIENT_IMAGE: _CLIENT_IMAGE
   _SERVICE: _SERVICE
   _PNPM_HOME: _PNPM_HOME
   _PNPM_PATH: _PNPM_PATH
