@@ -6,7 +6,7 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "pnpm interface && pnpm codegen && remix vite:dev",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+    "eslint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "spellcheck": "cspell '**'",
