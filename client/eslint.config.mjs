@@ -81,7 +81,7 @@ export default [
               name: "@remix-run/react",
               importNames: ["Link"],
               message:
-                "Please use the custom Link component from 'app/components/shared/Link/index.tsx' instead.",
+                "Use the custom Link component from 'app/components/link.tsx' instead.",
             },
           ],
         },
