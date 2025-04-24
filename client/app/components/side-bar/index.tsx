@@ -1,14 +1,14 @@
-import { Button, Flex, useColorModeValue } from "@chakra-ui/react";
-import { useGetLinks } from "../hooks/useGetLinks";
-import { NavLink } from "../nav-link";
-import { SIDE_BAR_WIDTH } from "./constants";
+import {Button, Flex, useColorModeValue} from "@chakra-ui/react";
+import {useGetLinks} from "../hooks/useGetLinks";
+import {NavLink} from "../nav-link";
+import {SIDE_BAR_WIDTH} from "./constants";
 
 export const SideBar = () => {
-  const { links } = useGetLinks();
+  const {links} = useGetLinks();
 
   return (
     <Flex
-      display={{ base: "none", md: "flex" }}
+      display={{base: "none", md: "flex"}}
       w={`${SIDE_BAR_WIDTH}px`}
       direction="column"
       gap="8px"

@@ -21,10 +21,5 @@
     "Typecheck",
     "vite"
   ],
-  "ignorePaths": [
-    "node_modules",
-    "pnpm-lock.yaml",
-    "build",
-    "gql"
-  ]
+  "ignorePaths": ["node_modules", "pnpm-lock.yaml", "build", "gql"]
 }

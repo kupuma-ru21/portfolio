@@ -1,6 +1,6 @@
-import { Button } from "@chakra-ui/react";
-import { useIndex } from "./useIndex";
-import { Card } from "~/components/card";
+import {Button} from "@chakra-ui/react";
+import {useIndex} from "./useIndex";
+import {Card} from "~/components/card";
 
 export const CardContent = ({
   title,
@@ -13,7 +13,7 @@ export const CardContent = ({
   href: string;
   linkText: string;
 }) => {
-  const { t, noOfLines, showFullDetail } = useIndex();
+  const {t, noOfLines, showFullDetail} = useIndex();
 
   return (
     <Card.Stack>

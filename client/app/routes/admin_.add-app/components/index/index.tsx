@@ -9,22 +9,22 @@ import {
   Radio,
   Stack,
 } from "@chakra-ui/react";
-import { Form } from "@remix-run/react";
-import { AppLinkType } from "gql/graphql";
-import { useIndex } from "./useIndex";
-import { Input } from "~/components/input";
-import { SubmitButton } from "~/components/submit-button";
-import { Textarea } from "~/components/textarea";
+import {Form} from "@remix-run/react";
+import {AppLinkType} from "gql/graphql";
+import {useIndex} from "./useIndex";
+import {Input} from "~/components/input";
+import {SubmitButton} from "~/components/submit-button";
+import {Textarea} from "~/components/textarea";
 
 export const AddApp = () => {
-  const { t, isSubmitting } = useIndex();
+  const {t, isSubmitting} = useIndex();
 
   return (
     <Box py="20px">
       <Heading as="h1" textAlign="center" mb="32px">
         {t("Add Application")}
       </Heading>
-      <Form method="POST" style={{ textAlign: "center" }}>
+      <Form method="POST" style={{textAlign: "center"}}>
         <chakra.fieldset disabled={isSubmitting}>
           <Flex
             direction="column"

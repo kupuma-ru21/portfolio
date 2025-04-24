@@ -6,14 +6,14 @@ import {
   FormLabel,
   Heading,
 } from "@chakra-ui/react";
-import { Form } from "@remix-run/react";
-import { useIndex } from "./useIndex";
-import { Input } from "~/components/input";
-import { SubmitButton } from "~/components/submit-button";
-import { Textarea } from "~/components/textarea";
+import {Form} from "@remix-run/react";
+import {useIndex} from "./useIndex";
+import {Input} from "~/components/input";
+import {SubmitButton} from "~/components/submit-button";
+import {Textarea} from "~/components/textarea";
 
 export const Contact = () => {
-  const { t, isSubmitting, sendDataToGTM } = useIndex();
+  const {t, isSubmitting, sendDataToGTM} = useIndex();
 
   return (
     <Box py="20px">
@@ -23,7 +23,7 @@ export const Contact = () => {
       <Form
         method="POST"
         onSubmit={sendDataToGTM}
-        style={{ textAlign: "center" }}
+        style={{textAlign: "center"}}
       >
         <chakra.fieldset disabled={isSubmitting}>
           <Flex

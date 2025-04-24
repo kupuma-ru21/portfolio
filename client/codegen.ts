@@ -1,4 +1,4 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
+import type {CodegenConfig} from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: import.meta.env.VITE_GRAPHQL_SCHEMA_URL,
@@ -10,7 +10,7 @@ const config: CodegenConfig = {
       plugins: [],
       presetConfig: {
         // ref: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#the-usefragment-helper
-        fragmentMasking: { unmaskFunctionName: "getFragmentData" },
+        fragmentMasking: {unmaskFunctionName: "getFragmentData"},
       },
     },
   },

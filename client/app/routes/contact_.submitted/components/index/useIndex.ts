@@ -1,7 +1,7 @@
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 export const useIndex = () => {
-  const { t } = useTranslation("contact");
+  const {t} = useTranslation("contact");
 
-  return { t };
+  return {t};
 };

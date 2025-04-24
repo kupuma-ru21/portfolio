@@ -7,10 +7,10 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
-import { useIndex } from "./useIndex";
+import {useIndex} from "./useIndex";
 
 export const About = () => {
-  const { t, hobbies } = useIndex();
+  const {t, hobbies} = useIndex();
 
   return (
     <Box py="20px" px="24px">
@@ -24,7 +24,7 @@ export const About = () => {
         {t("I like to do")}
       </Heading>
       <List spacing="24px">
-        {hobbies.map(({ icon, title, descriptions }) => {
+        {hobbies.map(({icon, title, descriptions}) => {
           return (
             <ListItem key={title}>
               <Flex alignItems="center" gap="16px" mb="8px">

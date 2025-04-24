@@ -1,8 +1,8 @@
 // Ref: https://remix.run/resources/remix-i18next
 
-import { resolve } from "node:path";
+import {resolve} from "node:path";
 import Backend from "i18next-fs-backend";
-import { RemixI18Next } from "remix-i18next/server";
+import {RemixI18Next} from "remix-i18next/server";
 import i18n from "~/i18n"; // your i18n configuration file
 
 const i18next = new RemixI18Next({

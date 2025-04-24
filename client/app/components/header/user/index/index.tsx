@@ -8,20 +8,20 @@ import {
   MenuList,
   Tooltip,
 } from "@chakra-ui/react";
-import { CiMenuBurger } from "react-icons/ci";
-import { FaGithub, FaLinkedin, FaFilePdf } from "react-icons/fa";
-import { MdOutlineMailOutline } from "react-icons/md";
-import { SwitchTheme } from "../../switch-theme";
-import { Wrapper } from "../../wrapper";
-import { ExternalIconLink } from "../external-icon-link";
-import { useIndex } from "./useIndex";
-import { useGetLinks } from "~/components/hooks/useGetLinks";
-import { Link } from "~/components/link";
-import { NavLink } from "~/components/nav-link";
+import {CiMenuBurger} from "react-icons/ci";
+import {FaGithub, FaLinkedin, FaFilePdf} from "react-icons/fa";
+import {MdOutlineMailOutline} from "react-icons/md";
+import {SwitchTheme} from "../../switch-theme";
+import {Wrapper} from "../../wrapper";
+import {ExternalIconLink} from "../external-icon-link";
+import {useIndex} from "./useIndex";
+import {useGetLinks} from "~/components/hooks/useGetLinks";
+import {Link} from "~/components/link";
+import {NavLink} from "~/components/nav-link";
 
 export const Header = () => {
-  const { t } = useIndex();
-  const { links } = useGetLinks();
+  const {t} = useIndex();
+  const {links} = useGetLinks();
 
   return (
     <Wrapper>
@@ -29,7 +29,7 @@ export const Header = () => {
         <SwitchTheme />
         <Menu>
           <MenuButton
-            display={{ base: "block", md: "none" }}
+            display={{base: "block", md: "none"}}
             as={IconButton}
             icon={
               <Icon
@@ -38,7 +38,7 @@ export const Header = () => {
               />
             }
           />
-          <MenuList display={{ base: "block", md: "none" }}>
+          <MenuList display={{base: "block", md: "none"}}>
             {links.map((link) => {
               return <MenuItem as={NavLink} {...link} key={link.to} />;
             })}

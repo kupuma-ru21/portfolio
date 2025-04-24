@@ -1,5 +1,5 @@
-import { sendToGTM } from ".";
+import {sendToGTM} from ".";
 
 export function useGTM() {
-  return { sendToGTM };
+  return {sendToGTM};
 }
