@@ -10,3 +10,7 @@ api:
 ci/cd:
   - changed-files:
       - any-glob-to-any-file: .github/**
+
+root:
+  - changed-files:
+      - any-glob-to-any-file: .
