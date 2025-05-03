@@ -9,10 +9,6 @@ steps:
     args:
       - build
       - --build-arg
-      - PNPM_HOME=${_PNPM_HOME}
-      - --build-arg
-      - PNPM_PATH=${_PNPM_PATH}
-      - --build-arg
       - CLIENT_PORT=${_CLIENT_PORT}
       - --build-arg
       - VITE_GRAPHQL_SCHEMA_URL=${_VITE_GRAPHQL_SCHEMA_URL}

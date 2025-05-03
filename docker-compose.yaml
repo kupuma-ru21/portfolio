@@ -3,8 +3,6 @@ services:
     build:
       context: ./client
       args:
-        - PNPM_HOME=${PNPM_HOME}
-        - PNPM_PATH=${PNPM_PATH}
         - CLIENT_PORT=${CLIENT_PORT}
         - VITE_GRAPHQL_SCHEMA_URL=${VITE_DOCKER_GRAPHQL_SCHEMA_URL}
         - VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID=${VITE_GOOGLE_ANALYTICS_MEASUREMENT_ID}
