@@ -4,6 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "copy-env": "cp ../.env .env",
     "build": "remix vite:build",
     "dev:remix": "remix vite:dev",
     "dev": "run-s copy-env interface codegen dev:remix",
