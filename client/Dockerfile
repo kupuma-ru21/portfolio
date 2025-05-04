@@ -1,4 +1,4 @@
-# REF: https://www.googlecloudcommunity.com/gc/Community-Blogs/No-servers-no-problem-A-guide-to-deploying-your-React/ba-p/690760
+2# REF: https://www.googlecloudcommunity.com/gc/Community-Blogs/No-servers-no-problem-A-guide-to-deploying-your-React/ba-p/690760
 # REF: https://pnpm.io/docker
 # Before running "gcloud builds submit -t ...", you have to login using "gcloud auth login" and "gcloud config set project ..."
 
@@ -6,9 +6,6 @@ FROM node:20-slim AS base
 
 RUN corepack enable
 WORKDIR /app
-
-FROM base AS prod-deps
-RUN pnpm install --prod
 
 FROM base AS build
 COPY . .
