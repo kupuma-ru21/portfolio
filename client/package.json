@@ -18,7 +18,7 @@
     "fix:prettier": "pnpm exec prettier . --write",
     "fix": "run-p fix:*",
     "//": "REF: https://the-guild.dev/graphql/codegen/docs/config-reference/require-field > Customize loaded env file",
-    "codegen": "DOTENV_CONFIG_PATH='../.env' graphql-codegen --require dotenv/config --config codegen.ts"
+    "codegen": "DOTENV_CONFIG_PATH='.env' graphql-codegen --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
