@@ -87,24 +87,6 @@ steps:
       - --platform
       - managed
       - --allow-unauthenticated
-substitutions:
-  # general
-  _REGION: _REGION
-  # client
-  _CLIENT_IMAGE: _CLIENT_IMAGE
-  _SERVICE: _SERVICE
-  _VITE_GRAPHQL_SCHEMA_URL: _VITE_GRAPHQL_SCHEMA_URL
-
-  # api
-  _ENV: _ENV
-  _POSTGRES_USER: _POSTGRES_USER
-  _POSTGRES_PASSWORD: _POSTGRES_PASSWORD
-  _POSTGRES_HOST: _POSTGRES_HOST
-  _POSTGRES_PORT: _POSTGRES_PORT
-  _POSTGRES_DB: _POSTGRES_DB
-  _PORT: _PORT
-  _API_IMAGE: _API_IMAGE
-  _API_SERVICE: _API_SERVICE
 
 options:
   logging: CLOUD_LOGGING_ONLY
