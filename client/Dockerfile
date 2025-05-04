@@ -10,7 +10,7 @@ WORKDIR /app
 FROM base AS build
 COPY . .
 RUN pnpm install
-RUN pnpm build:remix
+RUN pnpm build
 RUN rm -f .env
 
 FROM base
