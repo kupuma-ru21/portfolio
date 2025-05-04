@@ -57,6 +57,7 @@ steps:
           PORT=8080
           POSTGRES_USER=$(gcloud secrets versions access "projects/$PROJECT_ID/secrets/$_POSTGRES_USER/versions/latest")
           POSTGRES_PASSWORD=$(gcloud secrets versions access "projects/$PROJECT_ID/secrets/$_POSTGRES_PASSWORD/versions/latest")
+          POSTGRES_HOST=$(gcloud secrets versions access "projects/$PROJECT_ID/secrets/$_POSTGRES_HOST/versions/latest")
           JWT_SECRET_KEY=$(gcloud secrets versions access "projects/$PROJECT_ID/secrets/$_JWT_SECRET_KEY/versions/latest")
           EOF
 
