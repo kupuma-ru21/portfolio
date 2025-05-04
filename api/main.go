@@ -6,14 +6,12 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"portfolio-api/ent"
 	"portfolio-api/ent/migrate"
 	"portfolio-api/gqlgen"
 	"portfolio-api/gqlgen/directive"
 	"portfolio-api/gqlgen/resolvers"
 	"portfolio-api/middlewares/auth"
-	"runtime"
 
 	"entgo.io/ent/dialect"
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -24,18 +22,14 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	env := os.Getenv("ENV")
 	if env == "" {
 		log.Fatal("env is not set")
-	}
-
-	if env == "local" {
-		// NOTE: https://github.com/joho/godotenv/issues/17#issuecomment-751101201
-		_, file, _, _ := runtime.Caller(0)
-		err := godotenv.Load(filepath.Join(filepath.Dir(file), "../") + "/.env")
-		if err != nil {
-			log.Fatalln(err)
-		}
 	}
 
 	postgresUser := os.Getenv("POSTGRES_USER")
@@ -65,8 +59,7 @@ func main() {
 
 	var postgresqlUrl string
 
-	isDev := env == "local" || env == "docker"
-	if isDev {
+	if env == "development" {
 		postgresqlUrl = fmt.Sprintf(
 			"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 			postgresUser, postgresPassword, postgresHost,
