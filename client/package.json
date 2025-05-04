@@ -4,8 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "copy-env": "cp ../.env .env",
     "build": "remix vite:build",
-    "dev": "pnpm interface && pnpm codegen && remix vite:dev",
+    "dev:remix": "remix vite:dev",
+    "dev": "run-s copy-env interface codegen dev:remix",
     "eslint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
