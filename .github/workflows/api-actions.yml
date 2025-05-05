@@ -22,11 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 22.11.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.11.0
-
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
