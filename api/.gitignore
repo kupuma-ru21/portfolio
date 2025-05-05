@@ -1,1 +1,5 @@
 .env
+
+/ent/*
+!/ent/schema/
+!/ent/entc/
