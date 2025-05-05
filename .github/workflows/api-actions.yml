@@ -25,9 +25,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          # REF: https://github.com/actions/setup-go
-          # NOTE: Due to the peculiarities of YAML parsing, it is recommended to wrap the version in single quotation marks:
           go-version: "1.24.1"
+          cache: true
+          cache-dependency-path: |
+            **/go.sum
+            **/go.mod
 
       - name: Generate Go code
         run: make gen
