@@ -44,12 +44,18 @@ jobs:
       - name: Interface
         run: pnpm interface
 
+      - name: Create .env file
+        run: |
+          echo "VITE_GRAPHQL_SCHEMA_URL=${{ secrets.VITE_GRAPHQL_SCHEMA_URL }}" >> .env
+
+      - name: Build
+        run: pnpm build
+
+      - name: Remove .env file
+        run: rm .env
+
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Test
         run: pnpm test
-
-      - name: Build
-        run: pnpm build
-

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "copy-env": "cp ../.env .env",
-    "build": "remix vite:build",
+    "build:remix": "remix vite:build",
+    "build": "run-s codegen build:remix",
     "dev:remix": "remix vite:dev",
     "dev": "run-s copy-env interface codegen dev:remix",
     "eslint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -18,7 +19,7 @@
     "fix:prettier": "pnpm exec prettier . --write",
     "fix": "run-p fix:*",
     "//": "REF: https://the-guild.dev/graphql/codegen/docs/config-reference/require-field > Customize loaded env file",
-    "codegen": "DOTENV_CONFIG_PATH='../.env' graphql-codegen --require dotenv/config --config codegen.ts"
+    "codegen": "DOTENV_CONFIG_PATH='.env' graphql-codegen --verbose --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
