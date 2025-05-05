@@ -27,7 +27,7 @@ jobs:
         with:
           # REF: https://github.com/actions/setup-go
           # NOTE: Due to the peculiarities of YAML parsing, it is recommended to wrap the version in single quotation marks:
-          go-version: "1.23.2"
+          go-version: "1.24.1"
 
       - name: Generate Go code
         run: make gen
