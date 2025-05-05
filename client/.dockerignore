@@ -1,3 +1,6 @@
+# Ignore generated credentials from google-github-actions/auth
+# REF: https://github.com/google-github-actions/auth?tab=readme-ov-file#prerequisites
+gha-creds-*.json
 node_modules
 .git
 .gitignore
