@@ -1,6 +1,6 @@
 module portfolio-api
 
-go 1.24.1
+go 1.23.2
 
 require (
 	entgo.io/contrib v0.6.0
