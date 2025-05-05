@@ -15,6 +15,8 @@ RUN go mod download
 # https://docs.docker.com/reference/dockerfile/#copy
 COPY ./ ./
 
+RUN make gen
+
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /api
 
