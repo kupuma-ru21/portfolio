@@ -20,20 +20,8 @@ jobs:
   install:
     runs-on: ubuntu-latest
 
-    # REF: https://github.com/google-github-actions/auth?tab=readme-ov-file#usage
-    # Add "id-token" with the intended permissions.
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
     steps:
       - uses: actions/checkout@v4
-
-      # https://cloud.google.com/iam/docs/workload-identity-federation-with-other-providers
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-
 
       - name: Use Node.js 22.11.0
         uses: actions/setup-node@v4
