@@ -89,6 +89,7 @@ steps:
       - --platform
       - managed
       - --allow-unauthenticated
+    automapSubstitutions: true
 
 options:
   logging: CLOUD_LOGGING_ONLY
