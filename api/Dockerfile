@@ -2,7 +2,7 @@
 # REF: https://docs.docker.com/guides/golang/build-images/
 # REF: https://www.googlecloudcommunity.com/gc/Community-Blogs/No-servers-no-problem-A-guide-to-deploying-your-React/ba-p/690760
 
-FROM golang:1.23.2
+FROM golang:1.24.2
 
 # Set destination for COPY
 WORKDIR /app
