@@ -84,6 +84,8 @@ steps:
       - ${_API_IMAGE}
       - --region
       - ${_REGION}
+      - --update-secrets
+      - ENV=ENV:latest
       - --platform
       - managed
       - --allow-unauthenticated
