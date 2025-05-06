@@ -85,7 +85,7 @@ steps:
       - --region
       - ${_REGION}
       - --update-secrets
-      - POSTGRES_USER=POSTGRES_USER:latest
+      - POSTGRES_USER=${_POSTGRES_USER_SECRET}:latest
       - --platform
       - managed
       - --allow-unauthenticated
