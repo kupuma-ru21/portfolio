@@ -1,3 +1,16 @@
-<!-- TODO: https://github.com/kupuma-ru21/portfolio/issues/39 -->
+# Production URL
 
-- https://kupuma-ru21.com/
+https://kupuma-ru21.com/
+
+
+# Development Flow
+
+```
+cd api && make run
+```
+
+---
+
+```
+cd client && pnpm dev
+```
