@@ -68,10 +68,11 @@ steps:
       - ${_API_IMAGE}
       - --region
       - ${_REGION}
-      - --update-secrets
+      - --update-env-vars
       - ENV=prod
       - POSTGRES_PORT=5432
       - POSTGRES_DB=portfolio
+      - --update-secrets
       - POSTGRES_USER=${_POSTGRES_USER}:latest
       - POSTGRES_PASSWORD=${_POSTGRES_PASSWORD}:latest
       - POSTGRES_HOST=${_POSTGRES_HOST}:latest
