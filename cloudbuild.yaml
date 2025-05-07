@@ -72,7 +72,6 @@ steps:
       - ENV=prod
       - POSTGRES_PORT=5432
       - POSTGRES_DB=portfolio
-      - PORT=8080
       - POSTGRES_USER=${_POSTGRES_USER}:latest
       - POSTGRES_PASSWORD=${_POSTGRES_PASSWORD}:latest
       - POSTGRES_HOST=${_POSTGRES_HOST}:latest
