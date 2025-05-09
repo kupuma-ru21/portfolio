@@ -69,7 +69,7 @@ steps:
       - --region
       - ${_REGION}
       # REF: https://cloud.google.com/sdk/gcloud/reference/run/deploy
-      - --update-env-vars=ENV=prod,POSTGRES_PORT=5432,POSTGRES_DB=portfolio
+      - --update-env-vars=ENV=prod,POSTGRES_PORT=5432,POSTGRES_DB=portfolio,PORT=8080
       # - --update-secrets
       # - POSTGRES_USER=${_POSTGRES_USER}:latest
       # - POSTGRES_PASSWORD=${_POSTGRES_PASSWORD}:latest
