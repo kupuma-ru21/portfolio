@@ -42,6 +42,14 @@ docker-run-api:
 	docker run -d \
 		--name api \
 		--network portfolio \
+		-e ENV=$(ENV) \
+		-e POSTGRES_USER=$(POSTGRES_USER) \
+		-e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) \
+		-e POSTGRES_HOST=$(POSTGRES_HOST) \
+		-e POSTGRES_PORT=$(POSTGRES_PORT) \
+		-e POSTGRES_DB=$(POSTGRES_DB) \
+		-e PORT=$(PORT) \
+		-e JWT_SECRET_KEY=$(JWT_SECRET_KEY) \
 		-p 8080:$(PORT) \
 		api
 
