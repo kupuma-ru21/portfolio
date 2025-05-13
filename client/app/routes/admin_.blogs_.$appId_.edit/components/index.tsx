@@ -22,7 +22,7 @@ export const EditBlog = ({blog}: {blog: BlogQuery["blog"]}) => {
   return (
     <Box py="20px">
       <Heading as="h1" textAlign="center" mb="32px">
-        {t("Edit Application")}
+        {t("Edit Blog")}
       </Heading>
       <Form method="POST" style={{textAlign: "center"}}>
         <chakra.fieldset disabled={isSubmitting}>

@@ -27,7 +27,7 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
   }
 
   const t = await i18next.getFixedT(request, I18N);
-  const title = t("add-blog-post");
+  const title = t("Add Blog");
   return json({title});
 };
 

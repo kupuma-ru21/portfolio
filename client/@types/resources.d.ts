@@ -36,7 +36,7 @@ interface Resources {
     "Submit": "Submit"
   },
   "admin_add-blog-post": {
-    "add-blog-post": "Add Blog Post",
+    "Add Blog": "Add Blog",
     "title": "Title",
     "detail": "Detail",
     "post": "Post",
@@ -54,7 +54,7 @@ interface Resources {
     "Submit": "Submit"
   },
   "admin_apps_blog_id_edit": {
-    "Edit Application": "Edit Blog",
+    "Edit Blog": "Edit Blog",
     "Title": "Title",
     "Detail": "Detail",
     "Submit": "Submit",

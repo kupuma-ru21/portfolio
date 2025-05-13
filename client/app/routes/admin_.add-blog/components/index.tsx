@@ -15,13 +15,14 @@ import {Textarea} from "~/components/textarea";
 import {useModifyBlog} from "~/hooks/useModifyBlog";
 
 export const AddBlog = () => {
+  // rename admin_add-blog-post to admin_add_blog_post
   const {t} = useTranslation("admin_add-blog-post");
   const {isSubmitting, isDraftInputRef, saveAsDraft} = useModifyBlog();
 
   return (
     <Box py="20px">
       <Heading as="h1" textAlign="center" mb="32px">
-        {t("add-blog-post")}
+        {t("Add Blog")}
       </Heading>
       <Form method="POST" style={{textAlign: "center"}}>
         <chakra.fieldset disabled={isSubmitting}>

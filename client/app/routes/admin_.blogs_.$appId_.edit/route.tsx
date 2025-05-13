@@ -40,7 +40,7 @@ export const loader = async ({request, params}: LoaderFunctionArgs) => {
   if (error) throw get500ErrorResponse(error);
 
   const t = await i18next.getFixedT(request, I18N);
-  const title = t("Edit Application");
+  const title = t("Edit Blog");
   return json({title, blog});
 };
 
