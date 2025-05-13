@@ -1,4 +1,4 @@
-import {Flex, Icon, IconButton, Tooltip} from "@chakra-ui/react";
+import {Button, Flex, Icon, IconButton, Tooltip} from "@chakra-ui/react";
 import {Form} from "@remix-run/react";
 import {IoMdHome} from "react-icons/io";
 import {MdLogout} from "react-icons/md";
@@ -14,6 +14,12 @@ export const AdminHeader = () => {
     <Wrapper>
       <SwitchTheme />
       <Flex gap="16px">
+        <Button as={Link} to="/admin">
+          {t("admin-header.applications")}
+        </Button>
+        <Button as={Link} to="/admin/add-blog-post">
+          {t("admin-header.blog-posts")}
+        </Button>
         <Tooltip label={t("admin-header.Logout")}>
           <Form action="/logout" method="POST">
             <IconButton

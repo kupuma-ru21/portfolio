@@ -8,6 +8,11 @@
       "change-theme-color": "Change theme color"
     }
   },
-  "admin-header": {"Logout": "Logout", "Home": "Home"},
+  "admin-header": {
+    "Logout": "Logout",
+    "Home": "Home",
+    "applications": "Applications",
+    "blog-posts": "Blog Posts"
+  },
   "side-bar": {"home": "Home", "contact": "Contact", "about": "About"}
 }
