@@ -1,0 +1,11 @@
+extend type Query {
+  blogs: [Blog!]!
+  draftBlogs: [Blog!]!
+  blog(id: ID!): Blog!
+}
+
+extend type Mutation {
+  createBlog(input: CreateBlogInput!): ID!
+  updateBlog(id: ID!, input: UpdateBlogInput!): ID!
+  deleteBlog(id: ID!): ID!
+}
