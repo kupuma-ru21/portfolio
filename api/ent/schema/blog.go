@@ -13,6 +13,12 @@ type Blog struct {
 	ent.Schema
 }
 
+func (Blog) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		BaseMixin{},
+	}
+}
+
 // Fields of the Blog.
 func (Blog) Fields() []ent.Field {
 	return []ent.Field{
