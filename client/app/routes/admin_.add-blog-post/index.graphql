@@ -1,3 +1,0 @@
-mutation CreateBlog($input: CreateBlogInput!) {
-  createBlog(input: $input)
-}
