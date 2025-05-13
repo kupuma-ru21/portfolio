@@ -6,3 +6,7 @@ gen:
 
 run:
 	make gen && cp ../.env .env && go run ./main.go
+
+# make table table=Blog
+table:
+	go run -mod=mod entgo.io/ent/cmd/ent new $(table)
