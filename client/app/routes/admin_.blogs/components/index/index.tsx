@@ -1,7 +1,7 @@
 import {Box, Button, Flex, Heading} from "@chakra-ui/react";
 import {type SerializeFrom} from "@remix-run/node";
 import {type AdminBlogsQuery} from "gql/graphql";
-import {DeleteButton} from "../delete-app";
+import {DeleteButton} from "../delete-blog";
 import {useIndex} from "./useIndex";
 import {Card} from "~/components/card";
 import {Link} from "~/components/link";
