@@ -53,6 +53,9 @@ interface Resources {
     "Company": "Company",
     "Submit": "Submit"
   },
+  "admin_blogs": {
+    "Blogs": "Blogs"
+  },
   "common": {
     "header": {
       "resume": {

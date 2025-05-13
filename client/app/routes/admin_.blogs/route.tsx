@@ -5,8 +5,9 @@ import {
   json,
   type MetaFunction,
 } from "@remix-run/node";
-import {CreateBlogDocument} from "gql/graphql";
-import {AddBlog} from "./components/index/index";
+import {useLoaderData} from "@remix-run/react";
+import {AdminBlogsDocument, DeleteBlogDocument} from "gql/graphql";
+import {AdminBlogs} from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import {createMetaTitle} from "~/utils/createMetaTitle";
 import {get500ErrorResponse} from "~/utils/error/get500ErrorResponse";
@@ -16,19 +17,29 @@ import {apolloClient} from "~/utils/graphql";
 import {isLoggedIn} from "~/utils/isLoggedIn";
 
 export default function Route() {
-  return <AddBlog />;
+  const data = useLoaderData<typeof loader>();
+  return <AdminBlogs blogs={data.blogs} />;
 }
 
-const I18N = "admin_add-blog-post";
+const I18N = "admin_blogs";
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   if (!(await isLoggedIn(request.headers.get("cookie")))) {
+    // TODO: wanna add type to path
     return redirect("/login");
   }
 
+  // TODO: create fetchBlogs in utils
+  const {
+    data: {blogs},
+    error,
+  } = await apolloClient.query({query: AdminBlogsDocument});
+  if (error) throw get500ErrorResponse(error);
+
   const t = await i18next.getFixedT(request, I18N);
-  const title = t("add-blog-post");
-  return json({title});
+  const title = t("Blogs");
+
+  return json({blogs, title});
 };
 
 export const action = async ({request}: ActionFunctionArgs) => {
@@ -38,22 +49,18 @@ export const action = async ({request}: ActionFunctionArgs) => {
   ]);
 
   const {errors} = await apolloClient.mutate({
-    mutation: CreateBlogDocument,
-    variables: {
-      input: {
-        title: String(formData.get("title")),
-        detail: String(formData.get("detail")),
-        isDraft: formData.get("isDraft") === "true",
-      },
-    },
+    mutation: DeleteBlogDocument,
+    variables: {id: String(formData.get("blogId"))},
     context: getContext({token}),
+    refetchQueries: [{query: AdminBlogsDocument}],
   });
   if (errors) throw get500ErrorResponse(errors[0]);
-  return redirect("/admin/blogs");
-};
 
-export const handle = {isAdmin: true, i18n: I18N};
+  return null;
+};
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: createMetaTitle(data?.title ?? "")}];
 };
+
+export const handle = {isAdmin: true, i18n: I18N};
