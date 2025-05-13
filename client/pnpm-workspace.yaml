@@ -1,0 +1,6 @@
+# NOTE: vscode-eslint doesn't work without this file > https://github.com/microsoft/vscode-eslint/issues/1986#issuecomment-2799868163
+packages:
+  - "."
+
+publicHoistPattern:
+  - "*eslint*"
