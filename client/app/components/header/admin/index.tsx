@@ -17,7 +17,7 @@ export const AdminHeader = () => {
         <Button as={Link} to="/admin">
           {t("admin-header.applications")}
         </Button>
-        <Button as={Link} to="/admin/add-blog-post">
+        <Button as={Link} to="/admin/blogs">
           {t("admin-header.blog-posts")}
         </Button>
         <Tooltip label={t("admin-header.Logout")}>

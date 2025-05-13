@@ -1,0 +1,12 @@
+query AdminBlogs {
+  blogs {
+    id
+    title
+    detail
+    createdAt
+  }
+}
+
+mutation DeleteBlog($id: ID!) {
+  deleteBlog(id: $id)
+}
