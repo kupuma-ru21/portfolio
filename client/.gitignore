@@ -4,3 +4,5 @@ node_modules
 /build
 .env
 gql
+
+@types/resources.d.ts
