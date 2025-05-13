@@ -29,7 +29,7 @@ export const AddApp = () => {
           <Flex
             direction="column"
             justifyContent="center"
-            w="fit-content"
+            w={{base: "300px", md: "700px"}}
             m="auto"
             gap="24px"
             mb="54px"
