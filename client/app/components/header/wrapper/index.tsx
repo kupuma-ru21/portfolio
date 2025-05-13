@@ -11,7 +11,7 @@ export const Wrapper = ({children}: {children: ReactNode}) => {
       position="sticky"
       top={0}
       bgColor={useColorModeValue("white", "black")}
-      zIndex={1}
+      zIndex={2}
     >
       {children}
     </chakra.header>
