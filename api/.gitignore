@@ -4,3 +4,4 @@
 !/ent/schema/
 !/ent/entc/
 gqlgen/generated.go
+ent.graphql
