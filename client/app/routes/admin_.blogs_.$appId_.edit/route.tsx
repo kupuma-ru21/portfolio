@@ -7,7 +7,7 @@ import {
 } from "@remix-run/node";
 import {useLoaderData} from "@remix-run/react";
 import {BlogDocument, UpdateBlogDocument} from "gql/graphql";
-import {EditBlog} from "./components/index/index";
+import {EditBlog} from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import {createMetaTitle} from "~/utils/createMetaTitle";
 import {get500ErrorResponse} from "~/utils/error/get500ErrorResponse";

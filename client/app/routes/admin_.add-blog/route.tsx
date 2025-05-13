@@ -6,7 +6,7 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 import {CreateBlogDocument} from "gql/graphql";
-import {AddBlog} from "./components/index/index";
+import {AddBlog} from "./components/index";
 import i18next from "~/i18n/i18next.server";
 import {createMetaTitle} from "~/utils/createMetaTitle";
 import {get500ErrorResponse} from "~/utils/error/get500ErrorResponse";

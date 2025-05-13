@@ -1,4 +1,3 @@
-import {useRef} from "react";
 import {
   chakra,
   Box,
@@ -9,19 +8,15 @@ import {
   Button,
 } from "@chakra-ui/react";
 import {Form} from "@remix-run/react";
-import {useIndex} from "./useIndex";
+import {useTranslation} from "react-i18next";
 import {Input} from "~/components/input";
 import {SubmitButton} from "~/components/submit-button";
 import {Textarea} from "~/components/textarea";
+import {useModifyBlog} from "~/hooks/useModifyBlog";
 
 export const AddBlog = () => {
-  const {t, isSubmitting} = useIndex();
-  const isDraftInputRef = useRef<HTMLInputElement>(null);
-
-  const saveAsDraft = () => {
-    if (!isDraftInputRef.current) return;
-    isDraftInputRef.current.value = "true";
-  };
+  const {t} = useTranslation("admin_add-blog-post");
+  const {isSubmitting, isDraftInputRef, saveAsDraft} = useModifyBlog();
 
   return (
     <Box py="20px">
