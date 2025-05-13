@@ -63,7 +63,7 @@ export const action = async ({request, params}: ActionFunctionArgs) => {
     context: getContext({token}),
   });
   if (errors) throw get500ErrorResponse(errors[0]);
-  return redirect("/admin");
+  return redirect("/admin/blogs");
 };
 
 export const handle = {isAdmin: true, i18n: I18N};
