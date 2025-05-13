@@ -15,7 +15,7 @@ import {Textarea} from "~/components/textarea";
 import {useModifyBlog} from "~/hooks/useModifyBlog";
 
 export const AddBlog = () => {
-  // rename admin_add-blog-post to admin_add_blog_post
+  // TODO: rename admin_add-blog-post to admin_add_blog_post
   const {t} = useTranslation("admin_add-blog-post");
   const {isSubmitting, isDraftInputRef, saveAsDraft} = useModifyBlog();
 
