@@ -1,0 +1,11 @@
+query Blog($id: ID!) {
+  blog(id: $id) {
+    id
+    title
+    detail
+  }
+}
+
+mutation UpdateBlog($id: ID!, $input: UpdateBlogInput!) {
+  updateBlog(id: $id, input: $input)
+}

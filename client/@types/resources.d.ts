@@ -53,6 +53,14 @@ interface Resources {
     "Company": "Company",
     "Submit": "Submit"
   },
+  "admin_apps_blog_id_edit": {
+    "Edit Application": "Edit Blog",
+    "Title": "Title",
+    "Detail": "Detail",
+    "Submit": "Submit",
+    "Post": "Post",
+    "Save as Draft": "Save As Draft"
+  },
   "admin_blogs": {
     "Blogs": "Blogs"
   },
