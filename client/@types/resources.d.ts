@@ -35,6 +35,13 @@ interface Resources {
     "Company": "Company",
     "Submit": "Submit"
   },
+  "admin_add-blog-post": {
+    "add-blog-post": "Add Blog Post",
+    "title": "Title",
+    "detail": "Detail",
+    "post": "Post",
+    "save-as-draft": "Save As Draft"
+  },
   "admin_apps_app-id_edit": {
     "Edit Application": "Edit Application",
     "Title": "Title",
@@ -66,7 +73,9 @@ interface Resources {
     },
     "admin-header": {
       "Logout": "Logout",
-      "Home": "Home"
+      "Home": "Home",
+      "applications": "Applications",
+      "blog-posts": "Blog Posts"
     },
     "side-bar": {
       "home": "Home",

@@ -8,6 +8,11 @@
       "change-theme-color": "テーマの色を変更する"
     }
   },
-  "admin-header": {"Logout": "ログアウト", "Home": "ホーム"},
+  "admin-header": {
+    "Logout": "ログアウト",
+    "Home": "ホーム",
+    "applications": "アプリ一覧",
+    "blog-posts": "記事一覧"
+  },
   "side-bar": {"home": "ホーム", "contact": "問い合わせ", "about": "about"}
 }
