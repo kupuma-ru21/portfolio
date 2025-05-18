@@ -8,4 +8,4 @@ export default function Route() {
   return <NotFound />;
 }
 
-export const handle = {i18n: "not-found"};
+export const handle = {i18n: "not_found"};
