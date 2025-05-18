@@ -19,7 +19,7 @@ export default function Route() {
   return <AddBlog />;
 }
 
-const I18N = "admin_add-blog-post";
+const I18N = "admin_add_blog";
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   if (!(await isLoggedIn(request.headers.get("cookie")))) {

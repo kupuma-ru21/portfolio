@@ -28,7 +28,7 @@ export default function Route() {
   return <EditApp app={{...app, ...getFragmentData(AppFragmentDoc, app)}} />;
 }
 
-const I18N = "admin_apps_app-id_edit";
+const I18N = "admin_apps_app_id_edit";
 
 export const loader = async ({request, params}: LoaderFunctionArgs) => {
   if (!(await isLoggedIn(request.headers.get("cookie")))) {
