@@ -1,18 +1,18 @@
 {
   "header": {
-    "resume": {"abbr": "Open Resume", "aria-label": "resume"},
-    "contact": {"abbr": "Move to contact page", "aria-label": "contact"},
-    "theme": {"aria-label": "theme"},
-    "menu": {
-      "aria-label": "Menu",
-      "change-theme-color": "Change theme color"
-    }
+    "resume": {"Open Resume": "Open Resume", "Resume": "Resume"},
+    "contact": {
+      "Move to Contact Page": "Move to Contact Page",
+      "Contact": "Contact"
+    },
+    "Theme": "Theme",
+    "menu": {"Menu": "Menu", "Change Theme Color": "Change Theme Color"}
   },
   "admin-header": {
     "Logout": "Logout",
     "Home": "Home",
-    "applications": "Applications",
-    "blog-posts": "Blog Posts"
+    "Applications": "Applications",
+    "Blog Posts": "Blog Posts"
   },
-  "side-bar": {"home": "Home", "contact": "Contact", "about": "About"}
+  "side-bar": {"Home": "Home", "Contact": "Contact", "About": "About"}
 }
