@@ -2,7 +2,7 @@ import {useNavigation} from "@remix-run/react";
 import {useTranslation} from "react-i18next";
 
 export const useIndex = () => {
-  const {t} = useTranslation("admin_apps_app-id_edit");
+  const {t} = useTranslation("admin_apps_app_id_edit");
 
   const {state} = useNavigation();
   const isSubmitting = state === "submitting" || state === "loading";
