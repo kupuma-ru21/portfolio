@@ -19,7 +19,7 @@ export default function Route() {
   return <AddApp />;
 }
 
-const I18N = "admin_add-app";
+const I18N = "admin_add_app";
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   if (!(await isLoggedIn(request.headers.get("cookie")))) {
