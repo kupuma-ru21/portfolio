@@ -18,10 +18,10 @@ export const About = () => {
         {t("About")}
       </Heading>
       <Heading mb="56px" fontWeight={600} fontSize="3xl" textAlign="center">
-        {t("description")}
+        {t("Let me introduce myself!")}
       </Heading>
       <Heading as="h3" mb="16px">
-        {t("I like to do")}
+        {t("I like to do...")}
       </Heading>
       <List spacing="24px">
         {hobbies.map(({icon, title, descriptions}) => {

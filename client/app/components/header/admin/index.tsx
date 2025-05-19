@@ -15,10 +15,10 @@ export const AdminHeader = () => {
       <SwitchTheme />
       <Flex gap="16px">
         <Button as={Link} to="/admin">
-          {t("admin-header.applications")}
+          {t("admin-header.Applications")}
         </Button>
         <Button as={Link} to="/admin/blogs">
-          {t("admin-header.blog-posts")}
+          {t("admin-header.Blog Posts")}
         </Button>
         <Tooltip label={t("admin-header.Logout")}>
           <Form action="/logout" method="POST">

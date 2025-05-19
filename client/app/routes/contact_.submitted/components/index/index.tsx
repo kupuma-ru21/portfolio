@@ -8,16 +8,16 @@ export const ContactSubmitted = () => {
   return (
     <Box py="20px" textAlign="center">
       <Heading as="h1" mb="32px" fontSize={{base: "2xl", md: "4xl"}}>
-        {t("submitted.title")}
+        {t("submitted.Thank you for your message!")}
       </Heading>
       <Heading
         fontWeight={600}
         fontSize={{base: "-moz-initial", md: "3xl"}}
         mb="56px"
       >
-        {t("submitted.content")}
+        {t("submitted.Your message has been sent.")}
       </Heading>
-      <MoveToHomeButton>{t("submitted.move-to-home")}</MoveToHomeButton>
+      <MoveToHomeButton>{t("submitted.Move to Home")}</MoveToHomeButton>
     </Box>
   );
 };

@@ -34,7 +34,7 @@ export const Header = () => {
             icon={
               <Icon
                 as={CiMenuBurger}
-                aria-label={t("header.menu.aria-label")}
+                aria-label={t("header.menu.Menu")}
               />
             }
           />
@@ -56,21 +56,21 @@ export const Header = () => {
           aria-label="linkedin"
           iconType={FaLinkedin}
         />
-        <Tooltip label={t("header.resume.abbr")}>
+        <Tooltip label={t("header.resume.Open Resume")}>
           <div>
             <ExternalIconLink
               href="/resume.pdf"
-              aria-label={t("header.resume.aria-label")}
+              aria-label={t("header.resume.Resume")}
               iconType={FaFilePdf}
             />
           </div>
         </Tooltip>
-        <Tooltip label={t("header.contact.abbr")}>
+        <Tooltip label={t("header.contact.Move to Contact Page")}>
           <div>
             <IconButton
               as={Link}
               to="/contact"
-              aria-label={t("header.contact.aria-label")}
+              aria-label={t("header.contact.Contact")}
               icon={<Icon as={MdOutlineMailOutline} boxSize="24px" />}
               colorScheme="teal"
             />

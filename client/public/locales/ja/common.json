@@ -1,18 +1,18 @@
 {
   "header": {
-    "resume": {"abbr": "職務経歴書を開く", "aria-label": "職務経歴書"},
-    "contact": {"abbr": "問い合わせページへ移動", "aria-label": "問い合わせ"},
-    "theme": {"aria-label": "テーマ色"},
-    "menu": {
-      "aria-label": "メニュー",
-      "change-theme-color": "テーマの色を変更する"
-    }
+    "resume": {"Open Resume": "職務経歴書を開く", "Resume": "職務経歴書"},
+    "contact": {
+      "Move to Contact Page": "問い合わせページへ移動",
+      "Contact": "問い合わせ"
+    },
+    "Theme": "テーマ色",
+    "menu": {"Menu": "メニュー", "Change Theme Color": "テーマの色を変更する"}
   },
   "admin-header": {
     "Logout": "ログアウト",
     "Home": "ホーム",
-    "applications": "アプリ一覧",
-    "blog-posts": "記事一覧"
+    "Applications": "アプリ一覧",
+    "Blog Posts": "記事一覧"
   },
-  "side-bar": {"home": "ホーム", "contact": "問い合わせ", "about": "about"}
+  "side-bar": {"Home": "ホーム", "Contact": "問い合わせ", "About": "About"}
 }

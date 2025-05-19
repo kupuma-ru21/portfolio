@@ -1,19 +1,19 @@
 {
   "About": "About",
   "description": "自己紹介",
-  "I like to do": "趣味",
-  "software development": {
-    "title": "ソフトウェア開発",
-    "description": "特に保守性とパフォーマンスの向上に興味があります。例えば、このプロジェクトではavif画像のみを使用しています。jpg、pngなどと比較して、画像の読み込み時間が短縮される傾向があるからです。"
+  "I like to do...": "趣味",
+  "software-development": {
+    "Software Development": "ソフトウェア開発",
+    "I'm especially interested in how to improve maintainability and performance. For example, I've used just avif images in this project cuz it's better in performance than jpg, png and things like that.": "特に保守性とパフォーマンスの向上に興味があります。例えば、このプロジェクトではavif画像のみを使用しています。jpg、pngなどと比較して、画像の読み込み時間が短縮される傾向があるからです。"
   },
-  "reading comics and watching anime": {
-    "title": "アニメ鑑賞と漫画を読む",
-    "description1": "NetFlixとジャンプを手放せないです",
-    "description2": "以下のアニメが好きです:",
-    "description3": "PSYCHO-PASS, ハイキュー, 呪術廻戦, Naruto, One Piece, 進撃の巨人など"
+  "reading-comics-and-watching-anime": {
+    "Reading comics and watching anime": "アニメ鑑賞と漫画を読む",
+    "I'm a big fan of anime and comics. I've read countless comics and anime.": "NetFlixとジャンプを手放せないです",
+    "Anime like below are my favorite:": "以下のアニメが好きです:",
+    "PSYCHO-PASS, Haikyu, JujutsuKaisen, Naruto, One Piece, Attack on Titan and so on.": "PSYCHO-PASS, ハイキュー, 呪術廻戦, Naruto, One Piece, 進撃の巨人など"
   },
-  "going to a restaurant": {
-    "title": "レストラン巡り",
-    "description": "食べることが好きです。特に他国の料理が好きです。食べ物を通じて、その国の文化を学ぶことができるからです。"
+  "going-to-restaurants": {
+    "Going to restaurants": "レストラン巡り",
+    "I love to eat a food from other countries cuz through the food, I can learn about the culture of the country. It really broadens my horizons.": "食べることが好きです。特に他国の料理が好きです。食べ物を通じて、その国の文化を学ぶことができるからです。"
   }
 }

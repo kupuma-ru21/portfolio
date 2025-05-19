@@ -9,7 +9,7 @@ export const SwitchTheme = () => {
     <IconButton
       onClick={changeThemeColor}
       icon={<Icon as={useColorModeValue(CiLight, CiDark)} boxSize="24px" />}
-      aria-label={t("header.theme.aria-label")}
+      aria-label={t("header.Theme")}
     />
   );
 };

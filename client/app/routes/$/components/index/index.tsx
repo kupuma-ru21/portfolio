@@ -8,9 +8,9 @@ export const NotFound = () => {
   return (
     <Box py="20px" textAlign="center">
       <Heading as="h1" mb="56px">
-        {t("page-not-found")}
+        {t("Page Not Found")}
       </Heading>
-      <MoveToHomeButton>{t("move-to-home")}</MoveToHomeButton>
+      <MoveToHomeButton>{t("Move to Home")}</MoveToHomeButton>
     </Box>
   );
 };
