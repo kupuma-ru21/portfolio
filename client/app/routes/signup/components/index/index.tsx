@@ -13,7 +13,7 @@ export const Signup = () => {
             <Input
               type="email"
               name="email"
-              placeholder={t("Email")}
+              placeholder={t("example@email.com")}
               w={{base: "300px", md: "600px"}}
               isRequired
               autoComplete="true"
