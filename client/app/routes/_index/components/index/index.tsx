@@ -27,7 +27,7 @@ export const Index = ({
           </Text>
           <Text as="strong">{t("Koichi Kimura,")}</Text>
           <Text as="span" fontWeight={400} display="block">
-            {t("a Frontend developer")} 👋
+            {t("a Full-Stack Developer")} 👋
           </Text>
         </Heading>
         <Image
