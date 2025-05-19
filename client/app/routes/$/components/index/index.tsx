@@ -10,7 +10,7 @@ export const NotFound = () => {
       <Heading as="h1" mb="56px">
         {t("Page Not Found")}
       </Heading>
-      <MoveToHomeButton>{t("Move to home")}</MoveToHomeButton>
+      <MoveToHomeButton>{t("Move to Home")}</MoveToHomeButton>
     </Box>
   );
 };

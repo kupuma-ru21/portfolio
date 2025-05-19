@@ -17,7 +17,7 @@ export const ContactSubmitted = () => {
       >
         {t("submitted.Your message has been sent.")}
       </Heading>
-      <MoveToHomeButton>{t("submitted.Move to home")}</MoveToHomeButton>
+      <MoveToHomeButton>{t("submitted.Move to Home")}</MoveToHomeButton>
     </Box>
   );
 };
