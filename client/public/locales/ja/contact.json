@@ -5,8 +5,8 @@
   "Content": "内容",
   "Submit": "送信",
   "submitted": {
-    "title": "メッセージありがとうございます！",
-    "content": "メッセージを送信しました。",
-    "move-to-home": "ホームへ移動"
+    "Thank you for your message!": "メッセージありがとうございます！",
+    "Your message has been sent.": "メッセージを送信しました。",
+    "Move to home": "ホームへ移動"
   }
 }

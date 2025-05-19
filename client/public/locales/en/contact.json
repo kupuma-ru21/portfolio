@@ -5,8 +5,8 @@
   "Content": "Content",
   "Submit": "Submit",
   "submitted": {
-    "title": "Thank you for your message!",
-    "content": "Your message has been sent.",
-    "move-to-home": "Move to home"
+    "Thank you for your message!": "Thank you for your message!",
+    "Your message has been sent.": "Your message has been sent.",
+    "Move to home": "Move to home"
   }
 }
