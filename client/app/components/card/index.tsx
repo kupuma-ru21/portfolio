@@ -1,25 +1,45 @@
-import {type ReactNode} from "react";
-import {Card as CardBase, CardBody, Stack, Text} from "@chakra-ui/react";
-import {Footer} from "./footer";
-import {Heading} from "./heading";
-import {Image} from "./image";
+import {
+  Card as CardBase,
+  Image,
+  Stack,
+  type ImageProps,
+  type CardProps,
+  CardBody,
+  Heading,
+  type HeadingProps,
+  Text,
+  type CardFooterProps,
+  CardFooter,
+} from "@chakra-ui/react";
 
-// TODO: refactor structure of Card
-export const Card = ({children}: {children: ReactNode}) => {
-  return (
-    <CardBase
-      direction={{base: "column", md: "row"}}
-      overflow="hidden"
-      variant="outline"
-    >
-      {children}
-    </CardBase>
-  );
+export const Card = {
+  Root: (props: CardProps) => {
+    return (
+      <CardBase
+        {...props}
+        direction={{base: "column", md: "row"}}
+        overflow="hidden"
+        variant="outline"
+      />
+    );
+  },
+  Image: (props: ImageProps) => {
+    return (
+      <Image
+        {...props}
+        objectFit="cover"
+        maxW={{base: "100%", md: "200px"}}
+        maxH="200px"
+      />
+    );
+  },
+  Stack,
+  Body: CardBody,
+  Heading: (props: HeadingProps) => {
+    return <Heading {...props} size="md" />;
+  },
+  Text,
+  Footer: (props: CardFooterProps) => {
+    return <CardFooter {...props} gap="8px" />;
+  },
 };
-
-Card.Image = Image;
-Card.Stack = Stack;
-Card.Body = CardBody;
-Card.Heading = Heading;
-Card.Text = Text;
-Card.Footer = Footer;

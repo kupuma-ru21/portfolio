@@ -27,7 +27,7 @@ export const Admin = ({apps}: {apps: AppFragment[]}) => {
         <Flex direction="column" gap="16px">
           {apps.map(({id, title, detail, imageURL}) => {
             return (
-              <Card key={id}>
+              <Card.Root key={id}>
                 <Card.Image src={imageURL} alt={title} />
                 <Card.Stack>
                   <Card.Body>
@@ -46,7 +46,7 @@ export const Admin = ({apps}: {apps: AppFragment[]}) => {
                     <DeleteButton id={id} />
                   </Card.Footer>
                 </Card.Stack>
-              </Card>
+              </Card.Root>
             );
           })}
         </Flex>

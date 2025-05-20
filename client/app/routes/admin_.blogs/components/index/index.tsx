@@ -32,7 +32,7 @@ export const AdminBlogs = ({
         <Flex direction="column" gap="16px">
           {blogs.map(({id, title}) => {
             return (
-              <Card key={id}>
+              <Card.Root key={id}>
                 <Card.Stack>
                   <Card.Body>
                     <Card.Heading>{title}</Card.Heading>
@@ -49,7 +49,7 @@ export const AdminBlogs = ({
                     <DeleteButton id={id} />
                   </Card.Footer>
                 </Card.Stack>
-              </Card>
+              </Card.Root>
             );
           })}
         </Flex>
