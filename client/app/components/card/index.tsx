@@ -4,6 +4,7 @@ import {Footer} from "./footer";
 import {Heading} from "./heading";
 import {Image} from "./image";
 
+// TODO: refactor structure of Card
 export const Card = ({children}: {children: ReactNode}) => {
   return (
     <CardBase
