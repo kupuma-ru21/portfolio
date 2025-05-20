@@ -34,7 +34,7 @@ export const loader = async ({request, params}: LoaderFunctionArgs) => {
     error,
   } = await apolloClient.query({
     query: BlogDocument,
-    variables: {id: params.appId || ""},
+    variables: {id: params.blogId || ""},
     context: getContext({token}),
   });
   if (error) throw get500ErrorResponse(error);
@@ -53,7 +53,7 @@ export const action = async ({request, params}: ActionFunctionArgs) => {
   const {errors} = await apolloClient.mutate({
     mutation: UpdateBlogDocument,
     variables: {
-      id: params.appId || "",
+      id: params.blogId || "",
       input: {
         title: String(formData.get("title")),
         detail: String(formData.get("detail")),
