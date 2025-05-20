@@ -47,7 +47,7 @@ export const Index = ({
         <Flex direction="column" gap="16px">
           {apps.map(({id, imageURL, title, detail, link, linkType}) => {
             return (
-              <Card key={id}>
+              <Card.Root key={id}>
                 <Card.Image src={imageURL} alt={title} />
                 <CardContent
                   title={title}
@@ -59,7 +59,7 @@ export const Index = ({
                       : t("Move to company site")
                   }
                 />
-              </Card>
+              </Card.Root>
             );
           })}
         </Flex>
