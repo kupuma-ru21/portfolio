@@ -30,13 +30,12 @@ export const AdminBlogs = ({
           </Button>
         </Flex>
         <Flex direction="column" gap="16px">
-          {blogs.map(({id, title, detail}) => {
+          {blogs.map(({id, title}) => {
             return (
               <Card key={id}>
                 <Card.Stack>
                   <Card.Body>
                     <Card.Heading>{title}</Card.Heading>
-                    <Card.Text>{detail}</Card.Text>
                   </Card.Body>
                   <Card.Footer>
                     <Button
