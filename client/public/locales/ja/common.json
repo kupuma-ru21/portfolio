@@ -1,10 +1,6 @@
 {
   "header": {
     "resume": {"Open Resume": "職務経歴書を開く", "Resume": "職務経歴書"},
-    "contact": {
-      "Move to Contact Page": "問い合わせページへ移動",
-      "Contact": "問い合わせ"
-    },
     "Theme": "テーマ色",
     "menu": {"Menu": "メニュー", "Change Theme Color": "テーマの色を変更する"}
   },
@@ -14,5 +10,5 @@
     "Applications": "アプリ一覧",
     "Blog Posts": "記事一覧"
   },
-  "side-bar": {"Home": "ホーム", "Contact": "問い合わせ", "About": "About"}
+  "side-bar": {"Home": "ホーム", "About": "About"}
 }

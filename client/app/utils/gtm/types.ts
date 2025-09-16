@@ -1,3 +1,1 @@
-export type GTMPayload = {
-  action: "contact";
-};
+export type GTMPayload = object;

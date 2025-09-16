@@ -10,13 +10,11 @@ import {
 } from "@chakra-ui/react";
 import {CiMenuBurger} from "react-icons/ci";
 import {FaGithub, FaLinkedin, FaFilePdf} from "react-icons/fa";
-import {MdOutlineMailOutline} from "react-icons/md";
 import {SwitchTheme} from "../../switch-theme";
 import {Wrapper} from "../../wrapper";
 import {ExternalIconLink} from "../external-icon-link";
 import {useIndex} from "./useIndex";
 import {useGetLinks} from "~/components/hooks/useGetLinks";
-import {Link} from "~/components/link";
 import {NavLink} from "~/components/nav-link";
 
 export const Header = () => {
@@ -31,12 +29,7 @@ export const Header = () => {
           <MenuButton
             display={{base: "block", md: "none"}}
             as={IconButton}
-            icon={
-              <Icon
-                as={CiMenuBurger}
-                aria-label={t("header.menu.Menu")}
-              />
-            }
+            icon={<Icon as={CiMenuBurger} aria-label={t("header.menu.Menu")} />}
           />
           <MenuList display={{base: "block", md: "none"}}>
             {links.map((link) => {
@@ -62,17 +55,6 @@ export const Header = () => {
               href="/resume.pdf"
               aria-label={t("header.resume.Resume")}
               iconType={FaFilePdf}
-            />
-          </div>
-        </Tooltip>
-        <Tooltip label={t("header.contact.Move to Contact Page")}>
-          <div>
-            <IconButton
-              as={Link}
-              to="/contact"
-              aria-label={t("header.contact.Contact")}
-              icon={<Icon as={MdOutlineMailOutline} boxSize="24px" />}
-              colorScheme="teal"
             />
           </div>
         </Tooltip>
