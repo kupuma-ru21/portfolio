@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect,} from "react";
 import {Box, Divider, Flex, Heading, Image, Text} from "@chakra-ui/react";
 import {AppLinkType, type AppFragment} from "gql/graphql";
 import {CardContent} from "../card-body";
@@ -15,7 +15,10 @@ export const Index = ({
   const {sendToGTM, eventFiredRef} = useGTM();
   useEffect(() => {
     if (eventFiredRef.current) return;
-    sendToGTM({event: "page_view", user_id: "user_id"});
+    sendToGTM({
+      event: "page_view",
+      user_id: Math.round(Math.random() * 100000).toString(),
+    });
     eventFiredRef.current = true;
   }, [eventFiredRef, sendToGTM]);
 
