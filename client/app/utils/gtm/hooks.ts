@@ -1,5 +1,8 @@
+import {useRef} from "react";
 import {sendToGTM} from ".";
 
 export function useGTM() {
-  return {sendToGTM};
+  const eventFiredRef = useRef(false);
+
+  return {sendToGTM, eventFiredRef};
 }
