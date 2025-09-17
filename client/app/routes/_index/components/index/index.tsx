@@ -1,8 +1,10 @@
+import {useEffect} from "react";
 import {Box, Divider, Flex, Heading, Image, Text} from "@chakra-ui/react";
 import {AppLinkType, type AppFragment} from "gql/graphql";
 import {CardContent} from "../card-body";
 import {useIndex} from "./useIndex";
 import {Card} from "~/components/card";
+import {useGTM} from "~/utils/gtm/hooks";
 
 export const Index = ({
   apps,
@@ -10,6 +12,12 @@ export const Index = ({
   apps: (AppFragment & {link: string; linkType: AppLinkType})[];
 }) => {
   const {t} = useIndex();
+  const {sendToGTM, eventFiredRef} = useGTM();
+  useEffect(() => {
+    if (eventFiredRef.current) return;
+    sendToGTM({event: "page_view", user_id: "user_id"});
+    eventFiredRef.current = true;
+  }, [eventFiredRef, sendToGTM]);
 
   return (
     <Box py="20px">
