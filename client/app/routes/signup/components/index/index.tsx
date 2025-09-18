@@ -15,17 +15,17 @@ export const Signup = () => {
               name="email"
               placeholder={t("example@email.com")}
               w={{base: "300px", md: "600px"}}
-              isRequired
+              required
               autoComplete="true"
             />
             <Input
               type="password"
               name="password"
               w={{base: "300px", md: "600px"}}
-              isRequired
+              required
               min={8}
             />
-            <SubmitButton isLoading={isSubmitting}>{t("Signup")}</SubmitButton>
+            <SubmitButton loading={isSubmitting}>{t("Signup")}</SubmitButton>
           </VStack>
         </fieldset>
       </Form>

@@ -19,21 +19,21 @@ export const CardContent = ({
     <Card.Stack>
       <Card.Body>
         <Card.Heading>{title}</Card.Heading>
-        <Card.Text noOfLines={noOfLines}>{detail}</Card.Text>
+        <Card.Text lineClamp={noOfLines}>{detail}</Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Button onClick={showFullDetail} w="110px">
+        <Button
+          onClick={showFullDetail}
+          w="110px"
+          bgColor="#EDF2F7"
+          color="black"
+        >
           {noOfLines === undefined ? t("Fold") : t("Read more")}
         </Button>
-        <Button
-          as="a"
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          variant="solid"
-          colorScheme="teal"
-        >
-          {linkText}
+        <Button variant="solid" bgColor="#319795">
+          <a href={href} target="_blank" rel="noreferrer">
+            {linkText}
+          </a>
         </Button>
       </Card.Footer>
     </Card.Stack>

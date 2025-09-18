@@ -20,13 +20,8 @@ export const AdminBlogs = ({
           <Heading mb="16px" textAlign="center" fontWeight={600}>
             {t("Blogs")}
           </Heading>
-          <Button
-            as={Link}
-            to="/admin/add-blog"
-            variant="solid"
-            colorScheme="teal"
-          >
-            Add
+          <Button asChild variant="solid" colorScheme="teal">
+            <Link to="/admin/add-blog">Add</Link>
           </Button>
         </Flex>
         <Flex direction="column" gap="16px">
@@ -38,13 +33,8 @@ export const AdminBlogs = ({
                     <Card.Heading>{title}</Card.Heading>
                   </Card.Body>
                   <Card.Footer>
-                    <Button
-                      as={Link}
-                      to={`/admin/blogs/${id}/edit`}
-                      variant="solid"
-                      colorScheme="green"
-                    >
-                      Edit
+                    <Button asChild variant="solid" colorScheme="green">
+                      <Link to={`/admin/blogs/${id}/edit`}>Edit</Link>
                     </Button>
                     <DeleteButton id={id} />
                   </Card.Footer>

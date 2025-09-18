@@ -7,7 +7,7 @@ export const useIndex = () => {
 
   const hobbies = [
     {
-      icon: FaLaptop,
+      icon: <FaLaptop />,
       title: t("software-development.Software Development"),
       descriptions: [
         t(
@@ -16,7 +16,7 @@ export const useIndex = () => {
       ],
     },
     {
-      icon: FaBook,
+      icon: <FaBook />,
       title: t(
         "reading-comics-and-watching-anime.Reading comics and watching anime",
       ),
@@ -33,7 +33,7 @@ export const useIndex = () => {
       ],
     },
     {
-      icon: IoFastFoodOutline,
+      icon: <IoFastFoodOutline />,
       title: t("going-to-restaurants.Going to restaurants"),
       descriptions: [
         t(

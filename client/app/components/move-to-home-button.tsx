@@ -4,8 +4,8 @@ import {Link} from "./link";
 
 export const MoveToHomeButton = ({children}: PropsWithChildren) => {
   return (
-    <Button as={Link} to="/" colorScheme="teal" size="lg">
-      {children}
+    <Button asChild colorScheme="teal" size="lg">
+      <Link to="/">{children}</Link>
     </Button>
   );
 };

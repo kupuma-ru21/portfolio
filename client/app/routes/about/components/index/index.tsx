@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  List,
-  ListIcon,
-  ListItem,
-  Text,
-} from "@chakra-ui/react";
+import {Box, Heading, List, Text} from "@chakra-ui/react";
 import {useIndex} from "./useIndex";
 
 export const About = () => {
@@ -14,7 +6,7 @@ export const About = () => {
 
   return (
     <Box py="20px" px="24px">
-      <Heading as="h1" mb="16px" textAlign="center">
+      <Heading as="h1" mb="16px" textAlign="center" size="3xl" fontWeight={700}>
         {t("About")}
       </Heading>
       <Heading mb="56px" fontWeight={600} fontSize="3xl" textAlign="center">
@@ -23,23 +15,23 @@ export const About = () => {
       <Heading as="h3" mb="16px">
         {t("I like to do...")}
       </Heading>
-      <List spacing="24px">
+      <List.Root gap="24px">
         {hobbies.map(({icon, title, descriptions}) => {
           return (
-            <ListItem key={title}>
-              <Flex alignItems="center" gap="16px" mb="8px">
-                <ListIcon boxSize="32px" as={icon} color="green.500" m={0} />
-                <Heading as="h4" mb="16px" m={0} fontWeight={500}>
-                  {title}
-                </Heading>
-              </Flex>
+            <List.Root gap="2" variant="plain" align="center" key={title}>
+              <List.Item>
+                <List.Indicator asChild color="green.500">
+                  {icon}
+                </List.Indicator>
+                <Heading size="xl">{title}</Heading>
+              </List.Item>
               {descriptions.map((description) => {
                 return <Text key={description}>{description}</Text>;
               })}
-            </ListItem>
+            </List.Root>
           );
         })}
-      </List>
+      </List.Root>
     </Box>
   );
 };

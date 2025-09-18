@@ -1,13 +1,8 @@
-import {extendTheme} from "@chakra-ui/react";
+import {createSystem, defaultConfig} from "@chakra-ui/react";
 
-const styles = {
-  global: {
-    "html, body": {overscrollBehavior: "none"},
-    // NOTE UI changes if scroll bar is present so we force it to always be present
-    html: {overflowY: "scroll"},
-  },
-};
+const breakpoints = {lg: "1024px"};
 
-const config = {initialColorMode: "light", useSystemColorMode: false};
-
-export const theme = extendTheme({styles, config});
+export const system = createSystem(defaultConfig, {
+  globalCss: {"html, body": {overscrollBehaviorY: "none"}},
+  theme: {breakpoints},
+});

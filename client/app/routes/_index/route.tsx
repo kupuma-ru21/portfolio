@@ -3,7 +3,6 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-// import { useLoaderData } from "@remix-run/react";
 import {useLoaderData} from "@remix-run/react";
 import {getFragmentData} from "gql/fragment-masking";
 import {AppFragmentDoc, AppsDocument} from "gql/graphql";

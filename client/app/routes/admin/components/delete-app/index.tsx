@@ -10,7 +10,7 @@ export const DeleteButton = ({id}: {id: string}) => {
         type="submit"
         variant="solid"
         colorScheme="red"
-        isLoading={isDeletingApp}
+        loading={isDeletingApp}
       >
         Delete
       </Button>

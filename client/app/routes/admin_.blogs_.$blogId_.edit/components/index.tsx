@@ -2,14 +2,14 @@ import {
   chakra,
   Box,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Button,
 } from "@chakra-ui/react";
 import {Form} from "@remix-run/react";
 import {type BlogQuery} from "gql/graphql";
 import {useTranslation} from "react-i18next";
+import { FormControl } from "~/components/formControl";
+import { FormLabel } from "~/components/formLabel";
 import {Input} from "~/components/input";
 import {SubmitButton} from "~/components/submit-button";
 import {Textarea} from "~/components/textarea";
@@ -50,10 +50,10 @@ export const EditBlog = ({blog}: {blog: BlogQuery["blog"]}) => {
             />
           </Flex>
           <Flex gap="24px" justifyContent="center">
-            <SubmitButton isLoading={isSubmitting}>{t("Post")}</SubmitButton>
+            <SubmitButton loading={isSubmitting}>{t("Post")}</SubmitButton>
             <Button
               onClick={saveAsDraft}
-              isLoading={isSubmitting}
+              loading={isSubmitting}
               type="submit"
               size="lg"
             >
