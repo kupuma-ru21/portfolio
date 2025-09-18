@@ -22,10 +22,15 @@ export const CardContent = ({
         <Card.Text lineClamp={noOfLines}>{detail}</Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Button onClick={showFullDetail} w="110px">
+        <Button
+          onClick={showFullDetail}
+          w="110px"
+          bgColor="#EDF2F7"
+          color="black"
+        >
           {noOfLines === undefined ? t("Fold") : t("Read more")}
         </Button>
-        <Button variant="solid" colorScheme="teal">
+        <Button variant="solid" bgColor="#319795">
           <a href={href} target="_blank" rel="noreferrer">
             {linkText}
           </a>

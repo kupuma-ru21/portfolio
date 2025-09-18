@@ -21,7 +21,14 @@ export const SideBar = () => {
       zIndex={1}
     >
       {links.map((link) => {
-        return <Button as={NavLink} {...link} w="100%" key={link.to} />;
+        return (
+          <Button
+            as={NavLink}
+            {...link}
+            w="100%"
+            key={link.to}
+          />
+        );
       })}
     </Flex>
   );

@@ -10,7 +10,7 @@ export const ExternalIconLink = ({
   "aria-label": string;
 }) => {
   return (
-    <IconButtonBase {...rest} colorScheme="teal" asChild>
+    <IconButtonBase {...rest} bgColor="#319795" asChild>
       <a target="_blank" rel="noreferrer">
         <Icon boxSize="24px">{icon}</Icon>
       </a>

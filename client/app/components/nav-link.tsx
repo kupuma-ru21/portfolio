@@ -8,7 +8,7 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
         {...props}
         style={({isActive}) => {
           if (isActive) return {backgroundColor: "#319795", color: "#FFFFFF"};
-          return undefined;
+          return {backgroundColor: "#EDF2F7", color: "black"};
         }}
         ref={ref}
         prefetch="intent"
