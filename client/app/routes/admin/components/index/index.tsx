@@ -15,13 +15,8 @@ export const Admin = ({apps}: {apps: AppFragment[]}) => {
           <Heading mb="16px" textAlign="center" fontWeight={600}>
             {t("Applications")}
           </Heading>
-          <Button
-            as={Link}
-            to="/admin/add-app"
-            variant="solid"
-            colorScheme="teal"
-          >
-            Add
+          <Button variant="solid" colorScheme="teal">
+            <Link to="/admin/add-app">Add</Link>
           </Button>
         </Flex>
         <Flex direction="column" gap="16px">
@@ -35,13 +30,8 @@ export const Admin = ({apps}: {apps: AppFragment[]}) => {
                     <Card.Text>{detail}</Card.Text>
                   </Card.Body>
                   <Card.Footer>
-                    <Button
-                      as={Link}
-                      to={`/admin/apps/${id}/edit`}
-                      variant="solid"
-                      colorScheme="green"
-                    >
-                      Edit
+                    <Button variant="solid" colorScheme="green">
+                      <Link to={`/admin/apps/${id}/edit`}>Edit</Link>
                     </Button>
                     <DeleteButton id={id} />
                   </Card.Footer>

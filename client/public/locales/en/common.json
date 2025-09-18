@@ -1,7 +1,6 @@
 {
   "header": {
     "resume": {"Open Resume": "Open Resume", "Resume": "Resume"},
-    "Theme": "Theme",
     "menu": {"Menu": "Menu", "Change Theme Color": "Change Theme Color"}
   },
   "admin-header": {

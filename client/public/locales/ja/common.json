@@ -1,7 +1,6 @@
 {
   "header": {
     "resume": {"Open Resume": "職務経歴書を開く", "Resume": "職務経歴書"},
-    "Theme": "テーマ色",
     "menu": {"Menu": "メニュー", "Change Theme Color": "テーマの色を変更する"}
   },
   "admin-header": {

@@ -2,13 +2,13 @@ import {
   chakra,
   Box,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Button,
 } from "@chakra-ui/react";
 import {Form} from "@remix-run/react";
 import {useTranslation} from "react-i18next";
+import { FormControl } from "~/components/formControl";
+import { FormLabel } from "~/components/formLabel";
 import {Input} from "~/components/input";
 import {SubmitButton} from "~/components/submit-button";
 import {Textarea} from "~/components/textarea";
@@ -49,10 +49,10 @@ export const AddBlog = () => {
             />
           </Flex>
           <Flex gap="24px" justifyContent="center">
-            <SubmitButton isLoading={isSubmitting}>{t("post")}</SubmitButton>
+            <SubmitButton loading={isSubmitting}>{t("post")}</SubmitButton>
             <Button
               onClick={saveAsDraft}
-              isLoading={isSubmitting}
+              loading={isSubmitting}
               type="submit"
               size="lg"
             >

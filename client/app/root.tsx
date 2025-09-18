@@ -1,4 +1,4 @@
-import {Box, ChakraProvider, Heading} from "@chakra-ui/react";
+import {Box, Heading} from "@chakra-ui/react";
 import {type LinksFunction, type LoaderFunctionArgs} from "@remix-run/node"; // Depends on the runtime you choose
 import {
   json,
@@ -20,7 +20,7 @@ import {Header} from "./components/header/user/index";
 import {SideBar} from "./components/side-bar";
 import {SIDE_BAR_WIDTH} from "./components/side-bar/constants";
 import {LOCALES} from "./constants";
-import {theme} from "./styles";
+import {ChakraProvider} from "./libs/chakraProvider";
 import i18next from "~/i18n/i18next.server";
 
 export default function App() {
@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <Document locale={locale} dir={i18n.dir()}>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
         {isAdmin ? (
           <AdminHeader />
         ) : (
@@ -76,7 +76,7 @@ export function ErrorBoundary() {
 
   return (
     <Document locale={data?.locale ?? LOCALES.en} dir={i18n.dir()}>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
         <Header />
         <SideBar />
         <Box

@@ -1,5 +1,5 @@
 import {type ReactNode} from "react";
-import {chakra, useColorModeValue} from "@chakra-ui/react";
+import {chakra} from "@chakra-ui/react";
 
 export const Wrapper = ({children}: {children: ReactNode}) => {
   return (
@@ -10,7 +10,7 @@ export const Wrapper = ({children}: {children: ReactNode}) => {
       justifyContent="space-between"
       position="sticky"
       top={0}
-      bgColor={useColorModeValue("white", "black")}
+      bgColor="initial"
       zIndex={2}
     >
       {children}

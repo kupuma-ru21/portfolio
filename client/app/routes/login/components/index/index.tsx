@@ -15,16 +15,16 @@ export const Login = () => {
               name="email"
               placeholder={t("example@email.com")}
               w={{base: "300px", md: "600px"}}
-              isRequired
+              required
             />
             <Input
               type="password"
               name="password"
               w={{base: "300px", md: "600px"}}
-              isRequired
+              required
               min={8}
             />
-            <SubmitButton isLoading={isSubmitting}>{t("Login")}</SubmitButton>
+            <SubmitButton loading={isSubmitting}>{t("Login")}</SubmitButton>
           </VStack>
         </fieldset>
       </Form>

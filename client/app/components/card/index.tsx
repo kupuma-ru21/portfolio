@@ -3,19 +3,19 @@ import {
   Image,
   Stack,
   type ImageProps,
-  type CardProps,
   CardBody,
   Heading,
   type HeadingProps,
   Text,
   type CardFooterProps,
   CardFooter,
+  type CardRootProps,
 } from "@chakra-ui/react";
 
 export const Card = {
-  Root: (props: CardProps) => {
+  Root: (props: CardRootProps) => {
     return (
-      <CardBase
+      <CardBase.Root
         {...props}
         direction={{base: "column", md: "row"}}
         overflow="hidden"

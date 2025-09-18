@@ -1,5 +1,5 @@
-import {useEffect,} from "react";
-import {Box, Divider, Flex, Heading, Image, Text} from "@chakra-ui/react";
+import {useEffect} from "react";
+import {Box, Spacer, Flex, Heading, Image, Text} from "@chakra-ui/react";
 import {AppLinkType, type AppFragment} from "gql/graphql";
 import {CardContent} from "../card-body";
 import {useIndex} from "./useIndex";
@@ -50,7 +50,7 @@ export const Index = ({
           pointerEvents="none"
         />
       </Flex>
-      <Divider />
+      <Spacer />
       <Box p="16px">
         <Heading mb="16px" textAlign="center" fontWeight={600}>
           {t("Applications I developed at work")}
