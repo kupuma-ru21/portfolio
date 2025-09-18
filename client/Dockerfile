@@ -2,7 +2,7 @@
 # REF: https://pnpm.io/docker
 # Before running "gcloud builds submit -t ...", you have to login using "gcloud auth login" and "gcloud config set project ..."
 
-FROM node:20.19.2-alpine3.21 AS base
+FROM node:20.19.4-alpine3.21 AS base
 
 RUN corepack enable
 WORKDIR /app
